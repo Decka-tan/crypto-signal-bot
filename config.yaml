@@ -1,10 +1,17 @@
-# Crypto Signal Bot Configuration - For 10-Minute Prediction Markets
+# Crypto Signal Bot Configuration - For Unhedged Prediction Markets
 
-# Prediction Market Timing Rules:
-# - Market runs for 10 minutes (e.g., 2:50-3:00 PM)
-# - Betting closes 10 min BEFORE target time
-# - Strategy: Analyze at 2:45-2:48 for 3:00 PM target
-# - Must place bet BEFORE 2:50 PM!
+# Unhedged Market Timing:
+# Type 1 (Hourly YES/NO):
+#   - Market updates at XX:01 (e.g., 2:01 PM)
+#   - Betting closes at XX:50 (e.g., 2:50 PM)
+#   - Market resolves at XX:00 next hour
+#   - Strategy: Scrape at XX:01-XX:02, Alert at XX:40-XX:45
+#
+# Type 2 (2-Hourly Price Range):
+#   - Market updates at XX:01 (every 2 hours)
+#   - Betting closes at XX:110 (e.g., 3:50 PM for 2:00 PM start)
+#   - Market resolves at XX:120
+#   - Strategy: Scrape at XX:01-XX:02, Alert at XX:100-XX:105
 
 # Trading pairs to monitor
 symbols:
@@ -16,19 +23,33 @@ symbols:
 # Exchange: Bybit (has CCUSDT!)
 exchange: "bybit"
 
-# Timeframe: 10m (matches prediction market duration)
-timeframe: "10m"
+# Timeframe: 5m for better analysis of hourly markets
+timeframe: "5m"
 
-# Signal thresholds (AGGRESSIVE for fast markets)
+# Signal thresholds
 thresholds:
-  rsi_oversold: 25      # More sensitive for 10m moves
-  rsi_overbought: 75
-  min_confidence: 75  # Higher confidence needed
+  rsi_oversold: 30
+  rsi_overbought: 70
+  min_confidence: 75  # Only alert if confidence >= 75%
   volume_spike: 150
 
 # Display settings
 display:
-  update_interval: 600  # 10 minutes - analyze at start of each window
+  update_interval: 60  # Check every minute
+
+# Smart timing for Unhedged markets
+smart_timing:
+  enabled: true
+  # Type 1: Hourly YES/NO markets
+  hourly:
+    scrape_minute: 1      # Scrape at XX:01
+    alert_start: 40       # Start alerting at XX:40
+    alert_end: 45         # Stop alerting at XX:45
+  # Type 2: 2-Hourly price range markets
+  two_hourly:
+    scrape_minute: 1      # Scrape at XX:01
+    alert_start: 100      # Start alerting at minute 100
+    alert_end: 105        # Stop alerting at minute 105
 
 # Alert settings
 alerts:

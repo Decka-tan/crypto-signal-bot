@@ -357,15 +357,57 @@ class CryptoSignalBotUltimate:
         """Run analysis once"""
         self.console.print("\n[bold bright_magenta]ULTIMATE Mode - Full Analysis[/bold bright_magenta] 🚀\n")
 
+        # Test connections first
+        self.console.print("[bold]🔍 Testing API Connections...[/bold]")
+
+        # Test Bybit/Binance
+        self.console.print("  [dim]Testing Bybit/Binance API...[/dim]", end="\r")
+        try:
+            test_df = self.market_monitor.get_klines('BTCUSDT', limit=1)
+            if test_df is not None and len(test_df) > 0:
+                self.console.print("  [green]✓[/green] [dim]Bybit/Binance API - OK[/dim]")
+            else:
+                self.console.print("  [yellow]⚠[/yellow] [dim]Bybit/Binance API - No data (using demo)[/dim]")
+        except Exception as e:
+            self.console.print(f"  [red]✗[/red] [dim]Bybit/Binance API - ERROR: {str(e)[:50]}[/dim]")
+
+        # Test Unhedged
+        if self.unhedged_client:
+            self.console.print("  [dim]Testing Unhedged API...[/dim]", end="\r")
+            try:
+                unhedged_test = self.unhedged_client.get_markets()
+                if 'error' in unhedged_test:
+                    self.console.print(f"  [yellow]⚠[/yellow] [dim]Unhedged API - {unhedged_test['error'][:50]}[/dim]")
+                else:
+                    self.console.print("  [green]✓[/green] [dim]Unhedged API - OK[/dim]")
+            except Exception as e:
+                self.console.print(f"  [red]✗[/red] [dim]Unhedged API - ERROR: {str(e)[:50]}[/dim]")
+
+        self.console.print("")
         self.console.print("📡 Fetching data and running all analysis modules...")
 
         all_signals = {}
+        errors = {}
+
         for symbol in self.market_monitor.symbols:
             self.console.print(f"   [cyan]{symbol}[/cyan]...", end="\r")
-            signal = self.analyze_symbol(symbol)
-            all_signals[symbol] = signal
+            try:
+                signal = self.analyze_symbol(symbol)
+                if signal and signal.get('error'):
+                    errors[symbol] = f"Analysis error: {signal.get('error', 'Unknown')}"
+                all_signals[symbol] = signal
+            except Exception as e:
+                errors[symbol] = str(e)
+                all_signals[symbol] = None
 
         self.console.print("")  # New line after progress
+
+        # Show errors if any
+        if errors:
+            self.console.print("\n[bold red]⚠️  Errors encountered:[/bold red]")
+            for symbol, error in errors.items():
+                self.console.print(f"  [yellow]{symbol}:[/yellow] {error}")
+            self.console.print("")
 
         # Show summary table
         table = self.create_summary_table(all_signals)

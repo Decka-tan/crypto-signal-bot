@@ -36,6 +36,7 @@ class MarketMonitor:
 
         # Try different exchanges
         exchanges_to_try = []
+        errors = []
 
         if self.exchange == "auto":
             exchanges_to_try = ["binance", "bybit"]  # Skip OKX/KuCoin for now
@@ -57,9 +58,15 @@ class MarketMonitor:
                     return df
 
             except Exception as e:
+                error_msg = f"{exchange.upper()}: {str(e)[:50]}"
+                errors.append(error_msg)
                 continue
 
-        print(f"⚠️ All exchanges failed for {symbol}, using demo data")
+        # Show which exchanges failed
+        if errors:
+            print(f"⚠️  [{symbol}] Exchange errors: {' | '.join(errors[:2])}")
+
+        print(f"⚠️  [{symbol}] All exchanges failed, using demo data")
         return self._generate_demo_data(symbol, limit)
 
     def _get_binance_klines(self, symbol: str, limit: int) -> Optional[pd.DataFrame]:
