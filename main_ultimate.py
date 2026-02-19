@@ -31,6 +31,7 @@ from rich import box
 from core.market_monitor import MarketMonitor
 from core.ultimate_signals import UltimateSignalGenerator
 from core.alerts import AlertManager
+from core.unhedged_client import UnhedgedClient, BetPreparer
 
 
 class CryptoSignalBotUltimate:
@@ -48,6 +49,21 @@ class CryptoSignalBotUltimate:
         self.market_monitor = MarketMonitor(symbols, timeframe, demo_mode=demo_mode, exchange=exchange)
         self.signal_generator = UltimateSignalGenerator(self.config, self.market_monitor)
         self.alert_manager = AlertManager(self.config)
+
+        # Unhedged client (optional)
+        self.unhedged_client = None
+        self.bet_preparer = None
+
+        unhedged_config = self.config.get('unhedged', {})
+        if unhedged_config.get('enabled', False):
+            api_key = unhedged_config.get('api_key', '')
+            if api_key:
+                try:
+                    self.unhedged_client = UnhedgedClient(api_key)
+                    self.bet_preparer = BetPreparer(self.unhedged_client, self.config)
+                    self.console.print("[green]✓ Unhedged API connected[/green]")
+                except Exception as e:
+                    self.console.print(f"[yellow]⚠ Unhedged API connection failed: {e}[/yellow]")
 
         self.running = False
         self.last_alerts = {}
@@ -202,7 +218,11 @@ class CryptoSignalBotUltimate:
         # Funding
         fund = analyses.get('funding', {})
         if fund and 'error' not in fund:
-            lines.append(f"  💰 Funding: {fund.get('funding_sentiment', 'N/A')} ({fund.get('funding_rate', 0):.4f})")
+            funding_rate = fund.get('funding_rate')
+            if funding_rate is not None:
+                lines.append(f"  💰 Funding: {fund.get('funding_sentiment', 'N/A')} ({funding_rate:.4f})")
+            else:
+                lines.append(f"  💰 Funding: {fund.get('funding_sentiment', 'N/A')}")
 
         lines.append("")
 
@@ -240,6 +260,99 @@ class CryptoSignalBotUltimate:
         else:
             return "yellow"
 
+    def prepare_bets_from_signals(self, all_signals: Dict) -> List[Dict]:
+        """Prepare bets from all signals"""
+        if not self.bet_preparer:
+            return []
+
+        prepared_bets = []
+        for symbol, analysis in all_signals.items():
+            if analysis and not analysis.get('error'):
+                prepared_bet = self.bet_preparer.prepare_bet_from_signal(analysis)
+                if prepared_bet:
+                    prepared_bets.append(prepared_bet)
+
+        return prepared_bets
+
+    def display_prepared_bets(self, prepared_bets: List[Dict]):
+        """Display prepared bets in console"""
+        if not prepared_bets:
+            self.console.print("[dim]No bets prepared (confidence < 75% or no matching markets)[/dim]")
+
+            # Debug: Show what's happening
+            if self.unhedged_client:
+                self.console.print("\n[dim]🔍 Debug: Checking Unhedged API...[/dim]")
+                markets = self.unhedged_client.get_markets()
+                if 'error' in markets:
+                    self.console.print(f"[yellow]⚠️ Unhedged API Error: {markets['error']}[/yellow]")
+                    self.console.print("\n[bold cyan]💡 To enable semi-automated betting:[/bold cyan]")
+                    self.console.print("1. Go to https://unhedged.gg and open a market for your symbol")
+                    self.console.print("2. Copy the market ID from the URL (e.g., /market/btc-price-3pm)")
+                    self.console.print("3. Add it to config.yaml under unhedged.manual_markets:")
+                    help_text = """   unhedged:
+     manual_markets:
+       \"BTCUSDT\": \"btc-price-3pm\"
+       \"ETHUSDT\": \"eth-price-3pm\""""
+                    self.console.print(help_text)
+                else:
+                    active_crypto = self.unhedged_client.get_active_crypto_markets()
+                    self.console.print(f"[dim]✓ Found {len(active_crypto)} active crypto markets[/dim]")
+                    if active_crypto:
+                        self.console.print("[dim]Sample markets:[/dim]")
+                        for m in active_crypto[:3]:
+                            self.console.print(f"[dim]  - {m.get('name', 'N/A')}[/dim]")
+            return
+
+        self.console.print("\n[bold bright_yellow]🎯 PREPARED BETS (Semi-Automated)[/bold bright_yellow]\n")
+
+        for i, bet in enumerate(prepared_bets, 1):
+            self.console.print(f"[bold cyan]Bet #{i}[/bold cyan]")
+            self.console.print(f"  Symbol: [bold white]{bet.get('symbol', 'N/A')}[/bold white]")
+            self.console.print(f"  Market: {bet.get('market_name', 'N/A')}")
+            self.console.print(f"  Signal: [bold {self._get_signal_color(bet.get('signal', ''))}]{bet.get('signal', 'N/A')}[/bold {self._get_signal_color(bet.get('signal', ''))}]")
+            self.console.print(f"  Confidence: [bold]{bet.get('confidence', 0)}%[/bold]")
+            self.console.print(f"  Outcome: [bold]{bet.get('outcome', 'N/A')}[/bold]")
+            self.console.print(f"  Amount: [bold green]${bet.get('amount', 0)}[/bold green]")
+            self.console.print(f"\n[dim]To execute:[/dim]")
+            self.console.print(f"[dim]{bet.get('curl_command', '')}[/dim]\n")
+
+    def send_prepared_bets_to_discord(self, prepared_bets: List[Dict]):
+        """Send prepared bets to Discord"""
+        if not prepared_bets or not self.alert_manager:
+            return
+
+        discord_config = self.config.get('alerts', {}).get('discord', {})
+        if not discord_config.get('enabled', False):
+            return
+
+        webhook_url = discord_config.get('webhook_url', '')
+        if not webhook_url:
+            return
+
+        for bet in prepared_bets:
+            # Format bet message for Discord
+            message = f"""🎯 **PREPARED BET** - {bet.get('symbol', 'N/A')}
+
+**Signal:** {bet.get('signal', 'N/A')}
+**Confidence:** {bet.get('confidence', 0)}%
+**Outcome:** {bet.get('outcome', 'N/A')}
+**Amount:** ${bet.get('amount', 0)}
+
+**To execute:**
+```bash
+{bet.get('curl_command', '')}
+```
+
+*⚠️ Check market details before executing!*"""
+
+            # Send via alert manager
+            try:
+                import requests
+                data = {"content": message}
+                requests.post(webhook_url, json=data, timeout=5)
+            except:
+                pass  # Silently fail if Discord is down
+
     def run_once(self):
         """Run analysis once"""
         self.console.print("\n[bold bright_magenta]ULTIMATE Mode - Full Analysis[/bold bright_magenta] 🚀\n")
@@ -265,6 +378,12 @@ class CryptoSignalBotUltimate:
             if analysis and analysis.get('confidence', 0) >= 75:
                 self.display_detailed_analysis(analysis)
                 self.check_and_alert(analysis)
+
+        # Prepare bets
+        if self.bet_preparer:
+            prepared_bets = self.prepare_bets_from_signals(all_signals)
+            self.display_prepared_bets(prepared_bets)
+            self.send_prepared_bets_to_discord(prepared_bets)
 
     def run_continuous(self):
         """Run continuous monitoring"""
@@ -293,6 +412,13 @@ class CryptoSignalBotUltimate:
 
                 table = self.create_summary_table(all_signals)
                 self.console.print(table)
+
+                # Prepare bets
+                if self.bet_preparer:
+                    prepared_bets = self.prepare_bets_from_signals(all_signals)
+                    if prepared_bets:
+                        self.console.print("\n[bold bright_yellow]🎯 Prepared Bets Available[/bold bright_yellow]")
+                        self.send_prepared_bets_to_discord(prepared_bets)
 
                 if smart_timing:
                     current_min = time.localtime().tm_min

@@ -1,92 +1,70 @@
-# Crypto Signal Bot Configuration
-# Edit this file to customize your bot settings
+# Crypto Signal Bot Configuration - For 10-Minute Prediction Markets
+
+# Prediction Market Timing Rules:
+# - Market runs for 10 minutes (e.g., 2:50-3:00 PM)
+# - Betting closes 10 min BEFORE target time
+# - Strategy: Analyze at 2:45-2:48 for 3:00 PM target
+# - Must place bet BEFORE 2:50 PM!
 
 # Trading pairs to monitor
 symbols:
   - "BTCUSDT"   # Bitcoin
   - "ETHUSDT"   # Ethereum
   - "SOLUSDT"   # Solana
-  - "CCUSDT"    # Canton (available on Bybit!)
-  - "BNBUSDT"   # BNB
+  - "CCUSDT"    # Canton (Bybit only!)
 
-# Exchange to use: "auto", "binance", "bybit", "okx", "kucoin"
-# "auto" will try all exchanges (Binance, Bybit, OKX, KuCoin)
-exchange: "auto"
+# Exchange: Bybit (has CCUSDT!)
+exchange: "bybit"
 
-# Timeframe for analysis (15m for prediction markets)
-timeframe: "15m"
+# Timeframe: 10m (matches prediction market duration)
+timeframe: "10m"
 
-# Signal thresholds (adjust based on your strategy)
+# Signal thresholds (AGGRESSIVE for fast markets)
 thresholds:
-  # RSI levels for overbought/oversold
-  rsi_oversold: 30      # Buy signal when RSI below this
-  rsi_overbought: 70    # Sell signal when RSI above this
-
-  # Confidence score required to trigger alert (0-100)
-  min_confidence: 60
-
-  # Volume spike threshold (percentage above average)
-  volume_spike: 150     # 150% of average volume
-
-# Alert settings
-alerts:
-  # Show alerts in CLI
-  console: true
-
-  # Sound alert on Windows (leave empty to disable)
-  sound: "C:\\Windows\\Media\\notify.wav"
-
-  # Telegram alerts (optional - set up bot token and chat_id)
-  telegram:
-    enabled: false
-    bot_token: ""
-    chat_id: ""
-
-  # Discord alerts (optional - use webhook URL)
-  discord:
-    enabled: false
-    webhook_url: ""  # e.g., "https://discord.com/api/webhooks/YOUR_WEBHOOK_URL"
-    mention_everyone: false      # Set to true to @everyone for high-confidence signals
-    everyone_threshold: 90       # @everyone when confidence >= this (default: 90%)
+  rsi_oversold: 25      # More sensitive for 10m moves
+  rsi_overbought: 75
+  min_confidence: 75  # Higher confidence needed
+  volume_spike: 150
 
 # Display settings
 display:
-  # Number of candles to show in history
-  history_length: 50
+  update_interval: 600  # 10 minutes - analyze at start of each window
 
-  # Update interval - aligned with 15m prediction markets
-  # Options: 900 (15min), 300 (5min), 60 (1min)
-  update_interval: 900  # Check every 15 minutes (for prediction markets)
+# Alert settings
+alerts:
+  console: true
+  sound: "C:\\Windows\\Media\\notify.wav"
 
-# Prediction market timing (for 15m expiry)
-prediction_market:
-  # Only analyze at START of 15-minute windows
-  # Windows: XX:00, XX:15, XX:30, XX:45
-  use_smart_timing: true
-  timezone_offset: 7  # WIB (GMT+7)
+  # Discord
+  discord:
+    enabled: false
+    webhook_url: ""
+    mention_everyone: false
+    everyone_threshold: 95
 
-# Technical indicators to use
+# Technical indicators
 indicators:
-  rsi:
-    period: 14
-    enabled: true
+  rsi: {period: 14, enabled: true}
+  macd: {fast: 12, slow: 26, signal: 9, enabled: true}
+  ema: {short: 9, long: 21, enabled: true}
+  bollinger_bands: {period: 20, std: 2, enabled: true}
+  volume: {period: 20, enabled: true}
 
-  macd:
-    fast: 12
-    slow: 26
-    signal: 9
-    enabled: true
+# Unhedged API (Semi-automated betting)
+unhedged:
+  api_key: "ak_rHWj55mvAzifWvuVnRZDkGcasjFwHwsshgZNpKXXVCIOHIYk"
+  enabled: true
 
-  ema:
-    short: 9
-    long: 21
-    enabled: true
+  # Manual market ID mappings (since API markets endpoint might not work)
+  # To find market IDs, check Unhedged website or use their API
+  manual_markets:
+    # "BTCUSDT": "market_id_from_unhedged"
+    # "ETHUSDT": "market_id_from_unhedged"
+    # "SOLUSDT": "market_id_from_unhedged"
+    # "CCUSDT": "market_id_from_unhedged"
 
-  bollinger_bands:
-    period: 20
-    std: 2
-    enabled: true
-
-  volume:
-    period: 20
-    enabled: true
+# Betting settings
+betting:
+  base_amount: 10      # Base bet amount in USD
+  max_amount: 100      # Maximum bet amount
+  min_confidence: 75   # Minimum confidence to prepare bet
