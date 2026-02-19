@@ -1,106 +1,87 @@
 """
-Market Monitor Module - Fetches real-time crypto price data
-Supports multiple APIs for redundancy
+Multi-Exchange Market Monitor Module
+Supports: Binance, Bybit, OKX, KuCoin
 """
 
 import requests
 import pandas as pd
 from typing import List, Dict, Optional
-import random
+import numpy as np
+from datetime import datetime, timedelta
 
 
 class MarketMonitor:
-    """Monitor crypto markets using multiple APIs for redundancy"""
+    """Monitor crypto markets across multiple exchanges"""
 
-    def __init__(self, symbols: List[str], timeframe: str = "15m", demo_mode: bool = False):
+    def __init__(self, symbols: List[str], timeframe: str = "15m", demo_mode: bool = False, exchange: str = "auto"):
         """
         Initialize market monitor
 
         Args:
-            symbols: List of trading pairs (e.g., ["BTCUSDT", "ETHUSDT"])
-            timeframe: Candlestick interval (1m, 5m, 15m, 1h, 4h, 1d)
-            demo_mode: If True, use simulated data for testing
+            symbols: List of trading pairs (e.g., ["BTCUSDT", "CCUSDT"])
+            timeframe: Candlestick interval
+            demo_mode: Use simulated data
+            exchange: "auto", "binance", "bybit", "okx", "kucoin"
         """
         self.symbols = symbols
         self.timeframe = timeframe
         self.demo_mode = demo_mode
+        self.exchange = exchange
         self.data_cache = {}
 
-        # Try different APIs
-        self.apis = [
-            {
-                'name': 'Binance',
-                'klines_url': 'https://api.binance.com/api/v3/klines',
-                'price_url': 'https://api.binance.com/api/v3/ticker/price'
-            },
-            {
-                'name': 'Binance Backup',
-                'klines_url': 'https://api1.binance.com/api/v3/klines',
-                'price_url': 'https://api1.binance.com/api/v3/ticker/price'
-            },
-            {
-                'name': 'Binance US',
-                'klines_url': 'https://api.binance.us/api/v3/klines',
-                'price_url': 'https://api.binance.us/api/v3/ticker/price'
-            }
-        ]
-        self.current_api_index = 0
+    def get_klines(self, symbol: str, limit: int = 100) -> Optional[pd.DataFrame]:
+        """Fetch candlestick data - tries multiple exchanges"""
+        if self.demo_mode:
+            return self._generate_demo_data(symbol, limit)
 
-    def _try_api(self, url: str, params: dict, timeout: int = 10) -> Optional[requests.Response]:
-        """Try to make API request with fallback to alternative APIs"""
-        for i in range(len(self.apis)):
-            api_index = (self.current_api_index + i) % len(self.apis)
-            api_name = self.apis[api_index]['name']
+        # Try different exchanges
+        exchanges_to_try = []
 
+        if self.exchange == "auto":
+            exchanges_to_try = ["binance", "bybit"]  # Skip OKX/KuCoin for now
+        else:
+            exchanges_to_try = [self.exchange]
+
+        for exchange in exchanges_to_try:
             try:
-                # Replace domain in URL with current API
-                base_url = self.apis[api_index]['klines_url'].split('/api/')[0]
-                modified_url = url.replace('https://api.binance.com', base_url)
-                modified_url = modified_url.replace('https://api1.binance.com', base_url)
+                if exchange == "binance":
+                    df = self._get_binance_klines(symbol, limit)
+                elif exchange == "bybit":
+                    df = self._get_bybit_klines(symbol, limit)
+                elif exchange == "okx":
+                    df = self._get_okx_klines(symbol, limit)
+                elif exchange == "kucoin":
+                    df = self._get_kucoin_klines(symbol, limit)
 
-                response = requests.get(modified_url, params=params, timeout=timeout)
-                if response.status_code == 200:
-                    # Update current API on success
-                    self.current_api_index = api_index
-                    return response
+                if df is not None and len(df) > 0:
+                    return df
 
             except Exception as e:
                 continue
 
-        return None
+        print(f"⚠️ All exchanges failed for {symbol}, using demo data")
+        return self._generate_demo_data(symbol, limit)
 
-    def get_klines(self, symbol: str, limit: int = 100) -> Optional[pd.DataFrame]:
-        """Fetch candlestick data"""
-        if self.demo_mode:
-            return self._generate_demo_data(symbol, limit)
-
+    def _get_binance_klines(self, symbol: str, limit: int) -> Optional[pd.DataFrame]:
+        """Fetch from Binance"""
         try:
+            url = "https://api.binance.com/api/v3/klines"
             params = {
                 "symbol": symbol,
                 "interval": self.timeframe,
                 "limit": limit
             }
 
-            response = self._try_api(
-                self.apis[0]['klines_url'],
-                params,
-                timeout=10
-            )
-
-            if response is None:
-                print(f"⚠️ All APIs failed for {symbol}")
-                return None
-
+            response = requests.get(url, params=params, timeout=10)
+            response.raise_for_status()
             data = response.json()
 
-            # Parse into DataFrame
             df = pd.DataFrame(data, columns=[
                 'timestamp', 'open', 'high', 'low', 'close', 'volume',
                 'close_time', 'quote_volume', 'trades', 'taker_buy_base',
                 'taker_buy_quote', 'ignore'
             ])
 
-            # Convert to proper types
             df['timestamp'] = pd.to_datetime(df['timestamp'], unit='ms')
             df['open'] = df['open'].astype(float)
             df['high'] = df['high'].astype(float)
@@ -109,47 +90,179 @@ class MarketMonitor:
             df['volume'] = df['volume'].astype(float)
 
             df.set_index('timestamp', inplace=True)
-            df = df[['open', 'high', 'low', 'close', 'volume']]
+            return df[['open', 'high', 'low', 'close', 'volume']]
 
-            return df
+        except:
+            return None
 
-        except Exception as e:
-            print(f"Error fetching data for {symbol}: {e}")
+    def _get_bybit_klines(self, symbol: str, limit: int) -> Optional[pd.DataFrame]:
+        """Fetch from Bybit - supports CCUSDT!"""
+        try:
+            url = "https://api.bybit.com/v5/market/kline"
+
+            # Bybit uses different interval names
+            interval_map = {
+                '1m': '1', '5m': '5', '15m': '15', '1h': '60',
+                '4h': '240', '1d': 'D'
+            }
+            interval = interval_map.get(self.timeframe, '15')
+
+            params = {
+                "category": "spot",
+                "symbol": symbol,
+                "interval": interval,
+                "limit": min(limit, 200)  # Bybit max is 200
+            }
+
+            response = requests.get(url, params=params, timeout=10)
+            response.raise_for_status()
+            data = response.json()
+
+            if data.get('retCode') != 0:
+                return None
+
+            klines = data['result']['list']
+
+            # Bybit format: [startTime, open, high, low, close, volume, turnover]
+            df = pd.DataFrame(klines, columns=[
+                'timestamp', 'open', 'high', 'low', 'close', 'volume', 'turnover'
+            ])
+
+            df['timestamp'] = pd.to_datetime(df['timestamp'].astype(int), unit='ms')
+            df['open'] = df['open'].astype(float)
+            df['high'] = df['high'].astype(float)
+            df['low'] = df['low'].astype(float)
+            df['close'] = df['close'].astype(float)
+            df['volume'] = df['volume'].astype(float)
+
+            df.set_index('timestamp', inplace=True)
+            df = df.sort_index()
+            return df[['open', 'high', 'low', 'close', 'volume']]
+
+        except:
+            return None
+
+    def _get_okx_klines(self, symbol: str, limit: int) -> Optional[pd.DataFrame]:
+        """Fetch from OKX"""
+        try:
+            # OKX uses dash format (BTC-USDT)
+            okx_symbol = symbol.replace('USDT', '-USDT')
+
+            url = "https://www.okx.com/api/v5/market/candles"
+
+            interval_map = {
+                '1m': '1m', '5m': '5m', '15m': '15m', '1h': '1H',
+                '4h': '4H', '1d': '1D'
+            }
+            interval = interval_map.get(self.timeframe, '15m')
+
+            params = {
+                "instId": okx_symbol,
+                "bar": interval,
+                "limit": str(min(limit, 100))
+            }
+
+            response = requests.get(url, params=params, timeout=10)
+            response.raise_for_status()
+            data = response.json()
+
+            if data.get('code') != '0':
+                return None
+
+            klines = data['data']
+
+            # OKX format: [timestamp, open, high, low, close, volume, ...]
+            df = pd.DataFrame(klines, columns=[
+                'timestamp', 'open', 'high', 'low', 'close', 'volume',
+                'volCcy', 'volCcyQuote', 'confirm'
+            ])
+
+            df['timestamp'] = pd.to_datetime(df['timestamp'].astype(int), unit='ms')
+            df['open'] = df['open'].astype(float)
+            df['high'] = df['high'].astype(float)
+            df['low'] = df['low'].astype(float)
+            df['close'] = df['close'].astype(float)
+            df['volume'] = df['volume'].astype(float)
+
+            df.set_index('timestamp', inplace=True)
+            return df[['open', 'high', 'low', 'close', 'volume']]
+
+        except:
+            return None
+
+    def _get_kucoin_klines(self, symbol: str, limit: int) -> Optional[pd.DataFrame]:
+        """Fetch from KuCoin"""
+        try:
+            # KuCoin uses dash format (BTC-USDT)
+            kc_symbol = symbol.replace('USDT', '-USDT')
+
+            url = "https://api.kucoin.com/api/v1/klines"
+
+            params = {
+                "symbol": kc_symbol,
+                "type": self.timeframe,
+                "limit": str(limit)
+            }
+
+            response = requests.get(url, params=params, timeout=10)
+            response.raise_for_status()
+            data = response.json()
+
+            if data.get('code') != '200000':
+                return None
+
+            klines = data['data']
+
+            if not klines or len(klines) == 0:
+                return None
+
+            # KuCoin format: [timestamp, open, high, low, close, volume]
+            df = pd.DataFrame(klines, columns=[
+                'timestamp', 'open', 'high', 'low', 'close', 'volume'
+            ])
+
+            # Handle timestamps safely
+            df['timestamp'] = pd.to_datetime(df['timestamp'].astype(int), unit='ms')
+            df['open'] = df['open'].astype(float)
+            df['high'] = df['high'].astype(float)
+            df['low'] = df['low'].astype(float)
+            df['close'] = df['close'].astype(float)
+            df['volume'] = df['volume'].astype(float)
+
+            df.set_index('timestamp', inplace=True)
+            return df[['open', 'high', 'low', 'close', 'volume']]
+
+        except:
             return None
 
     def _generate_demo_data(self, symbol: str, limit: int = 100) -> Optional[pd.DataFrame]:
-        """Generate realistic demo data for testing"""
-        import numpy as np
-        from datetime import datetime, timedelta
+        """Generate realistic demo data"""
+        end_time = datetime.now()
+        start_time = end_time - timedelta(minutes=15 * limit)
+        timestamps = pd.date_range(start=start_time, end=end_time, periods=limit)
 
-        # Base price for different symbols
+        # Base prices for different symbols
         base_prices = {
             'BTCUSDT': 43000,
             'ETHUSDT': 2300,
             'SOLUSDT': 100,
             'BNBUSDT': 320,
-            'ADAUSDT': 0.55
+            'ADAUSDT': 0.55,
+            'CCUSDT': 0.165  # Canton!
         }
 
         base_price = base_prices.get(symbol, 100)
 
-        # Generate timestamps
-        end_time = datetime.now()
-        start_time = end_time - timedelta(minutes=15 * limit)
-        timestamps = pd.date_range(start=start_time, end=end_time, periods=limit)
-
-        # Generate price data with random walk
-        np.random.seed(hash(symbol) % 10000)  # Consistent data for same symbol
-
-        returns = np.random.normal(0, 0.005, limit)  # 0.5% volatility
+        # Generate price data
+        np.random.seed(hash(symbol) % 10000)
+        returns = np.random.normal(0, 0.005, limit)
         prices = [base_price]
+
         for ret in returns[1:]:
             prices.append(prices[-1] * (1 + ret))
 
         prices = np.array(prices)
-
-        # Generate OHLC from close prices
-        noise = np.random.normal(0, 0.001, limit)  # Small noise for high/low
+        noise = np.random.normal(0, 0.001, limit)
 
         data = {
             'open': prices * (1 + np.abs(noise) * 0.3),
@@ -163,56 +276,64 @@ class MarketMonitor:
         return df
 
     def get_current_price(self, symbol: str) -> Optional[float]:
-        """Get current price for a symbol"""
+        """Get current price"""
         if self.demo_mode:
             df = self.get_klines(symbol, limit=1)
             if df is not None and len(df) > 0:
                 return float(df['close'].iloc[-1])
             return None
 
-        try:
-            for api in self.apis:
-                try:
-                    response = requests.get(
-                        api['price_url'],
-                        params={"symbol": symbol},
-                        timeout=5
-                    )
+        # Try exchanges
+        for exchange in ["bybit" if self.exchange == "auto" else self.exchange, "binance"]:
+            try:
+                if exchange == "bybit":
+                    url = "https://api.bybit.com/v5/market/tickers"
+                    params = {"category": "spot", "symbol": symbol}
+                    response = requests.get(url, params=params, timeout=5)
+                    if response.status_code == 200:
+                        data = response.json()
+                        if data.get('retCode') == 0:
+                            return float(data['result']['list'][0]['lastPrice'])
+                elif exchange == "binance":
+                    url = "https://api.binance.com/api/v3/ticker/price"
+                    params = {"symbol": symbol}
+                    response = requests.get(url, params=params, timeout=5)
                     if response.status_code == 200:
                         data = response.json()
                         return float(data['price'])
-                except:
-                    continue
-            return None
-        except:
-            return None
+            except:
+                continue
 
-    def get_24h_ticker(self, symbol: str) -> Optional[Dict]:
-        """Get 24hr ticker statistics"""
-        return None  # Not critical for main functionality
+        return None
 
     def update_all_data(self, limit: int = 100) -> Dict[str, pd.DataFrame]:
-        """Fetch latest data for all monitored symbols"""
+        """Fetch latest data for all symbols"""
         data = {}
-
         for symbol in self.symbols:
             df = self.get_klines(symbol, limit)
             if df is not None:
                 data[symbol] = df
                 self.data_cache[symbol] = df
-
         return data
 
     def get_price_summary(self, symbol: str) -> Optional[Dict]:
-        """Get a summary of current price data"""
+        """Get price summary"""
         df = self.data_cache.get(symbol)
         if df is None or len(df) == 0:
             df = self.get_klines(symbol, limit=50)
-            if df is None:
+            if df is None or len(df) == 0:
                 return None
 
         latest = df.iloc[-1]
         prev = df.iloc[-2] if len(df) > 1 else latest
+
+        # Safely calculate change
+        if prev is not None and 'close' in prev and not pd.isna(prev['close']):
+            change = latest['close'] - prev['close']
+            change_percent = (change / prev['close']) * 100
+        else:
+            change = 0
+            change_percent = 0
 
         return {
             'symbol': symbol,
@@ -221,7 +342,7 @@ class MarketMonitor:
             'high': latest['high'],
             'low': latest['low'],
             'volume': latest['volume'],
-            'change': latest['close'] - prev['close'],
-            'change_percent': ((latest['close'] - prev['close']) / prev['close']) * 100,
+            'change': change,
+            'change_percent': change_percent,
             'time': latest.name.strftime('%H:%M:%S')
         }

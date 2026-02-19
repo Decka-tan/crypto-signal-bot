@@ -410,8 +410,13 @@ class UltimateSignalGenerator:
 
         # Check funding rate risk
         fund = analyses.get('funding', {})
-        funding_rate = fund.get('funding_rate', 0)
-        if abs(funding_rate) > 0.05:
+        # Handle error case
+        if 'error' in fund or 'funding_rate' not in fund:
+            funding_rate = 0
+        else:
+            funding_rate = fund.get('funding_rate', 0)
+
+        if funding_rate is not None and abs(funding_rate) > 0.05:
             risk_factors.append("Extreme funding rate")
             risk_level = "High"
 

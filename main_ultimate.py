@@ -15,6 +15,7 @@ import io
 import time
 import argparse
 import yaml
+import traceback
 
 # Fix Windows encoding
 if sys.platform == "win32":
@@ -43,7 +44,8 @@ class CryptoSignalBotUltimate:
         symbols = self.config.get('symbols', ['BTCUSDT', 'ETHUSDT', 'SOLUSDT'])
         timeframe = self.config.get('timeframe', '15m')
 
-        self.market_monitor = MarketMonitor(symbols, timeframe, demo_mode=demo_mode)
+        exchange = self.config.get('exchange', 'auto')
+        self.market_monitor = MarketMonitor(symbols, timeframe, demo_mode=demo_mode, exchange=exchange)
         self.signal_generator = UltimateSignalGenerator(self.config, self.market_monitor)
         self.alert_manager = AlertManager(self.config)
 
@@ -270,7 +272,8 @@ class CryptoSignalBotUltimate:
         self.console.print("[dim]Press Ctrl+C to stop[/dim]\n")
 
         self.running = True
-        interval = self.config.get('display', {}).get('update_interval', 60)
+        interval = self.config.get('display', {}).get('update_interval', 900)
+        smart_timing = self.config.get('prediction_market', {}).get('use_smart_timing', True)
 
         try:
             while self.running:
@@ -279,7 +282,7 @@ class CryptoSignalBotUltimate:
                 self.console.print(
                     f"[bold bright_magenta]ULTIMATE[/bold bright_magenta] 🚀 | "
                     f"[dim]{time.strftime('%H:%M:%S')}[/dim] | "
-                    f"[dim]Interval: {interval}s[/dim]\n"
+                    f"[dim]Update every {interval}s ({interval//60} min)[/dim]\n"
                 )
 
                 all_signals = {}
@@ -290,6 +293,11 @@ class CryptoSignalBotUltimate:
 
                 table = self.create_summary_table(all_signals)
                 self.console.print(table)
+
+                if smart_timing:
+                    current_min = time.localtime().tm_min
+                    min_to_next = 15 - (current_min % 15)
+                    self.console.print(f"\n[dim]⏰ Next analysis: {min_to_next} min (at XX:{'00' if (current_min // 15 + 1) * 15 < 10 else ''}{(current_min // 15 + 1) * 15:00})[/dim]")
 
                 time.sleep(interval)
 
@@ -327,6 +335,8 @@ def main():
         bot.run(once=args.once)
     except Exception as e:
         print(f"❌ Error: {e}")
+        print("\n--- Full Traceback ---")
+        traceback.print_exc()
         sys.exit(1)
 
 

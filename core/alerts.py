@@ -235,6 +235,8 @@ class AlertManager:
 
             discord_config = self.alert_config.get('discord', {})
             webhook_url = discord_config.get('webhook_url')
+            mention_everyone = discord_config.get('mention_everyone', False)
+            everyone_threshold = discord_config.get('everyone_threshold', 90)  # @everyone for 90%+ confidence
 
             if not webhook_url:
                 print("⚠️ Discord not configured: Missing webhook_url")
@@ -243,12 +245,17 @@ class AlertManager:
             # Format message with embed
             embed = self._format_discord_embed(signal_analysis)
 
-            # Send message
+            # Build message data
             data = {
                 'embeds': [embed],
                 'username': 'Crypto Signal Bot',
-                'avatar_url': 'https://i.imgur.com/zxBaQ8k.png'  # Default avatar
+                'avatar_url': 'https://i.imgur.com/zxBaQ8k.png'
             }
+
+            # Add @everyone for high confidence signals
+            confidence = signal_analysis.get('confidence', 0)
+            if mention_everyone and confidence >= everyone_threshold:
+                data['content'] = '@everyone 🚨 HIGH CONFIDENCE SIGNAL!'
 
             response = requests.post(webhook_url, json=data, timeout=10)
             response.raise_for_status()

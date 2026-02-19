@@ -1,13 +1,17 @@
 # Crypto Signal Bot Configuration
 # Edit this file to customize your bot settings
 
-# Trading pairs to monitor (Binance format)
+# Trading pairs to monitor
 symbols:
-  - "SOLUSDT"   # Solana
-  - "ETHUSDT"   # Ethereum
   - "BTCUSDT"   # Bitcoin
+  - "ETHUSDT"   # Ethereum
+  - "SOLUSDT"   # Solana
+  - "CCUSDT"    # Canton (available on Bybit!)
   - "BNBUSDT"   # BNB
-  - "ADAUSDT"   # Cardano
+
+# Exchange to use: "auto", "binance", "bybit", "okx", "kucoin"
+# "auto" will try all exchanges (Binance, Bybit, OKX, KuCoin)
+exchange: "auto"
 
 # Timeframe for analysis (15m for prediction markets)
 timeframe: "15m"
@@ -41,15 +45,25 @@ alerts:
   # Discord alerts (optional - use webhook URL)
   discord:
     enabled: false
-    webhook_url: ""  # e.g., "https://discord.com/api/webhooks/123/abc"
+    webhook_url: ""  # e.g., "https://discord.com/api/webhooks/YOUR_WEBHOOK_URL"
+    mention_everyone: false      # Set to true to @everyone for high-confidence signals
+    everyone_threshold: 90       # @everyone when confidence >= this (default: 90%)
 
 # Display settings
 display:
   # Number of candles to show in history
   history_length: 50
 
-  # Update interval in seconds
-  update_interval: 30  # Check every 30 seconds
+  # Update interval - aligned with 15m prediction markets
+  # Options: 900 (15min), 300 (5min), 60 (1min)
+  update_interval: 900  # Check every 15 minutes (for prediction markets)
+
+# Prediction market timing (for 15m expiry)
+prediction_market:
+  # Only analyze at START of 15-minute windows
+  # Windows: XX:00, XX:15, XX:30, XX:45
+  use_smart_timing: true
+  timezone_offset: 7  # WIB (GMT+7)
 
 # Technical indicators to use
 indicators:

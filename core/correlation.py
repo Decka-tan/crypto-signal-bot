@@ -134,13 +134,17 @@ class CorrelationAnalyzer:
         corr_data = self.calculate_correlation(btc_df, coin_df, period=50)
 
         if 'error' in corr_data:
-            return corr_data
+            return {'error': corr_data['error'], 'symbol': symbol}
 
         # Check if BTC leads
         lead_lag = self.analyze_leading_lagging(btc_df, coin_df, max_lag=5)
 
         # Determine influence level
-        influence_score = abs(corr_data['correlation']) * 100
+        correlation = corr_data.get('correlation')
+        if correlation is None:
+            return {'error': 'Could not calculate correlation', 'symbol': symbol}
+
+        influence_score = abs(correlation) * 100
 
         if influence_score > 80:
             influence = "Very High"
@@ -154,10 +158,10 @@ class CorrelationAnalyzer:
         # Trading implication
         btc_trend = "UP" if btc_df['close'].iloc[-1] > btc_df['close'].iloc[-5] else "DOWN"
 
-        if corr_data['correlation'] > 0.6:
+        if correlation > 0.6:
             implication = f"{symbol} tends to follow BTC direction"
             btc_signal = "YES" if btc_trend == "UP" else "NO"
-        elif corr_data['correlation'] < -0.6:
+        elif correlation < -0.6:
             implication = f"{symbol} tends to move opposite to BTC"
             btc_signal = "NO" if btc_trend == "UP" else "YES"
         else:
