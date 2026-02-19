@@ -76,13 +76,20 @@ unhedged:
   api_key: "ak_rHWj55mvAzifWvuVnRZDkGcasjFwHwsshgZNpKXXVCIOHIYk"
   enabled: true
 
-  # Manual market ID mappings (since API markets endpoint might not work)
-  # To find market IDs, check Unhedged website or use their API
+  # Market IDs scraped from unhedged.gg/markets?category=crypto
+  # Type 1: Price Range Markets (2-hourly)
+  # Type 2: Binary YES/NO Markets (hourly) - using these by default
   manual_markets:
-    # "BTCUSDT": "market_id_from_unhedged"
-    # "ETHUSDT": "market_id_from_unhedged"
-    # "SOLUSDT": "market_id_from_unhedged"
-    # "CCUSDT": "market_id_from_unhedged"
+    "BTCUSDT": "cmltajr3z02xk0swj5n3s6v5d"  # Bitcoin above $66,776.62 at 6:00 PM? (Binary)
+    "ETHUSDT": "cmltajrad02xo0swj73x3quzw"  # Ethereum above $1,961.59 at 6:00 PM? (Binary)
+    "SOLUSDT": "cmltajrgz02xs0swj0lueb3ov"  # Solana above $81.108 at 6:00 PM? (Binary)
+    "CCUSDT": "cmltajrne02xw0swjt9f9tyvc"  # Canton Coin above $0.16089 at 6:00 PM? (Binary)
+
+    # Alternative price range markets (2-hourly):
+    # "BTCUSDT_RANGE": "cmltajqxf02xf0swjjkq9n1wq"  # Bitcoin price at 7:00 PM?
+    # "ETHUSDT_RANGE": "cmltajrt902y00swjt1mvrkdj"  # Ethereum price at 7:00 PM?
+    # "SOLUSDT_RANGE": "cmltajrz902y50swj3vgp8hh8"  # Solana price at 7:00 PM?
+    # "CCUSDT_RANGE": "cmltajs6602ya0swjg016j2jn"  # Canton Coin price at 7:00 PM?
 
 # Betting settings
 betting:
