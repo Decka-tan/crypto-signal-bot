@@ -329,6 +329,9 @@ class CryptoSignalBotUltimate:
         if not webhook_url:
             return
 
+        username = discord_config.get('username', 'Unhedged Bot')
+        avatar_url = discord_config.get('avatar_url', '')
+
         for bet in prepared_bets:
             # Format bet message for Discord
             message = f"""🎯 **PREPARED BET** - {bet.get('symbol', 'N/A')}
@@ -345,13 +348,20 @@ class CryptoSignalBotUltimate:
 
 *⚠️ Check market details before executing!*"""
 
-            # Send via alert manager
+            # Send via webhook
             try:
                 import requests
-                data = {"content": message}
-                requests.post(webhook_url, json=data, timeout=5)
-            except:
-                pass  # Silently fail if Discord is down
+                data = {"content": message, "username": username}
+
+                if avatar_url:
+                    data["avatar_url"] = avatar_url
+
+                response = requests.post(webhook_url, json=data, timeout=5)
+                response.raise_for_status()
+
+                print(f"✓ Discord prepared bet sent for {bet.get('symbol', 'N/A')}")
+            except Exception as e:
+                print(f"⚠️ Failed to send prepared bet to Discord: {e}")
 
     def run_once(self):
         """Run analysis once"""

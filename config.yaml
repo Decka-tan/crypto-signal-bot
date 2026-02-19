@@ -58,8 +58,10 @@ alerts:
 
   # Discord
   discord:
-    enabled: false
-    webhook_url: ""
+    enabled: true
+    webhook_url: "https://discord.com/api/webhooks/1473940255622168650/zBdqtLMLH8xtqDdxWbkqgFgCHjEKOesK9jbjKeVmRlGs7ExP54iC_nw3p3zj4tCa8g0L"
+    username: "Unhedged Bot"
+    avatar_url: "https://i.imgur.com/cbcdc26e-066f-4eec-9473-bd99e331e161.jpg"
     mention_everyone: false
     everyone_threshold: 95
 

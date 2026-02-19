@@ -235,6 +235,8 @@ class AlertManager:
 
             discord_config = self.alert_config.get('discord', {})
             webhook_url = discord_config.get('webhook_url')
+            username = discord_config.get('username', 'Crypto Signal Bot')
+            avatar_url = discord_config.get('avatar_url', '')
             mention_everyone = discord_config.get('mention_everyone', False)
             everyone_threshold = discord_config.get('everyone_threshold', 90)  # @everyone for 90%+ confidence
 
@@ -248,9 +250,12 @@ class AlertManager:
             # Build message data
             data = {
                 'embeds': [embed],
-                'username': 'Crypto Signal Bot',
-                'avatar_url': 'https://i.imgur.com/zxBaQ8k.png'
+                'username': username
             }
+
+            # Add avatar if provided
+            if avatar_url:
+                data['avatar_url'] = avatar_url
 
             # Add @everyone for high confidence signals
             confidence = signal_analysis.get('confidence', 0)
@@ -259,6 +264,8 @@ class AlertManager:
 
             response = requests.post(webhook_url, json=data, timeout=10)
             response.raise_for_status()
+
+            print(f"✓ Discord alert sent for {signal_analysis['symbol']}")
 
         except Exception as e:
             print(f"⚠️ Failed to send Discord alert: {e}")
