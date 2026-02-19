@@ -135,26 +135,17 @@ class UnhedgedClient:
         Returns:
             Prepared bet command info
         """
+        # Generate direct market link
+        market_link = f"https://unhedged.gg/markets/{market_id}"
+
         # Determine outcome index (usually 0 for YES, 1 for NO)
         outcome_index = 0 if outcome.upper() == "YES" else 1
 
-        # Prepare curl command
+        # Prepare curl command (fallback)
         curl_command = f"""curl -X POST {self.base_url}/bets \\
   -H "Authorization: Bearer {self.api_key}" \\
   -H "Content-Type: application/json" \\
   -d '{{"marketId":"{market_id}","outcomeIndex":{outcome_index},"amount":{amount}}}'"""
-
-        # Prepare Python command
-        python_command = f"""
-import requests
-
-response = requests.post(
-    "{self.base_url}/bets",
-    headers={{"Authorization": "Bearer {self.api_key}", "Content-Type": "application/json"}},
-    json={{"marketId": "{market_id}", "outcomeIndex": {outcome_index}, "amount": {amount}}}
-)
-print(response.json())
-"""
 
         return {
             'market_id': market_id,
@@ -163,8 +154,8 @@ print(response.json())
             'amount': amount,
             'confidence': confidence,
             'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-            'curl_command': curl_command,
-            'python_command': python_command.strip()
+            'market_link': market_link,
+            'curl_command': curl_command
         }
 
     def get_account_balance(self) -> Optional[Dict]:

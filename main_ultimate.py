@@ -523,18 +523,17 @@ print(json.dumps(symbol_map))
                             self.console.print(f"[dim]  - {m.get('name', 'N/A')}[/dim]")
             return
 
-        self.console.print("\n[bold bright_yellow]🎯 PREPARED BETS (Semi-Automated)[/bold bright_yellow]\n")
+        self.console.print("\n[bold bright_yellow]🎯 BETTING OPPORTUNITIES[/bold bright_yellow]\n")
 
         for i, bet in enumerate(prepared_bets, 1):
-            self.console.print(f"[bold cyan]Bet #{i}[/bold cyan]")
-            self.console.print(f"  Symbol: [bold white]{bet.get('symbol', 'N/A')}[/bold white]")
-            self.console.print(f"  Market: {bet.get('market_name', 'N/A')}")
-            self.console.print(f"  Signal: [bold {self._get_signal_color(bet.get('signal', ''))}]{bet.get('signal', 'N/A')}[/bold {self._get_signal_color(bet.get('signal', ''))}]")
-            self.console.print(f"  Confidence: [bold]{bet.get('confidence', 0)}%[/bold]")
-            self.console.print(f"  Outcome: [bold]{bet.get('outcome', 'N/A')}[/bold]")
-            self.console.print(f"  Amount: [bold green]${bet.get('amount', 0)}[/bold green]")
-            self.console.print(f"\n[dim]To execute:[/dim]")
-            self.console.print(f"[dim]{bet.get('curl_command', '')}[/dim]\n")
+            self.console.print(f"[bold cyan]#{i}. {bet.get('symbol', 'N/A')}[/bold cyan]")
+            self.console.print(f"   Signal: [bold {self._get_signal_color(bet.get('signal', ''))}]{bet.get('signal', 'N/A')}[/bold {self._get_signal_color(bet.get('signal', ''))}]")
+            self.console.print(f"   Confidence: [bold]{bet.get('confidence', 0)}%[/bold]")
+            self.console.print(f"   Outcome: [bold]{bet.get('outcome', 'N/A')}[/bold]")
+            self.console.print(f"   Amount: [bold green]${bet.get('amount', 0)}[/bold green]")
+            self.console.print(f"\n   [bold cyan]🔗 Open Market:[/bold cyan]")
+            self.console.print(f"   {bet.get('market_link', 'N/A')}")
+            self.console.print("")
 
     def send_prepared_bets_to_discord(self, prepared_bets: List[Dict]):
         """Send prepared bets to Discord"""
@@ -553,20 +552,17 @@ print(json.dumps(symbol_map))
         avatar_url = discord_config.get('avatar_url', '')
 
         for bet in prepared_bets:
-            # Format bet message for Discord
-            message = f"""🎯 **PREPARED BET** - {bet.get('symbol', 'N/A')}
+            # Format bet message for Discord with link
+            message = f"""🎯 **Betting Opportunity** - {bet.get('symbol', 'N/A')}
 
 **Signal:** {bet.get('signal', 'N/A')}
 **Confidence:** {bet.get('confidence', 0)}%
 **Outcome:** {bet.get('outcome', 'N/A')}
 **Amount:** ${bet.get('amount', 0)}
 
-**To execute:**
-```bash
-{bet.get('curl_command', '')}
-```
+**🔗 Open Market:** {bet.get('market_link', 'N/A')}
 
-*⚠️ Check market details before executing!*"""
+*Click the link above to place your bet!*"""
 
             # Send via webhook
             try:
@@ -579,9 +575,9 @@ print(json.dumps(symbol_map))
                 response = requests.post(webhook_url, json=data, timeout=5)
                 response.raise_for_status()
 
-                print(f"✓ Discord prepared bet sent for {bet.get('symbol', 'N/A')}")
+                print(f"✓ Discord alert sent for {bet.get('symbol', 'N/A')}")
             except Exception as e:
-                print(f"⚠️ Failed to send prepared bet to Discord: {e}")
+                print(f"⚠️ Failed to send Discord alert: {e}")
 
     def run_once(self):
         """Run analysis once"""
