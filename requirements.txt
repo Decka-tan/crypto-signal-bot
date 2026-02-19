@@ -1,0 +1,18 @@
+# Crypto Signal Bot - Simplified requirements (works with Python 3.14)
+
+# API & Data Fetching
+requests>=2.31.0
+
+# Data Analysis
+pandas>=2.0.0
+numpy>=1.24.0
+
+# CLI & Display
+rich>=13.7.0
+colorama>=0.4.6
+
+# Configuration
+pyyaml>=6.0.1
+
+# Note: ta-lib and pandas-ta removed for compatibility
+# All indicators implemented manually in indicators.py
