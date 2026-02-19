@@ -371,134 +371,114 @@ class CryptoSignalBotUltimate:
 
     def auto_scrape_market_ids(self):
         """Automatically scrape Unhedged market IDs and update config"""
+        import yaml
+
+        self.console.print("[dim]🔍 Auto-scraping Unhedged market IDs...[/dim]")
+
         try:
             from bs4 import BeautifulSoup
             import re
             import time
+            import subprocess
             import sys
-            from selenium import webdriver
-            from selenium.webdriver.chrome.options import Options
-            from selenium.webdriver.common.by import By
-            from selenium.webdriver.support.ui import WebDriverWait
-            from selenium.webdriver.support import expected_conditions as EC
 
-            # Save original stdout/stderr
-            original_stdout = sys.stdout
-            original_stderr = sys.stderr
+            # Run scrape in subprocess to avoid stdout conflicts
+            result = subprocess.run(
+                [sys.executable, '-c', '''
+import sys
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from bs4 import BeautifulSoup
+import re
+import time
 
-            print("  [dim]Starting browser...[/dim]")
+options = Options()
+options.add_argument("--headless")
+options.add_argument("--no-sandbox")
+options.add_argument("--disable-dev-shm-usage")
+options.add_argument("--log-level=3")
+driver = webdriver.Chrome(options=options)
 
-            # Setup Chrome
-            chrome_options = Options()
-            chrome_options.add_argument('--headless')
-            chrome_options.add_argument('--no-sandbox')
-            chrome_options.add_argument('--disable-dev-shm-usage')
-            chrome_options.add_argument('--disable-gpu')
-            chrome_options.add_argument('--window-size=1920,1080')
-            chrome_options.add_argument('--log-level=3')
+driver.get("https://unhedged.gg/markets?category=crypto&sort=newest")
+WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.TAG_NAME, "body")))
+time.sleep(5)
 
-            driver = None
-            try:
-                # Reset stdout/stderr before Selenium
-                sys.stdout = original_stdout.__class__(
-                    original_stdout.buffer,
-                    encoding='utf-8',
-                    errors='replace'
-                ) if hasattr(original_stdout, 'buffer') else original_stdout
-                sys.stderr = original_stderr.__class__(
-                    original_stderr.buffer,
-                    encoding='utf-8',
-                    errors='replace'
-                ) if hasattr(original_stderr, 'buffer') else original_stderr
+html = driver.page_source
+soup = BeautifulSoup(html, "html.parser")
+cards = soup.find_all("a", href=re.compile(r"/markets/"))
 
-                driver = webdriver.Chrome(options=chrome_options)
+symbol_map = {}
+for card in cards:
+    href = card.get("href", "")
+    mid = href.replace("/markets/", "") if href else ""
+    title_elem = card.find("h3")
+    title = title_elem.get_text(strip=True) if title_elem else ""
+    title_lower = title.lower()
 
-                # Navigate to Unhedged
-                url = "https://unhedged.gg/markets?category=crypto&sort=newest"
-                driver.get(url)
+    if "canton" in title_lower or " cc " in title.lower():
+        sym = "CCUSDT"
+    elif "btc" in title_lower or "bitcoin" in title_lower:
+        sym = "BTCUSDT"
+    elif "eth" in title_lower or "ethereum" in title_lower:
+        sym = "ETHUSDT"
+    elif "sol" in title_lower or "solana" in title_lower:
+        sym = "SOLUSDT"
+    else:
+        continue
 
-                # Wait for page load
-                WebDriverWait(driver, 15).until(
-                    EC.presence_of_element_located((By.TAG_NAME, "body"))
-                )
+    if "above" in title_lower and mid:
+        symbol_map[sym] = mid
 
-                # Wait for market data
-                time.sleep(5)
+driver.quit()
 
-                # Get HTML
-                html = driver.page_source
-                soup = BeautifulSoup(html, 'html.parser')
+# Output as JSON
+import json
+print(json.dumps(symbol_map))
+'''],
+                capture_output=True,
+                text=True,
+                timeout=60,
+                cwd='C:/Codingers/crypto-signal-bot'
+            )
 
-                # Extract market IDs
-                market_cards = soup.find_all('a', href=re.compile(r'/markets/'))
+            if result.returncode == 0:
+                import json
+                symbol_map = json.loads(result.stdout.strip().split('\n')[-1])
 
-                # Map to our symbols
-                symbol_map = {}
-                for card in market_cards:
-                    href = card.get('href', '')
-                    market_id = href.replace('/markets/', '') if href else ''
-
-                    title_elem = card.find('h3')
-                    title = title_elem.get_text(strip=True) if title_elem else ''
-
-                    # Determine symbol
-                    title_lower = title.lower()
-                    if 'canton' in title_lower or ' cc ' in title.lower():
-                        symbol = 'CCUSDT'
-                    elif 'btc' in title_lower or 'bitcoin' in title_lower:
-                        symbol = 'BTCUSDT'
-                    elif 'eth' in title_lower or 'ethereum' in title_lower:
-                        symbol = 'ETHUSDT'
-                    elif 'sol' in title_lower or 'solana' in title_lower:
-                        symbol = 'SOLUSDT'
-                    else:
-                        continue
-
-                    # Only store binary markets (with "above" in title)
-                    if 'above' in title_lower and market_id:
-                        symbol_map[symbol] = market_id
-
-                # Close driver
-                if driver:
-                    driver.quit()
-                    driver = None
-
-                # Restore original stdout/stderr
-                sys.stdout = original_stdout
-                sys.stderr = original_stderr
-
-                # Update config if found markets
                 if symbol_map:
-                    print(f"  [green]✓[/green] Found {len(symbol_map)} market IDs")
+                    self.console.print(f"  [green]✓[/green] Found {len(symbol_map)} market IDs")
 
                     # Update config
                     self.config.setdefault('unhedged', {})['manual_markets'] = symbol_map
 
-                    # Reinitialize bet preparer with new market IDs
+                    # Update bet preparer
                     if self.bet_preparer:
-                        self.bet_preparer.manual_markets = symbol_map or {}
+                        self.bet_preparer.manual_markets = symbol_map
+
+                    # Update config file
+                    try:
+                        with open('config.yaml', 'r') as f:
+                            config = yaml.safe_load(f)
+                        config.setdefault('unhedged', {})['manual_markets'] = symbol_map
+                        with open('config.yaml', 'w') as f:
+                            yaml.dump(config, f, default_flow_style=False)
+                    except:
+                        pass
 
                     # Show found markets
                     for symbol, mid in symbol_map.items():
-                        print(f"  [dim]  {symbol}: {mid[:20]}...[/dim]")
+                        self.console.print(f"    [cyan]{symbol}:[/cyan] {mid[:25]}...")
                 else:
-                    print("  [yellow]⚠ No markets found, using cached IDs[/yellow]")
-
-            except Exception as e:
-                # Restore stdout/stderr on error
-                sys.stdout = original_stdout
-                sys.stderr = original_stderr
-
-                if driver:
-                    try:
-                        driver.quit()
-                    except:
-                        pass
-                raise
+                    self.console.print("  [yellow]⚠ No markets found[/yellow]")
+            else:
+                self.console.print("  [yellow]⚠ Scrape failed, using cached IDs[/yellow]")
 
         except Exception as e:
-            print(f"  [yellow]⚠ Auto-scrape failed: {str(e)[:100]}[/yellow]")
-            print("  [dim]Using cached market IDs from config...[/dim]")
+            self.console.print(f"  [yellow]⚠ Auto-scrape failed: {str(e)[:50]}[/yellow]")
+            self.console.print("  [dim]Using cached market IDs from config...[/dim]")
 
     def prepare_bets_from_signals(self, all_signals: Dict) -> List[Dict]:
         """Prepare bets from all signals"""
@@ -606,6 +586,11 @@ class CryptoSignalBotUltimate:
     def run_once(self):
         """Run analysis once"""
         self.console.print("\n[bold bright_magenta]ULTIMATE Mode - Full Analysis[/bold bright_magenta] 🚀\n")
+
+        # Auto-scrape market IDs if Unhedged enabled
+        if self.unhedged_client:
+            self.auto_scrape_market_ids()
+            self.console.print("")
 
         # Test connections first
         self.console.print("[bold]🔍 Testing API Connections...[/bold]")

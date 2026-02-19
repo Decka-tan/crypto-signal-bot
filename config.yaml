@@ -1,100 +1,66 @@
-# Crypto Signal Bot Configuration - For Unhedged Prediction Markets
-
-# Unhedged Market Timing:
-# Type 1 (Hourly YES/NO):
-#   - Market updates at XX:01 (e.g., 2:01 PM)
-#   - Betting closes at XX:50 (e.g., 2:50 PM)
-#   - Market resolves at XX:00 next hour
-#   - Strategy: Scrape at XX:01-XX:02, Alert at XX:40-XX:45
-#
-# Type 2 (2-Hourly Price Range):
-#   - Market updates at XX:01 (every 2 hours)
-#   - Betting closes at XX:110 (e.g., 3:50 PM for 2:00 PM start)
-#   - Market resolves at XX:120
-#   - Strategy: Scrape at XX:01-XX:02, Alert at XX:100-XX:105
-
-# Trading pairs to monitor
-symbols:
-  - "BTCUSDT"   # Bitcoin
-  - "ETHUSDT"   # Ethereum
-  - "SOLUSDT"   # Solana
-  - "CCUSDT"    # Canton (Bybit only!)
-
-# Exchange: Bybit (has CCUSDT!)
-exchange: "bybit"
-
-# Timeframe: 5m for better analysis of hourly markets
-timeframe: "5m"
-
-# Signal thresholds
-thresholds:
-  rsi_oversold: 30
-  rsi_overbought: 70
-  min_confidence: 75  # Only alert if confidence >= 75%
-  volume_spike: 150
-
-# Display settings
-display:
-  update_interval: 60  # Check every minute
-
-# Smart timing for Unhedged markets
-smart_timing:
-  enabled: true
-  # Type 1: Hourly YES/NO markets
-  hourly:
-    scrape_minute: 1      # Scrape at XX:01
-    alert_start: 40       # Start alerting at XX:40
-    alert_end: 45         # Stop alerting at XX:45
-  # Type 2: 2-Hourly price range markets
-  two_hourly:
-    scrape_minute: 1      # Scrape at XX:01
-    alert_start: 100      # Start alerting at minute 100
-    alert_end: 105        # Stop alerting at minute 105
-
-# Alert settings
 alerts:
   console: true
-  sound: "C:\\Windows\\Media\\notify.wav"
-
-  # Discord
   discord:
+    avatar_url: https://i.imgur.com/cbcdc26e-066f-4eec-9473-bd99e331e161.jpg
     enabled: true
-    webhook_url: "https://discord.com/api/webhooks/1473940255622168650/zBdqtLMLH8xtqDdxWbkqgFgCHjEKOesK9jbjKeVmRlGs7ExP54iC_nw3p3zj4tCa8g0L"
-    username: "Unhedged Bot"
-    avatar_url: "https://i.imgur.com/cbcdc26e-066f-4eec-9473-bd99e331e161.jpg"
-    mention_everyone: false
     everyone_threshold: 95
-
-# Technical indicators
-indicators:
-  rsi: {period: 14, enabled: true}
-  macd: {fast: 12, slow: 26, signal: 9, enabled: true}
-  ema: {short: 9, long: 21, enabled: true}
-  bollinger_bands: {period: 20, std: 2, enabled: true}
-  volume: {period: 20, enabled: true}
-
-# Unhedged API (Semi-automated betting)
-unhedged:
-  api_key: "ak_rHWj55mvAzifWvuVnRZDkGcasjFwHwsshgZNpKXXVCIOHIYk"
-  enabled: false  # TEMPORARILY DISABLED - Use --scrape flag to update market IDs
-
-  # Market IDs scraped from unhedged.gg/markets?category=crypto
-  # Type 1: Price Range Markets (2-hourly)
-  # Type 2: Binary YES/NO Markets (hourly) - using these by default
-  manual_markets:
-    "BTCUSDT": "cmltajr3z02xk0swj5n3s6v5d"  # Bitcoin above $66,776.62 at 6:00 PM? (Binary)
-    "ETHUSDT": "cmltajrad02xo0swj73x3quzw"  # Ethereum above $1,961.59 at 6:00 PM? (Binary)
-    "SOLUSDT": "cmltajrgz02xs0swj0lueb3ov"  # Solana above $81.108 at 6:00 PM? (Binary)
-    "CCUSDT": "cmltajrne02xw0swjt9f9tyvc"  # Canton Coin above $0.16089 at 6:00 PM? (Binary)
-
-    # Alternative price range markets (2-hourly):
-    # "BTCUSDT_RANGE": "cmltajqxf02xf0swjjkq9n1wq"  # Bitcoin price at 7:00 PM?
-    # "ETHUSDT_RANGE": "cmltajrt902y00swjt1mvrkdj"  # Ethereum price at 7:00 PM?
-    # "SOLUSDT_RANGE": "cmltajrz902y50swj3vgp8hh8"  # Solana price at 7:00 PM?
-    # "CCUSDT_RANGE": "cmltajs6602ya0swjg016j2jn"  # Canton Coin price at 7:00 PM?
-
-# Betting settings
+    mention_everyone: false
+    username: Unhedged Bot
+    webhook_url: https://discord.com/api/webhooks/1473940255622168650/zBdqtLMLH8xtqDdxWbkqgFgCHjEKOesK9jbjKeVmRlGs7ExP54iC_nw3p3zj4tCa8g0L
+  sound: C:\Windows\Media\notify.wav
 betting:
-  base_amount: 10      # Base bet amount in USD
-  max_amount: 100      # Maximum bet amount
-  min_confidence: 75   # Minimum confidence to prepare bet
+  base_amount: 10
+  max_amount: 100
+  min_confidence: 75
+display:
+  update_interval: 60
+exchange: bybit
+indicators:
+  bollinger_bands:
+    enabled: true
+    period: 20
+    std: 2
+  ema:
+    enabled: true
+    long: 21
+    short: 9
+  macd:
+    enabled: true
+    fast: 12
+    signal: 9
+    slow: 26
+  rsi:
+    enabled: true
+    period: 14
+  volume:
+    enabled: true
+    period: 20
+smart_timing:
+  enabled: true
+  hourly:
+    alert_end: 45
+    alert_start: 40
+    scrape_minute: 1
+  two_hourly:
+    alert_end: 105
+    alert_start: 100
+    scrape_minute: 1
+symbols:
+- BTCUSDT
+- ETHUSDT
+- SOLUSDT
+- CCUSDT
+thresholds:
+  min_confidence: 75
+  rsi_overbought: 70
+  rsi_oversold: 30
+  volume_spike: 150
+timeframe: 5m
+unhedged:
+  api_key: ak_rHWj55mvAzifWvuVnRZDkGcasjFwHwsshgZNpKXXVCIOHIYk
+  enabled: true
+  manual_markets:
+    BTCUSDT: cmltcowpl032n0swjkxggw0bl
+    CCUSDT: cmltcox3j032v0swjykla75na
+    ETHUSDT: cmltcowwb032r0swjzeocmes9
+    SOLUSDT: cmltcox9w032z0swj7uv4147p
