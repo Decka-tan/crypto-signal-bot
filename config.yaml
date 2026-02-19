@@ -76,7 +76,7 @@ indicators:
 # Unhedged API (Semi-automated betting)
 unhedged:
   api_key: "ak_rHWj55mvAzifWvuVnRZDkGcasjFwHwsshgZNpKXXVCIOHIYk"
-  enabled: true
+  enabled: false  # TEMPORARILY DISABLED - Use --scrape flag to update market IDs
 
   # Market IDs scraped from unhedged.gg/markets?category=crypto
   # Type 1: Price Range Markets (2-hourly)
