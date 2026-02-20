@@ -37,8 +37,18 @@ class MarketMonitor:
         # Use Selenium fetcher by default (bypasses Python blocking)
         self.use_selenium = True
 
-    def get_klines(self, symbol: str, limit: int = 100) -> Optional[pd.DataFrame]:
-        """Fetch candlestick data - uses Selenium by default (bypasses Python blocking)"""
+    def get_klines(self, symbol: str, limit: int = 100, timeframe: str = None) -> Optional[pd.DataFrame]:
+        """
+        Fetch candlestick data - uses Selenium by default (bypasses Python blocking)
+
+        Args:
+            symbol: Trading pair symbol
+            limit: Number of candles to fetch
+            timeframe: Candlestick interval (optional, uses default if not specified)
+        """
+        # Use provided timeframe or fall back to default
+        tf = timeframe if timeframe else self.timeframe
+
         if self.demo_mode:
             return self._generate_demo_data(symbol, limit)
 
@@ -49,11 +59,11 @@ class MarketMonitor:
                     print("   [INFO] Initializing Chrome-based data fetcher...")
                     self.selenium_fetcher = SeleniumMarketFetcher(
                         symbols=self.symbols,
-                        timeframe=self.timeframe,
+                        timeframe=self.timeframe,  # Default timeframe
                         headless=True  # Run in background
                     )
 
-                df = self.selenium_fetcher.get_klines(symbol, limit)
+                df = self.selenium_fetcher.get_klines(symbol, limit, timeframe=tf)
                 if df is not None and len(df) > 0:
                     return df
             except Exception as e:
@@ -72,13 +82,13 @@ class MarketMonitor:
         for exchange in exchanges_to_try:
             try:
                 if exchange == "binance":
-                    df = self._get_binance_klines(symbol, limit)
+                    df = self._get_binance_klines(symbol, limit, tf)
                 elif exchange == "bybit":
-                    df = self._get_bybit_klines(symbol, limit)
+                    df = self._get_bybit_klines(symbol, limit, tf)
                 elif exchange == "okx":
-                    df = self._get_okx_klines(symbol, limit)
+                    df = self._get_okx_klines(symbol, limit, tf)
                 elif exchange == "kucoin":
-                    df = self._get_kucoin_klines(symbol, limit)
+                    df = self._get_kucoin_klines(symbol, limit, tf)
 
                 if df is not None and len(df) > 0:
                     return df
@@ -94,13 +104,14 @@ class MarketMonitor:
 
         return self._generate_demo_data(symbol, limit)
 
-    def _get_binance_klines(self, symbol: str, limit: int) -> Optional[pd.DataFrame]:
+    def _get_binance_klines(self, symbol: str, limit: int, timeframe: str = None) -> Optional[pd.DataFrame]:
         """Fetch from Binance"""
         try:
+            tf = timeframe if timeframe else self.timeframe
             url = "https://api.binance.com/api/v3/klines"
             params = {
                 "symbol": symbol,
-                "interval": self.timeframe,
+                "interval": tf,
                 "limit": limit
             }
 
@@ -127,9 +138,10 @@ class MarketMonitor:
         except:
             return None
 
-    def _get_bybit_klines(self, symbol: str, limit: int) -> Optional[pd.DataFrame]:
+    def _get_bybit_klines(self, symbol: str, limit: int, timeframe: str = None) -> Optional[pd.DataFrame]:
         """Fetch from Bybit - supports CCUSDT!"""
         try:
+            tf = timeframe if timeframe else self.timeframe
             url = "https://api.bybit.com/v5/market/kline"
 
             # Bybit uses different interval names
@@ -137,7 +149,7 @@ class MarketMonitor:
                 '1m': '1', '5m': '5', '15m': '15', '1h': '60',
                 '4h': '240', '1d': 'D'
             }
-            interval = interval_map.get(self.timeframe, '15')
+            interval = interval_map.get(tf, '15')
 
             params = {
                 "category": "spot",
@@ -174,9 +186,10 @@ class MarketMonitor:
         except:
             return None
 
-    def _get_okx_klines(self, symbol: str, limit: int) -> Optional[pd.DataFrame]:
+    def _get_okx_klines(self, symbol: str, limit: int, timeframe: str = None) -> Optional[pd.DataFrame]:
         """Fetch from OKX"""
         try:
+            tf = timeframe if timeframe else self.timeframe
             # OKX uses dash format (BTC-USDT)
             okx_symbol = symbol.replace('USDT', '-USDT')
 
@@ -186,7 +199,7 @@ class MarketMonitor:
                 '1m': '1m', '5m': '5m', '15m': '15m', '1h': '1H',
                 '4h': '4H', '1d': '1D'
             }
-            interval = interval_map.get(self.timeframe, '15m')
+            interval = interval_map.get(tf, '15m')
 
             params = {
                 "instId": okx_symbol,

@@ -63,7 +63,7 @@ class ProSignalGenerator:
         for tf in self.timeframes:
             try:
                 # Fetch data for this timeframe
-                df = self.market_monitor.get_klines(symbol, limit=100)
+                df = self.market_monitor.get_klines(symbol, limit=100, timeframe=tf)
                 if df is None or len(df) < 30:
                     continue
 

@@ -200,21 +200,48 @@ class CryptoSignalBotUltimate:
         return self.signal_generator.generate_ultimate_signal(symbol)
 
     def check_and_alert(self, signal_analysis):
-        """Check and send alert"""
+        """
+        Check and send alert
+        Implements flexible high-confidence strategy with market resolved window check
+        """
         if not signal_analysis or signal_analysis.get('error'):
             return
 
         symbol = signal_analysis['symbol']
         confidence = signal_analysis['confidence']
-        min_conf = self.config.get('thresholds', {}).get('min_confidence', 75)
+        min_conf = self.config.get('thresholds', {}).get('min_confidence', 80)
 
         from core.ultimate_signals import SignalType
 
-        if signal_analysis['signal_type'] != SignalType.HOLD and confidence >= min_conf:
-            last_time = self.last_alerts.get(symbol, 0)
-            if time.time() - last_time > 120:  # 2 min cooldown
-                self.alert_manager.send_alert(signal_analysis)
-                self.last_alerts[symbol] = time.time()
+        # Check if signal meets minimum confidence
+        if signal_analysis['signal_type'] == SignalType.HOLD or confidence < min_conf:
+            return
+
+        # CHECK: Market Resolved Window (menit 50-00)
+        smart_timing = self.config.get('smart_timing', {})
+        if smart_timing.get('avoid_during_resolve', True):
+            current_min = time.localtime().tm_min
+            window = smart_timing.get('resolved_window', {'start': 50, 'end': 5})
+
+            # Check if current time is in resolved window
+            in_resolved_window = current_min >= window['start'] or current_min < window['end']
+
+            if in_resolved_window:
+                # Skip alert during market resolved window
+                self.console.print(f"   [dim][SKIP] {symbol}: In market resolved window ({current_min:02d} min)[/dim]")
+                return
+
+        # CHECK: Cooldown (prevent spam alerts for same symbol)
+        last_time = self.last_alerts.get(symbol, 0)
+        cooldown = 120  # 2 minutes cooldown
+
+        if time.time() - last_time < cooldown:
+            return
+
+        # ALL CHECKS PASSED - SEND ALERT!
+        self.console.print(f"   [green][ALERT] {symbol}: {signal_analysis['signal']} (Confidence: {confidence}%)[/green]")
+        self.alert_manager.send_alert(signal_analysis)
+        self.last_alerts[symbol] = time.time()
 
     def create_summary_table(self, all_signals):
         """Create ultimate summary table"""
@@ -659,22 +686,43 @@ print(json.dumps(symbol_map))
             self.send_prepared_bets_to_discord(prepared_bets)
 
     def run_continuous(self):
-        """Run continuous monitoring"""
-        self.console.print("\n[bold bright_magenta]ULTIMATE Mode - Live Monitoring[/bold bright_magenta] 🚀")
+        """Run continuous monitoring with multi-timeframe analysis"""
+        # Check multi-timeframe settings
+        mtf_config = self.config.get('multi_timeframe', {})
+        mtf_enabled = mtf_config.get('enabled', True)
+        timeframes = mtf_config.get('timeframes', ['5m', '15m', '1h'])
+
+        # Check smart timing
+        smart_timing = self.config.get('smart_timing', {})
+        avoid_resolved = smart_timing.get('avoid_during_resolve', True)
+        resolved_window = smart_timing.get('resolved_window', {'start': 50, 'end': 5})
+
+        self.console.print("\n[bold bright_magenta]ULTIMATE Mode - Multi-Timeframe Analysis[/bold bright_magenta] 🚀")
+        if mtf_enabled:
+            self.console.print(f"[dim]Timeframes: {', '.join(timeframes)}[/dim]")
         self.console.print("[dim]Press Ctrl+C to stop[/dim]\n")
 
+        if avoid_resolved:
+            self.console.print(f"[yellow]⚠️  Smart Timing: Alerts skipped during market resolved window (XX:{resolved_window['start']:02d} - XX:0{resolved_window['end']})[/yellow]\n")
+
         self.running = True
-        interval = self.config.get('display', {}).get('update_interval', 900)
-        smart_timing = self.config.get('prediction_market', {}).get('use_smart_timing', True)
+        interval = self.config.get('display', {}).get('update_interval', 60)
 
         try:
             while self.running:
                 self.console.clear()
 
+                # Current time and window status
+                current_time = time.strftime('%H:%M:%S')
+                current_min = time.localtime().tm_min
+                in_resolved_window = current_min >= resolved_window['start'] or current_min < resolved_window['end']
+                window_status = "[red]MARKET RESOLVED ❌[/red]" if in_resolved_window else "[green]BETTING OPEN ✅[/green]"
+
                 self.console.print(
                     f"[bold bright_magenta]ULTIMATE[/bold bright_magenta] 🚀 | "
-                    f"[dim]{time.strftime('%H:%M:%S')}[/dim] | "
-                    f"[dim]Update every {interval}s ({interval//60} min)[/dim]\n"
+                    f"[dim]{current_time}[/dim] | "
+                    f"{window_status} | "
+                    f"[dim]Update: {interval}s[/dim]\n"
                 )
 
                 all_signals = {}
