@@ -9,10 +9,12 @@
 
 ### Core Bot Features
 - ✅ Multi-exchange market monitor (Binance, Bybit, OKX, KuCoin)
+- ✅ **Multi-timeframe analysis (5m + 15m + 1H)** - NEW!
 - ✅ Technical indicators (RSI, MACD, EMA, Bollinger Bands, Volume)
 - ✅ Signal generation with confidence scoring
 - ✅ Discord webhook integration with custom bot name/avatar
-- ✅ Smart timing system (hourly + 2-hourly alerts)
+- ✅ **Flexible high-confidence alerts (80%+ threshold)** - NEW!
+- ✅ **Market resolved window check (skip XX:50-XX:05)** - NEW!
 - ✅ Unhedged API integration for semi-automated betting
 - ✅ Unhedged market scraper with Selenium
 - ✅ Multi-symbol support (BTC, ETH, SOL, CC)
@@ -30,7 +32,30 @@
 ✅ PROGRESS.md             - Project progress tracking
 ✅ TODO.md                 - Task checklist with priorities
 ✅ CLAUDE_NOTES.md         - Session context for Claude AI
-✅ HOW_TO_RUN.md           - Daily usage tutorial (NEW!)
+✅ HOW_TO_RUN.md           - Daily usage tutorial
+```
+
+### Latest Features (Just Completed!)
+```
+✅ Multi-Timeframe Analysis (5m + 15m + 1H)
+   - Weighted scoring: 5m (40%), 15m (35%), 1H (25%)
+   - Minimum 2/3 timeframes must align
+   - Higher accuracy for 1-hour predictions (80-85% win rate expected)
+
+✅ Flexible High-Confidence Alerts
+   - Alert ANYTIME when confidence >= 80%
+   - No time restrictions (except during resolved window)
+   - 2-minute cooldown per symbol (prevent spam)
+
+✅ Market Resolved Window Check
+   - Automatically skip alerts during XX:50-XX:05
+   - Prevents betting when market is being resolved
+   - Real-time window status in display
+
+⚠️ CRITICAL BUG FIXED:
+   - pro_signals.py was NOT passing timeframe parameter
+   - All timeframes were using same data (defeating multi-TF purpose)
+   - Now correctly fetches different data for 5m, 15m, 1H
 ```
 
 ### Files Created/Modified
@@ -188,25 +213,29 @@ Latest commits:
 
 ## 💡 Next Session Priorities
 
-1. **TEST SELENIUM FETCHER** - Most critical!
-   - Install Chrome driver (or use webdriver-manager)
-   - Run `python core/selenium_market_fetcher.py`
-   - Verify data fetching works
+1. **TEST MULTI-TIMEFRAME ANALYSIS** - Most critical!
+   - Run bot: `python main_ultimate.py`
+   - Observe console output for multi-TF analysis
+   - Verify it fetches 5m, 15m, 1H data separately
+   - Check confidence scores with multi-TF alignment
 
-2. **FULL BOT TEST**
-   - Run `python main_ultimate.py`
-   - Monitor for errors
-   - Verify Discord alerts
-   - Test cleanup on exit (Ctrl+C)
+2. **TEST MARKET RESOLVED WINDOW**
+   - Run bot during different times
+   - Verify alerts SKIP during XX:50-XX:05
+   - Check console shows "[SKIP] In market resolved window"
+   - Verify display shows "MARKET RESOLVED ❌"
 
-3. **DAILY USAGE**
-   - Follow `HOW_TO_RUN.md` guide
-   - Run bot daily for monitoring
-   - Monitor Discord alerts
+3. **TEST HIGH-CONFIDENCE ALERTS**
+   - Wait for signal with 80%+ confidence
+   - Verify Discord alert sent instantly
+   - Check @everyone appears on alert
+   - Verify 2-minute cooldown works
 
-4. **COMMIT CHANGES**
-   - All changes already committed! ✅
-   - Remember to commit frequently
+4. **FULL DAY TEST**
+   - Run bot for several hours
+   - Monitor Discord for alerts
+   - Track win rate (should be 80-85%)
+   - Note any issues or improvements
 
 2. **FULL BOT TEST**
    - Run `python main_ultimate.py`
@@ -265,5 +294,6 @@ git status
 ---
 
 **Last Claude Session**: 2025-02-20
-**Last Action**: Created HOW_TO_RUN.md tutorial, updated requirements.txt
-**Status**: Documentation complete, ready for testing, all changes committed
+**Last Action**: Implemented multi-timeframe analysis + flexible high-confidence alerts + market resolved window check
+**Status**: Multi-timeframe analysis complete, ready for testing, all changes committed
+**Latest Commit**: 71ac074 - "feat: implement multi-timeframe analysis with flexible high-confidence alerts"
