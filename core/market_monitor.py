@@ -1,6 +1,7 @@
 """
 Multi-Exchange Market Monitor Module
 Supports: Binance, Bybit, OKX, KuCoin
+Uses Selenium/Chrome for data fetching (bypasses Python blocking)
 """
 
 import requests
@@ -8,6 +9,9 @@ import pandas as pd
 from typing import List, Dict, Optional
 import numpy as np
 from datetime import datetime, timedelta
+
+# Import Selenium fetcher
+from core.selenium_market_fetcher import SeleniumMarketFetcher
 
 
 class MarketMonitor:
@@ -28,13 +32,35 @@ class MarketMonitor:
         self.demo_mode = demo_mode
         self.exchange = exchange
         self.data_cache = {}
+        self.selenium_fetcher = None
+
+        # Use Selenium fetcher by default (bypasses Python blocking)
+        self.use_selenium = True
 
     def get_klines(self, symbol: str, limit: int = 100) -> Optional[pd.DataFrame]:
-        """Fetch candlestick data - tries multiple exchanges"""
+        """Fetch candlestick data - uses Selenium by default (bypasses Python blocking)"""
         if self.demo_mode:
             return self._generate_demo_data(symbol, limit)
 
-        # Try different exchanges
+        # Use Selenium fetcher (Chrome browser)
+        if self.use_selenium:
+            try:
+                if self.selenium_fetcher is None:
+                    print("   [INFO] Initializing Chrome-based data fetcher...")
+                    self.selenium_fetcher = SeleniumMarketFetcher(
+                        symbols=self.symbols,
+                        timeframe=self.timeframe,
+                        headless=True  # Run in background
+                    )
+
+                df = self.selenium_fetcher.get_klines(symbol, limit)
+                if df is not None and len(df) > 0:
+                    return df
+            except Exception as e:
+                print(f"   [WARN] Selenium fetch failed: {str(e)[:50]}")
+                print(f"   [INFO] Falling back to requests method...")
+
+        # Fallback to requests method
         exchanges_to_try = []
         errors = []
 
@@ -64,9 +90,8 @@ class MarketMonitor:
 
         # Show which exchanges failed
         if errors:
-            print(f"⚠️  [{symbol}] Exchange errors: {' | '.join(errors[:2])}")
+            print(f"   [WARN] [{symbol}] All methods failed, using demo data")
 
-        print(f"⚠️  [{symbol}] All exchanges failed, using demo data")
         return self._generate_demo_data(symbol, limit)
 
     def _get_binance_klines(self, symbol: str, limit: int) -> Optional[pd.DataFrame]:
@@ -283,14 +308,23 @@ class MarketMonitor:
         return df
 
     def get_current_price(self, symbol: str) -> Optional[float]:
-        """Get current price"""
+        """Get current price - uses Selenium by default"""
         if self.demo_mode:
             df = self.get_klines(symbol, limit=1)
             if df is not None and len(df) > 0:
                 return float(df['close'].iloc[-1])
             return None
 
-        # Try exchanges
+        # Use Selenium fetcher first
+        if self.use_selenium and self.selenium_fetcher is not None:
+            try:
+                price = self.selenium_fetcher.get_current_price(symbol)
+                if price is not None:
+                    return price
+            except:
+                pass
+
+        # Fallback to requests
         for exchange in ["bybit" if self.exchange == "auto" else self.exchange, "binance"]:
             try:
                 if exchange == "bybit":
@@ -353,3 +387,9 @@ class MarketMonitor:
             'change_percent': change_percent,
             'time': latest.name.strftime('%H:%M:%S')
         }
+
+    def cleanup(self):
+        """Clean up resources (close Selenium driver)"""
+        if self.selenium_fetcher is not None:
+            self.selenium_fetcher.close()
+            self.selenium_fetcher = None

@@ -742,11 +742,17 @@ def main():
 
     try:
         bot.run(once=args.once)
+    except KeyboardInterrupt:
+        print("\n\n[!] Bot stopped by user")
     except Exception as e:
         print(f"❌ Error: {e}")
         print("\n--- Full Traceback ---")
         traceback.print_exc()
         sys.exit(1)
+    finally:
+        # Cleanup Selenium driver
+        print("\n[INFO] Cleaning up...")
+        bot.market_monitor.cleanup()
 
 
 if __name__ == "__main__":

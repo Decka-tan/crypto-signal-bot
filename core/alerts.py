@@ -257,10 +257,13 @@ class AlertManager:
             if avatar_url:
                 data['avatar_url'] = avatar_url
 
-            # Add @everyone for high confidence signals
-            confidence = signal_analysis.get('confidence', 0)
-            if mention_everyone and confidence >= everyone_threshold:
-                data['content'] = '@everyone 🚨 HIGH CONFIDENCE SIGNAL!'
+            # Add @everyone for ALL alerts
+            if mention_everyone:
+                confidence = signal_analysis.get('confidence', 0)
+                if confidence >= everyone_threshold:
+                    data['content'] = '@everyone 🚨 HIGH CONFIDENCE SIGNAL!'
+                else:
+                    data['content'] = '@everyone 📊 New Trading Signal!'
 
             response = requests.post(webhook_url, json=data, timeout=10)
             response.raise_for_status()

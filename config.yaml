@@ -3,8 +3,8 @@ alerts:
   discord:
     avatar_url: https://i.imgur.com/cbcdc26e-066f-4eec-9473-bd99e331e161.jpg
     enabled: true
-    everyone_threshold: 95
-    mention_everyone: false
+    everyone_threshold: 75
+    mention_everyone: true
     username: Unhedged Bot
     webhook_url: https://discord.com/api/webhooks/1473940255622168650/zBdqtLMLH8xtqDdxWbkqgFgCHjEKOesK9jbjKeVmRlGs7ExP54iC_nw3p3zj4tCa8g0L
   sound: C:\Windows\Media\notify.wav
@@ -60,7 +60,7 @@ unhedged:
   api_key: ak_rHWj55mvAzifWvuVnRZDkGcasjFwHwsshgZNpKXXVCIOHIYk
   enabled: true
   manual_markets:
-    BTCUSDT: cmltcowpl032n0swjkxggw0bl
-    CCUSDT: cmltcox3j032v0swjykla75na
-    ETHUSDT: cmltcowwb032r0swjzeocmes9
-    SOLUSDT: cmltcox9w032z0swj7uv4147p
+    BTCUSDT: cmltgz89a03dk0swj3febsk7m
+    CCUSDT: cmltgz8o003ds0swjitsvl7rh
+    ETHUSDT: cmltgz8gt03do0swju58b72ab
+    SOLUSDT: cmltgz8uw03dw0swj779dlin8
