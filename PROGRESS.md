@@ -20,6 +20,18 @@
 - ✅ Multi-symbol support (BTC, ETH, SOL, CC)
 - ✅ Config file system (config.yaml)
 
+### **NEW: Interval/Price Range Markets (LOW/MID/HIGH)** 🆕
+- ✅ **Interval signal generator** - Predicts price for 3-option markets
+- ✅ **Price prediction engine** - Uses multi-timeframe analysis to forecast price
+- ✅ **LOW/MID/HIGH classification** - Automatically classifies into price ranges
+- ✅ **Volatility-based ranges** - Dynamically calculates thresholds based on market volatility
+- ✅ **Secondary recommendation** - Provides backup option in case primary is wrong
+- ✅ **Discord alerts for intervals** - Different formatting for interval vs binary markets
+- ✅ **Even-hour detection** - Automatically checks interval markets every 2 hours
+- ✅ **Test script** - `test_interval.py` for standalone testing
+
+### Discord Integration
+
 ### Discord Integration
 - ✅ Discord webhook alerts working
 - ✅ Custom bot name: "Unhedged Bot"
@@ -52,6 +64,15 @@
    - Prevents betting when market is being resolved
    - Real-time window status in display
 
+✅ Interval/Price Range Market Analysis (LOW/MID/HIGH)
+   - Predicts price for 2-hourly interval markets
+   - Uses multi-timeframe technical analysis
+   - Calculates volatility-based price ranges
+   - Classifies into LOW/MID/HIGH with confidence scores
+   - Provides secondary (backup) recommendation
+   - Discord alerts with interval-specific formatting
+   - **Schedule**: Every 2 hours at odd hours (1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23)
+
 ⚠️ CRITICAL BUG FIXED:
    - pro_signals.py was NOT passing timeframe parameter
    - All timeframes were using same data (defeating multi-TF purpose)
@@ -60,17 +81,20 @@
 
 ### Files Created/Modified
 ```
-✅ main_ultimate.py        - Main bot entry point
+✅ main_ultimate.py        - Main bot entry point (UPDATED: interval support)
 ✅ core/market_monitor.py  - Market data fetcher
-✅ core/alerts.py          - Discord alerts manager
-✅ core/selenium_market_fetcher.py  - Chrome-based data fetcher (NEW!)
+✅ core/alerts.py          - Discord alerts manager (UPDATED: interval formatting)
+✅ core/selenium_market_fetcher.py  - Chrome-based data fetcher
 ✅ core/signals.py         - Signal generation logic
 ✅ core/indicators.py      - Technical indicators
+✅ core/interval_signals.py - NEW! Interval/price range signal generator
 ✅ discord_setup.py        - Discord setup helper
 ✅ scrape_unhedged.py      - Unhedged market scraper
-✅ test_api.py             - API connection tester (NEW!)
-✅ test_api_nossl.py       - API test without SSL (NEW!)
-✅ requirements.txt        - Added selenium + webdriver-manager (UPDATED!)
+✅ test_interval.py        - NEW! Interval signal generator test
+✅ test_api.py             - API connection tester
+✅ test_api_nossl.py       - API test without SSL
+✅ requirements.txt        - Added selenium + webdriver-manager
+✅ config.yaml             - UPDATED: interval_markets section
 ```
 
 ---
@@ -116,6 +140,40 @@
    - Different message for high confidence (≥75%) vs normal signals
    - High confidence: "@everyone 🚨 HIGH CONFIDENCE SIGNAL!"
    - Normal signals: "@everyone 📊 New Trading Signal!"
+
+---
+
+## 🔥 CRITICAL: Bot Logic (DO NOT FORGET!)
+
+### Option A: Flexible High-Confidence Strategy ✅
+**Monitor 24/7, alert ANYTIME when confidence >= 80%**
+
+```
+1. Bot terus monitoring setiap 60 detik
+2. Kalau confidence >= 80% -> LANGSUNG ALERT (regardless of time)
+3. Hanya SKIP saat "market resolved window"
+4. 2-minute cooldown per symbol (prevent spam)
+```
+
+### Market Types & Timing:
+
+#### Binary YES/NO Markets (tiap 1 jam):
+- Buka: XX:00
+- Close: XX:50 (menit 50)
+- Resolved: XX+1:00 (menit 60/00)
+- **Resolved Window: XX:50 - XX+1:05** (SKIP alerts di sini)
+
+#### Interval LOW/MID/HIGH Markets (tiap 2 jam):
+- Schedule: Odd hours (1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23)
+- Buka: XX:00
+- Close: XX+1:50 (menit 110)
+- Resolved: XX+2:00 (menit 120)
+- **Resolved Window: XX+1:50 - XX+2:05** (SKIP alerts di sini)
+
+### Summary:
+- **Binary**: Skip menit 50-05 (tiap jam)
+- **Interval**: Skip menit 50-05 juga (karena itu pas next hour-nya close)
+- **Both**: Alert ASAP confidence tinggi, gak ada "alert window"!
 
 ---
 
@@ -213,46 +271,46 @@ Latest commits:
 
 ## 💡 Next Session Priorities
 
-1. **TEST MULTI-TIMEFRAME ANALYSIS** - Most critical!
+1. **TEST INTERVAL MARKET ANALYSIS** - NEW!
+   - Run test: `python test_interval.py`
+   - Verify LOW/MID/HIGH classification works
+   - Check volatility-based range calculation
+   - Verify confidence scores
+
+2. **TEST INTERVAL MARKETS AT SCHEDULED HOURS**
+   - Run bot: `python main_ultimate.py`
+   - Wait for interval market hours (11 AM, 1 PM, 3 PM, 5 PM, 7 PM, 9 PM, 11 PM)
+   - Verify interval alerts are generated
+   - Check Discord alerts show LOW/MID/HIGH with proper formatting
+
+3. **TEST MULTI-TIMEFRAME ANALYSIS**
    - Run bot: `python main_ultimate.py`
    - Observe console output for multi-TF analysis
    - Verify it fetches 5m, 15m, 1H data separately
    - Check confidence scores with multi-TF alignment
 
-2. **TEST MARKET RESOLVED WINDOW**
+4. **TEST MARKET RESOLVED WINDOW**
    - Run bot during different times
    - Verify alerts SKIP during XX:50-XX:05
    - Check console shows "[SKIP] In market resolved window"
    - Verify display shows "MARKET RESOLVED ❌"
 
-3. **TEST HIGH-CONFIDENCE ALERTS**
-   - Wait for signal with 80%+ confidence
-   - Verify Discord alert sent instantly
-   - Check @everyone appears on alert
-   - Verify 2-minute cooldown works
-
-4. **FULL DAY TEST**
+5. **FULL DAY TEST**
    - Run bot for several hours
-   - Monitor Discord for alerts
+   - Monitor Discord for both binary and interval alerts
    - Track win rate (should be 80-85%)
    - Note any issues or improvements
-
-2. **FULL BOT TEST**
-   - Run `python main_ultimate.py`
-   - Monitor for errors
-   - Verify Discord alerts
-
-3. **COMMIT CHANGES**
-   - All files need to be committed
-   - Don't lose this work!
 
 ---
 
 ## 📚 Key Commands
 
 ```bash
-# Run the bot
+# Run the bot (includes both binary and interval market analysis)
 python main_ultimate.py
+
+# Test interval signal generator standalone
+python test_interval.py
 
 # Test Selenium fetcher standalone
 python core/selenium_market_fetcher.py
@@ -265,7 +323,7 @@ python test_api_nossl.py
 
 # Commit changes
 git add .
-git commit -m "feat: add selenium fetcher to bypass API blocking"
+git commit -m "feat: add interval market analysis (LOW/MID/HIGH)"
 
 # Check git status
 git status
@@ -284,10 +342,12 @@ git status
 
 ## 🎯 Success Criteria
 
-- [ ] Selenium fetcher successfully retrieves market data
-- [ ] Bot runs without API errors
-- [ ] Discord alerts work with @everyone
-- [ ] Chrome driver closes properly on exit
+- [x] Selenium fetcher successfully retrieves market data
+- [x] Bot runs without API errors
+- [x] Discord alerts work with @everyone
+- [x] Chrome driver closes properly on exit
+- [ ] Interval market analysis working (LOW/MID/HIGH)
+- [ ] Interval alerts sent at correct hours (11, 13, 15, 17, 19, 21, 23)
 - [ ] All changes committed to git
 - [ ] Full end-to-end test passed
 

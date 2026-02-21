@@ -1,0 +1,97 @@
+# Copy this file to config.yaml and add your API keys
+
+alerts:
+  console: true
+  discord:
+    avatar_url: https://i.imgur.com/cbcdc26e-066f-4eec-9473-bd99e331e161.jpg
+    enabled: true
+    everyone_threshold: 80
+    mention_everyone: true
+    username: Unhedged Bot
+    # ADD YOUR WEBHOOK URL HERE or use UNHEDGED_API_KEY from .env
+    webhook_url: ""
+  sound: C:\Windows\Media\notify.wav
+
+betting:
+  base_amount: 10
+  max_amount: 100
+  min_confidence: 80
+
+display:
+  update_interval: 60
+
+exchange: bybit
+
+indicators:
+  bollinger_bands:
+    enabled: true
+    period: 20
+    std: 2
+  ema:
+    enabled: true
+    long: 21
+    short: 9
+  macd:
+    enabled: true
+    fast: 12
+    signal: 9
+    slow: 26
+  rsi:
+    enabled: true
+    period: 14
+  volume:
+    enabled: true
+    period: 20
+
+multi_timeframe:
+  enabled: true
+  timeframes:
+    - 5m
+    - 15m
+    - 1h
+  weights:
+    5m: 0.4
+    15m: 0.35
+    1h: 0.25
+  min_timeframes_aligned: 2
+
+smart_timing:
+  enabled: true
+  avoid_during_resolve: true
+  resolved_window:
+    start: 50
+    end: 5
+  alert_min: 45
+  buffer_btc: 100
+  buffer_eth: 10
+  buffer_sol: 5
+  buffer_cc: 0.02
+
+interval_markets:
+  enabled: true
+  min_confidence: 70
+  target_minutes: 120
+  hours: [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23]
+
+symbols:
+- BTCUSDT
+- ETHUSDT
+- SOLUSDT
+- CCUSDT
+
+thresholds:
+  min_confidence: 80
+  rsi_overbought: 70
+  rsi_oversold: 30
+  volume_spike: 150
+
+timeframe: 5m
+
+unhedged:
+  api_key: ""  # USE .env FILE INSTEAD: UNHEDGED_API_KEY
+  enabled: true
+  manual_markets:
+    BTCUSDT: ""
+    CCUSDT: ""
+    ETHUSDT: ""
+    SOLUSDT: ""

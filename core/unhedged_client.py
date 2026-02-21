@@ -302,6 +302,7 @@ class BetPreparer:
     def prepare_bet_from_signal(self, signal_analysis: Dict) -> Optional[Dict]:
         """
         Prepare bet command from signal analysis
+        CORRECTLY converts trading signal to prediction market outcome
 
         Args:
             signal_analysis: Signal analysis from ultimate_signals
@@ -322,24 +323,49 @@ class BetPreparer:
         # Get symbol
         symbol = signal_analysis.get('symbol', '')
 
-        # Try manual market mapping first (from config)
-        market_id = self.manual_markets.get(symbol)
+        # Check if we have market info from scraping (preferred!)
+        market_link = signal_analysis.get('market_link', '')
+        market_id = signal_analysis.get('market_id', '')
+        market_question = signal_analysis.get('market_question', '')
 
-        # If no manual mapping, try API
-        if not market_id:
-            active_markets = self.client.get_active_crypto_markets()
-            matched_market = self.client.match_symbol_to_market(symbol, active_markets)
-            if matched_market:
-                market_id = matched_market.get('id', '')
-                market_name = matched_market.get('name', '')
-            else:
-                # No market found
-                return None
+        # If we have scraped market info, use it
+        if market_id and market_link:
+            # Determine outcome based on MARKET QUESTION + PREDICTED PRICE
+            outcome = self._determine_outcome_from_market(
+                market_question,
+                signal_analysis,
+                signal
+            )
+
+            # Use scraped market info
+            market_name = market_question[:50] if market_question else f"{symbol} market"
         else:
-            market_name = f"{symbol} (manual config)"
+            # Fallback to manual mapping (old method)
+            market_id = self.manual_markets.get(symbol)
 
-        # Determine outcome
-        outcome = "YES" if "YES" in signal else "NO"
+            if not market_id:
+                # Try API (less reliable)
+                active_markets = self.client.get_active_crypto_markets()
+                matched_market = self.client.match_symbol_to_market(symbol, active_markets)
+                if matched_market:
+                    market_id = matched_market.get('id', '')
+                    market_question = matched_market.get('question', '')
+                    market_name = matched_market.get('name', '')
+                else:
+                    return None
+            else:
+                market_name = f"{symbol} (manual config)"
+
+            # Determine outcome from market question
+            if market_question:
+                outcome = self._determine_outcome_from_market(
+                    market_question,
+                    signal_analysis,
+                    signal
+                )
+            else:
+                # No question available, use signal as fallback
+                outcome = "YES" if "YES" in signal else "NO"
 
         # Calculate bet size based on confidence
         bet_amount = self._calculate_bet_amount(confidence, signal)
@@ -358,9 +384,57 @@ class BetPreparer:
         prepared_bet['market_name'] = market_name
         prepared_bet['market_id'] = market_id
         prepared_bet['market_question'] = f"Bet {outcome} on {symbol}"
+        prepared_bet['market_link'] = market_link
         prepared_bet['current_odds'] = {}
 
         return prepared_bet
+
+    def _determine_outcome_from_market(self, market_question: str, signal_analysis: Dict, signal: str) -> str:
+        """
+        Determine the correct outcome (YES/NO) based on:
+        1. Market question (what's being asked?)
+        2. Predicted price (where will price be?)
+
+        Args:
+            market_question: e.g., "SOL above $83.014 at 12:00 PM?"
+            signal_analysis: Contains predicted_price
+            signal: Trading signal (fallback)
+
+        Returns:
+            "YES" or "NO"
+        """
+        import re
+
+        # Parse the market question to get target price and direction
+        # Pattern: "above $X", "below $X"
+        above_match = re.search(r'above\s+\$?([\d,]+\.?\d*)', market_question, re.IGNORECASE)
+        below_match = re.search(r'below\s+\$?([\d,]+\.?\d*)', market_question, re.IGNORECASE)
+
+        # Get predicted price
+        predicted_price = signal_analysis.get('predicted_price')
+        current_price = signal_analysis.get('current_price')
+
+        if predicted_price and current_price:
+            # We have predicted price - use it to determine outcome
+            if above_match:
+                target_price = float(above_match.group(1).replace(',', ''))
+                # Market: "Price above $X?"
+                # YES if predicted > target, NO if predicted <= target
+                if predicted_price > target_price:
+                    return "YES"
+                else:
+                    return "NO"
+            elif below_match:
+                target_price = float(below_match.group(1).replace(',', ''))
+                # Market: "Price below $X?"
+                # YES if predicted < target, NO if predicted >= target
+                if predicted_price < target_price:
+                    return "YES"
+                else:
+                    return "NO"
+
+        # Fallback: Use trading signal
+        return "YES" if "YES" in signal else "NO"
 
     def _calculate_bet_amount(self, confidence: float, signal: str) -> float:
         """

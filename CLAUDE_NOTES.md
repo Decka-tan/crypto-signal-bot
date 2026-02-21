@@ -4,15 +4,54 @@
 
 ---
 
-## 🚨 IMPORTANT: READ THIS FIRST!
+## 🔥 CRITICAL: READ THIS FIRST!
 
 **Claude Code has NO memory between sessions!** Each new session = fresh start with zero knowledge of previous conversations.
 
 **Always read these files in order:**
 1. `CLAUDE_NOTES.md` (this file) - Quick context
-2. `PROGRESS.md` - What was done
+2. `PROGRESS.md` - What was done (SEE "CRITICAL: Bot Logic" SECTION!)
 3. `TODO.md` - What needs to be done
 4. Check `git status` - Uncommitted changes
+
+---
+
+## 🚨 CRITICAL REMINDERS (NEVER FORGET!)
+
+### Option A: Flexible High-Confidence Strategy ✅
+**Monitor 24/7, alert ANYTIME when confidence >= 80%**
+
+```
+1. Bot terus monitoring setiap 60 detik
+2. Kalau confidence >= 80% -> LANGSUNG ALERT (regardless of time)
+3. Hanya SKIP saat "market resolved window"
+4. 2-minute cooldown per symbol (prevent spam)
+```
+
+**TIDAK ADA "ALERT WINDOW"!** Bukan menit 40-50, bukan menit 100-110!
+Alert ANYTIME pas confidence tinggi!
+
+### Market Timing:
+
+#### Binary YES/NO Markets (tiap 1 jam):
+- Buka: XX:00
+- Close: XX:50 (menit 50)
+- Resolved: XX+1:00 (menit 60/00)
+- **Resolved Window: XX:50 - XX+1:05** (SKIP alerts di sini)
+
+#### Interval LOW/MID/HIGH Markets (tiap 2 jam):
+- Schedule: Odd hours (1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23)
+- Buka: XX:00 (e.g., 11:00)
+- Close: XX+1:50 (menit 110, e.g., 12:50)
+- Resolved: XX+2:00 (menit 120, e.g., 13:00)
+- **Resolved Window: XX+1:50 - XX+2:05** (SKIP alerts di sini)
+- Dalam 1 jam cycle: menit 50-59 adalah resolved window (karena next hour close)
+
+### Multi-Timeframe Analysis:
+- Timeframes: 5m (40%), 15m (35%), 1H (25%)
+- **CRITICAL**: pro_signals.py MUST pass `timeframe=tf` parameter!
+- Line 66: `df = self.market_monitor.get_klines(symbol, limit=100, timeframe=tf)`
+- Kalau lupa pass timeframe, semua TF pakai data SAMA!
 
 ---
 
@@ -386,6 +425,7 @@ When ending a session, Claude should:
 ---
 
 **Last Updated**: 2025-02-20
-**Session Count**: 2
+**Session Count**: 3+
 **User Preference**: Wants documentation and git commits to avoid losing work
-**Next Action**: Test Selenium fetcher, then commit changes
+**CRITICAL**: NEVER FORGET Option A logic and market timing!
+**Next Action**: Test interval market alerts, then commit all changes

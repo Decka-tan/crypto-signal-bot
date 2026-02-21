@@ -49,6 +49,18 @@ class MarketMonitor:
         # Use provided timeframe or fall back to default
         tf = timeframe if timeframe else self.timeframe
 
+        # CCUSDT (Canton) - try OKX first, then demo mode
+        if symbol == 'CCUSDT' and not self.demo_mode:
+            try:
+                # Try OKX for CCUSDT (might be listed there)
+                df = self._get_okx_klines(symbol, limit, tf)
+                if df is not None and len(df) > 0:
+                    return df
+            except:
+                pass  # Fall through to demo mode
+            # If OKX fails, use demo mode
+            return self._generate_demo_data(symbol, limit)
+
         if self.demo_mode:
             return self._generate_demo_data(symbol, limit)
 

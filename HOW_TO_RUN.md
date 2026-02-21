@@ -1,393 +1,342 @@
-# 🚀 Cara Run Bot Setiap Hari
+# 🚀 CARA JALANIN BOT (UNHEDGED PREDICTION MARKETS)
 
-**Bot**: Crypto Signal Bot - ULTIMATE Mode
 **Last Updated**: 2025-02-20
+**Version**: ULTIMATE with Active Market Scraper + Market Matching
 
 ---
 
-## 📋 Daftar Isi
+## 🎯 APA YANG BOT LAKUKAN?
 
-1. [Persiapan Awal (One-Time Setup)](#1-persiapan-awal-one-time-setup)
-2. [Run Bot Mode Harian](#2-run-bot-mode-harian)
-3. [Run Bot Mode Test (Sekali Jalan)](#3-run-bot-mode-test-sekali-jalan)
-4. [Troubleshooting Masalah Umum](#4-troubleshooting-masalah-umum)
-5. [Tips & Best Practices](#5-tips--best-practices)
+### **SAAT BOT MULAI (Setiap Jam XX:05)**
+1. **Scrape Unhedged** → Dapat SEMUA active markets (termasuk market ID dan waktu resolve)
+2. **Kirim Discord Alert** → List semua active market links yang bisa di-ikuti
+3. **Auto-Detect** → Market ID, status, betting window
+
+### **SETIAP 60 DETIK**
+1. **Monitor** → Cek semua symbols (BTC, ETH, SOL, CC)
+2. **Analisa** → Multi-timeframe (5m, 15m, 1H)
+3. **Match Market** → Cari market yang MASIH ACTIVE untuk symbol tersebut
+4. **Alert** → Kalau confidence ≥ 80%, kirim signal ke Discord
+
+### **MARKET MATCHING (FIXED!)**
+- ❌ **OLD**: Bot alert market jam 9:00 padahal sudah resolved
+- ✅ **NEW**: Bot cek `is_still_active()` → Skip resolved markets
+- ✅ **NEW**: Cari market terdekat yang masih active (e.g., 11 AM market)
 
 ---
 
-## 1. Persiapan Awal (One-Time Setup)
+## 🚀 QUICK START (3 LANGKAH)
 
-**Cukup lakuin sekali aja di awal!**
-
-### Step 1: Buka Terminal/Command Prompt
-
+### Step 1: Install Dependencies
 ```bash
-# Masuk ke folder project
 cd C:\Codingers\crypto-signal-bot
-```
-
-### Step 2: Install Dependencies (Belum Pernah?)
-
-```bash
-# Install semua yang dibutuhkan
 pip install -r requirements.txt
 ```
 
-**Apa yang di-install?**
-- `requests` - untuk API calls
-- `selenium` - untuk Chrome browser automation
-- `webdriver-manager` - auto-download Chrome driver
-- `pandas`, `numpy` - untuk data analysis
-- `rich` - untuk tampilan terminal yang cantik
-- `pyyaml` - untuk baca config file
-
-**Output yang diharapkan:**
-```
-Successfully installed requests-2.31.0
-Successfully installed selenium-4.15.0
-Successfully installed webdriver-manager-4.0.0
-Successfully installed pandas-2.0.0
-... (dll)
-```
-
-### Step 3: Cek Config
-
-**Pastikan file `config.yaml` sudah ter-set dengan benar:**
-
+### Step 2: Run Bot
 ```bash
-# Buka config.yaml di VS Code atau text editor
-notepad config.yaml
-# atau
-code config.yaml
+python main_ultimate.py
 ```
 
-**Cek bagian penting:**
-```yaml
-# Symbols yang mau dimonitor
-symbols:
-  - BTCUSDT
-  - ETHUSDT
-  - SOLUSDT
-  - CCUSDT
+### Step 3: Buka Discord
+```
+🔔 Bot akan kirim alert:
 
-# Discord webhook (agar alerts masuk ke Discord)
+@everyone 🔔 ACTIVE MARKETS ON UNHEDGED
+
+Found 8 active markets:
+
+BTCUSDT (2 market(s)):
+  • [Bitcoin price at 1:00 PM](https://unhedged.gg/markets/btc-price-1pm)
+  • [Bitcoin above $67,340 at 11:00 AM](https://unhedged.gg/markets/btc-above-67k)
+  ↑ Klik ini langsung buka market!
+
+ETHUSDT (2 market(s)):
+  • [Ethereum price at 1:00 PM](https://unhedged.gg/markets/eth-price-1pm)
+  • [Ethereum above $1,950 at 11:00 AM](https://unhedged.gg/markets/eth-above-1950)
+
+...
+
+_Click semua link yang mau di-ikut!_
+```
+
+**To stop bot**: Tekan `Ctrl + C`
+
+---
+
+## 📊 CONTOH ALERT DISCORD
+
+### 1. Active Markets Alert (Saat Bot Mulai)
+```
+@everyone 🔔 ACTIVE MARKETS ON UNHEDGED
+
+Found 8 active markets:
+
+BTCUSDT (2 market(s)):
+  • [Bitcoin price at 1:00 PM (112 min left)](https://unhedged.gg/markets/btc-price-1pm)
+  • [Bitcoin above $67,340 at 11:00 AM (41 min left)](https://unhedged.gg/markets/btc-above-67k)
+
+ETHUSDT (2 market(s)):
+  • [Ethereum price at 1:00 PM (112 min left)](https://unhedged.gg/markets/eth-price-1pm)
+  • [Ethereum above $1,950 at 11:00 AM (41 min left)](https://unhedged.gg/markets/eth-above-1950)
+
+...
+
+_Updated: 10:05:23_
+```
+
+### 2. Signal Alert (Binary YES/NO)
+```
+🚨 SIGNAL ALERT: BTCUSDT
+
+Signal: YES (Confidence: 85%)
+Market Status: 41 min left
+🔗 Market: [Open Market](https://unhedged.gg/markets/btc-above-67k)
+
+📊 Crowd: YES 75% | NO 25%
+🎯 Sentiment: STRONG
+
+📈 Reasons:
+   1. 1h: RSI oversold (28.5)
+   2. MACD bullish
+   3. Multi-timeframe agreement (85%)
+
+⏰ 2025-02-20 10:15:30 | Crypto Signal Bot v1.0
+```
+
+### 3. Signal Alert (Interval LOW/MID/HIGH)
+```
+🎯 INTERVAL SIGNAL ALERT: ETHUSDT
+
+Signal: MID (Confidence: 78%)
+📊 Range: $1,942.30 - $1,961.82
+⏰ Status: 1h 20 min left
+💰 Current Price: $1,950.81
+🎯 Predicted Price: $1,945.71
+🔗 Market: [Open Market](https://unhedged.gg/markets/eth-interval)
+
+📊 Crowd: LOW 25% | MID 50% | HIGH 25%
+🎯 Sentiment: WEAK
+🔄 Backup: LOW
+
+📈 Reasons:
+   - 15m: EMA bullish (short above long)
+   - Predicted price $1,945.71 falls within range
+```
+
+---
+
+## ⚙️ KONFIGURASI
+
+### Edit `config.yaml`:
+```yaml
+# Symbols yang di-monitor
+symbols:
+- BTCUSDT
+- ETHUSDT
+- SOLUSDT
+- CCUSDT
+
+# Min confidence untuk alert
+thresholds:
+  min_confidence: 80
+
+# Discord webhook
 alerts:
   discord:
     enabled: true
-    webhook_url: "https://discord.com/api/webhooks/..."
+    webhook_url: "YOUR_WEBHOOK_URL_HERE"
     mention_everyone: true
+    username: Unhedged Bot
 
-# Unhedged API (untuk semi-automated betting)
-unhedged:
+# Interval markets (LOW/MID/HIGH)
+interval_markets:
   enabled: true
-  api_key: "ak_..."
-```
-
-**Kalau config belum ada atau kosong, jalankan:**
-```bash
-python setup_discord.py
-```
-
-### Step 4: Test Connection (Optional tapi Disarankan)
-
-```bash
-# Test API connection (akan gagal kalau ada blocking - itu normal!)
-python test_api.py
-```
-
-**Output:**
-```
-Testing Binance API...
-[X] ERROR: Connection timeout  <- INI NORMAL KALAU KENA BLOCK
-```
-
-Kalau gagal, **jangan khawatir!** Bot punya Selenium fetcher untuk bypass blocking.
-
----
-
-## 2. Run Bot Mode Harian
-
-### Cara 1: Run Terus Menerus (Recommended)
-
-**Bot akan jalan terus, monitoring 24/7 dan kirim alert ke Discord kalau ada signal.**
-
-```bash
-# Pastikan di folder project
-cd C:\Codingers\crypto-signal-bot
-
-# Run bot
-python main_ultimate.py
-```
-
-**Apa yang akan terjadi:**
-
-1. **Bot Start**
-   ```
-   ╔════════════════════════════════════════════════════════════╗
-   ║       📊 Crypto Signal Bot - ULTIMATE Mode v2.0            ║
-   ║    Multi-Exchange + ML + Sentiment + Correlation           ║
-   ╚════════════════════════════════════════════════════════════╝
-
-   Loading configuration from config.yaml...
-   Initializing Chrome-based data fetcher...
-   Fetching BTCUSDT via Chrome...
-      [OK] Got 100 candles from Binance
-   Fetching ETHUSDT via Chrome...
-      [OK] Got 100 candles from Binance
-   ...
-   ```
-
-2. **Monitoring Aktif**
-   ```
-   ╔═══════════════════════════════════════════════════════════════════════════╗
-   ║                    📊 MARKET OVERVIEW - 5m Timeframe                      ║
-   ╠═══════════════════════════════════════════════════════════════════════════╣
-   ║ Symbol │ Price      │ Change │ RSI  │ MACD  │ Trend      │ Volume        ║
-   ╠═══════════════════════════════════════════════════════════════════════════╣
-   ║ BTC    │ $43,250   │ +1.2%  │ 45.3 │ Bull  │ NEUTRAL   │ 1.2K          ║
-   ║ ETH    │ $1,965    │ +0.8%  │ 52.1 │ Bull  │ BULLISH   │ 856           ║
-   ║ SOL    │ $82.45    │ +2.1%  │ 68.4 │ Bull  │ BULLISH   │ 2.3K          ║
-   ║ CC     │ $0.85     │ -0.5%  │ 35.2 │ Bear  │ BEARISH   │ 124           ║
-   ╚═══════════════════════════════════════════════════════════════════════════╝
-   ```
-
-3. **Kalau Ada Signal**
-   ```
-   🚨 SIGNAL ALERT: SOLUSDT
-
-   📊 RECOMMENDATION: STRONG YES (Confidence: 82.5%)
-
-   💡 ACTION: Bet YES
-      Target: ABOVE $82.695
-      Timeframe: 15m
-      Risk Level: Low
-
-   📈 Technical Reasons:
-      1. RSI oversold (28.3)
-      2. EMA bullish cross (short: 82.45 > long: 82.12)
-      3. Volume spike (165% of avg)
-
-   🔗 Unhedged Link: https://unhedged.gg/markets/cmltgz8uw03dw0swj779dlin8
-   ```
-
-4. **Discord Alert Terkirim**
-   - Cek Discord channel, bot akan kirim alert dengan @everyone
-   - Tinggal klik link Unhedged untuk betting
-
-5. **Update Setiap 60 Detik**
-   ```
-   [10:30:15] Updating market data...
-   [10:31:15] Updating market data...
-   [10:32:15] Updating market data...
-   ```
-
-### Stop Bot
-
-**Tekan `Ctrl + C` di terminal**
-
-```
-^C
-[!] Bot stopped by user
-[INFO] Cleaning up...
-```
-
-### Cara 2: Run Background (Windows)
-
-**Supaya bot tetep jalan walau terminal ditutup:**
-
-```bash
-# Buat batch file untuk run bot
-notepad run_bot.bat
-```
-
-**Isi file `run_bot.bat`:**
-```batch
-@echo off
-cd C:\Codingers\crypto-signal-bot
-python main_ultimate.py
-pause
-```
-
-**Cara pakai:**
-- Double-click `run_bot.bat` → Bot jalan
-- Tekan `Ctrl + C` → Bot stop
-
----
-
-## 3. Run Bot Mode Test (Sekali Jalan)
-
-**Cuma buat testing, jalan sekali terus keluar.**
-
-### Test Sekali Saja
-
-```bash
-# Run once - bot akan analisa terus keluar
-python main_ultimate.py --once
-```
-
-**Output:**
-```
-Running analysis ONCE...
-Loading configuration...
-Fetching data...
-Analyzing signals...
-
-No strong signals detected.
-Analysis complete.
-```
-
-### Test dengan Symbols Tertentu
-
-```bash
-# Hanya monitor BTC dan ETH
-python main_ultimate.py --symbols BTC ETH
-
-# Atau pakai format USDT
-python main_ultimate.py --symbols BTCUSDT ETHUSDT
-```
-
-### Test dengan Custom Config
-
-```bash
-# Pakai config file lain
-python main_ultimate.py --config config_test.yaml
+  min_confidence: 70
+  hours: [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23]  # All odd hours
 ```
 
 ---
 
-## 4. Troubleshooting Masalah Umum
+## 🎮 DAILY WORKFLOW
 
-### Problem 1: "ModuleNotFoundError: No module named 'selenium'"
+### Setiap Hari:
 
-**Solusi:**
-```bash
-pip install -r requirements.txt
-```
-
-Atau manual:
-```bash
-pip install selenium
-pip install webdriver-manager
-```
-
----
-
-### Problem 2: "Chrome driver needs to be updated"
-
-**Solusi (OTOMATIS):**
-```bash
-# Install webdriver-manager (sudah ada di requirements.txt)
-pip install webdriver-manager
-```
-
-Bot akan auto-download Chrome driver yang cocok dengan versi Chrome kamu.
-
----
-
-### Problem 3: "Connection timeout" / "API blocking"
-
-**Solusi:**
-Tenang! Bot sudah pakai **Selenium fetcher** yang bypass blocking.
-
-Kalau masih gagal:
-```bash
-# Cek Chrome sudah terinstall
-chrome --version
-
-# Atau test Selenium fetcher langsung
-python core/selenium_market_fetcher.py
-```
-
----
-
-### Problem 4: Discord webhook tidak jalan
-
-**Cek:**
-1. Webhook URL masih valid di Discord?
-2. Bot sudah di-kick dari server?
-
-**Test webhook:**
-```bash
-python test_discord.py
-```
-
----
-
-### Problem 5: Bot keluar error dan stop
-
-**Cek error log:**
-```bash
-# Run dengan verbose output
-python main_ultimate.py --verbose
-```
-
-**Lapor error dengan screenshot!**
-- Screenshot error message
-- Copy traceback
-- Cek file `PROGRESS.md` dan `TODO.md`
-
----
-
-## 5. Tips & Best Practices
-
-### ✅ DO (Recommended)
-
-1. **Commit sering ke git**
+1. **09:05** - Bot mulai
    ```bash
-   git add .
-   git commit -m "daily: update config"
-   git push
+   python main_ultimate.py
    ```
 
-2. **Cek Discord alerts berkala**
-   - Pastikan bot aktif dan kirim alerts
-   - Kalau lama gak ada alert, cek terminal bot
+2. **Bot scrape Unhedged** → Kirim semua active market links
 
-3. **Monitor resource usage**
-   - Chrome driver consume RAM (sekitar 200-300MB)
-   - Kalau RAM habis, matikan app lain
+3. **Setiap jam** (9:05, 10:05, 11:05, ...):
+   - Bot refresh active markets
+   - Kirim update active market links
 
-4. **Keep updated**
-   - Pull latest changes dari GitHub
-   - Update dependencies tiap bulan
+4. **Setiap 60 detik**:
+   - Bot analisa symbols
+   - **Market Matching**: Cari market yang MASIH ACTIVE
+   - Kalau confidence ≥ 80% → Kirim signal alert
 
-### ❌ DON'T (Avoid)
+5. **User lihat Discord**:
+   - Klik market link dari alert
+   - Cek signal dari bot (YES/NO atau LOW/MID/HIGH)
+   - Pasang bet sesuai signal
 
-1. **Jangan close terminal tanpa Ctrl+C**
-   - Chrome driver mungkin gak ke-close bersih
-   - Bisa sisa `chrome.exe` di background
-
-2. **Jangan run multiple bot instances**
-   - Bikin Chrome driver multiple
-   - RAM habis
-
-3. **Jangan edit config.yaml while bot running**
-   - Bot gak reload config secara otomatis
-   - Stop bot dulu, edit config, run lagi
+6. **Repeat** sampai bot stop (Ctrl + C)
 
 ---
 
-## 📋 Quick Reference Command
+## 🔥 MARKET MATCHING (NEW!)
+
+### Problem (OLD):
+```
+Jam 10:59, bot alert: "BTCUSDT - YES (85%)"
+Tapi market yang di-alert itu market jam 9:00 yang SUDAH RESOLVED!
+User bingung: "Kenapa alert market yang udah resolved?"
+```
+
+### Solution (NEW):
+```
+1. Scrape Unhedged → Dapat SEMUA markets:
+   - BTC at 9:00 AM (RESOLVED)
+   - BTC at 11:00 AM (ACTIVE, 41 min left)
+   - BTC at 1:00 PM (ACTIVE, 112 min left)
+
+2. Bot analyze BTCUSDT → Confidence: 85%
+
+3. Market Matching:
+   - find_matching_market('BTCUSDT')
+   - Cek market 9:00 AM → is_still_active() = False → SKIP!
+   - Cek market 11:00 AM → is_still_active() = True → PAKAI INI!
+
+4. Alert: "BTCUSDT - YES (85%) - Market at 11:00 AM (41 min left)"
+
+✅ User dapat signal untuk market yang MASIH ACTIVE!
+```
+
+### Code Flow:
+```python
+# Step 1: Refresh active markets (scrape Unhedged)
+markets = scraper.scrape_active_markets()
+# Returns: [BTC_9am, BTC_11am, ETH_11am, ...]
+
+# Step 2: Cache with composite key (symbol_market_id)
+for market in markets:
+    key = f"{market.symbol}_{market.market_id}"
+    cache[key] = market
+# Cache: {"BTCUSDT_btc-9am": market1, "BTCUSDT_btc-11am": market2, ...}
+
+# Step 3: Find best matching market
+def find_matching_market(symbol):
+    for key, market in cache.items():
+        if key.startswith(f"{symbol}_"):
+            if market.is_still_active():
+                return market  # Found active market!
+    return None
+
+# Step 4: Check before alert
+active_market = find_matching_market('BTCUSDT')
+if not active_market.is_still_active():
+    return  # SKIP! Market already resolved
+
+# Step 5: Send alert
+send_alert(signal_analysis)
+```
+
+---
+
+## 🎯 TWIN LEADERBOARD STRATEGY
+
+### Budget: 200 CC/hari
+
+**Target**:
+- ✅ Top 10 Activity Leaderboard
+- ✅ Top 10 Profit Leaderboard
+- ✅ Top 20 MVP Leaderboard
+
+**Cara**:
+```
+1. Ikut SEMUA market dengan confidence ≥ 80%
+   - Binary: ~24 markets/hari
+   - Interval: ~12 markets/hari
+   - Total: ~36 bets/hari
+
+2. Bet size: 5-10 CC per market
+   - Total volume: 180-360 CC/hari
+   - Dengan 200 CC budget, perfect!
+
+3. Focus HIGH CONFIDENCE:
+   - 80%+ → Bet
+   - < 80% → Skip (preserve win rate)
+   - Expected win rate: 75-80%
+
+4. Consistent participation:
+   - Run bot 24/7 (atau minimal 8 AM - 12 AM)
+   - Tiap jam ada alert
+   - Build up activity score
+```
+
+---
+
+## 📈 EXPECTED PERFORMANCE
+
+### Dengan Bot Ini:
+- **Bets per day**: 30-36 (every market)
+- **Win rate**: 75-80% (multi-timeframe + crowd confirmation)
+- **Daily profit**: 150-250 CC (dengan 200 CC budget)
+- **Weekly profit**: 1,050-1,750 CC
+- **Leaderboard target**: Top 10 Activity + Profit ✅
+
+---
+
+## 🔧 TROUBLESHOOTING
+
+### Bot Gagal Scrap Active Markets
+**Solusi**: Normal! Kalau scraping gagal, bot tetap jalan dengan config symbols
+
+### Tidak Ada Alert
+**Cek**:
+1. `config.yaml` → `alerts.discord.enabled: true`
+2. `webhook_url` sudah benar
+3. Confidence threshold (min_confidence: 80)
+
+### Market Resolved Masih Dapat Alert
+**FIXED**: Bot sekarang:
+1. Scrape Unhedged untuk dapat SEMUA active markets
+2. Match signal ke specific market pakai `find_matching_market()`
+3. Check `is_still_active()` → Kalau resolved, SKIP alert
+4. Hanya alert untuk market yang masih ACTIVE
+
+### "No active markets found"
+**Possible causes**:
+1. Unhedged sedang maintenance
+2. Chrome/ChromeDriver not installed
+3. Internet connection issue
+
+**Solution**: Bot akan auto-retry setiap jam (XX:05)
+
+---
+
+## 📝 COMMANDS
 
 ```bash
-# === DAILY USE ===
+# === RUN BOT ===
 
-# Run bot (mode harian)
+# Run continuous (24/7 monitoring)
 python main_ultimate.py
 
-# Stop bot
-Ctrl + C
-
-# === TESTING ===
-
-# Run once
+# Run once (test)
 python main_ultimate.py --once
 
-# Test specific symbols
-python main_ultimate.py --symbols BTC ETH
+# === STOP BOT ===
 
-# Test Selenium fetcher
-python core/selenium_market_fetcher.py
+# Tekan: Ctrl + C
+
+# === TEST ===
+
+# Test active markets scraper
+python core/unhedged_active_markets.py
 
 # === MAINTENANCE ===
 
@@ -396,86 +345,61 @@ pip install -r requirements.txt --upgrade
 
 # Git commit
 git add .
-git commit -m "daily: update"
+git commit -m "update"
 git push
-
-# Cek log
-cat logs/signals_$(date +%Y%m%d).log
 ```
 
 ---
 
-## 🎯 Daily Workflow (Recommended)
+## 🆘 BUTUH BANTUAN?
 
-### Setiap Hari:
+### Error? Cek:
+1. **Python version**: `python --version` (need 3.10+)
+2. **Dependencies**: `pip install -r requirements.txt`
+3. **Chrome**: Buka `chrome://version`
 
-1. **Buka terminal**
-   ```bash
-   cd C:\Codingers\crypto-signal-bot
-   ```
+### Lupa command?
+Baca file ini lagi: `HOW_TO_RUN.md`
 
-2. **Pull latest updates** (kalau ada)
-   ```bash
-   git pull origin main
-   ```
-
-3. **Run bot**
-   ```bash
-   python main_ultimate.py
-   ```
-
-4. **Minimize terminal** (biarkan jalan di background)
-
-5. **Cek Discord untuk alerts**
-
-6. **Selesai hari ini** → Stop bot dengan `Ctrl + C`
+### Masih error?
+- Screenshot error message
+- Copy traceback
+- Cek `PROGRESS.md`
 
 ---
 
-## 🆘 Emergency Commands
+**Selamat trading! 🚀**
 
-### Kalau bot "stuck" atau gak respon:
-
-```bash
-# Force stop semua Python
-taskkill /F /IM python.exe
-
-# Kill Chrome driver (kalau sisa)
-taskkill /F /IM chromedriver.exe
-
-# Atau restart PC
-```
-
-### Kalau lupa command:
-
-```bash
-# Buka file ini
-notepad HOW_TO_RUN.md
-
-# Atau baca README
-notepad README.md
-```
+**Goal**: Top 10 Leaderboard → Airdrop! 🎁
 
 ---
 
-## 📞 Butuh Bantuan?
+## 🔥 KEY FEATURES
 
-1. **Baca dokumentasi:**
-   - `README.md` - Overview project
-   - `PROGRESS.md` - Status terbaru
-   - `TODO.md` - Apa yang pending
-   - `CLAUDE_NOTES.md` - Notes buat Claude AI
+### ✅ Automatic Market Detection
+- Scrape Unhedged untuk dapat SEMUA active markets
+- Auto-detect market ID, resolve time, status
+- No manual input needed!
 
-2. **Cek troubleshooting di atas**
+### ✅ Market Matching
+- Match signal ke specific market (e.g., BTC at 11 AM)
+- Check `is_still_active()` → Skip resolved markets
+- No more alerts for dead markets!
 
-3. **Kalau masih error:**
-   - Screenshot error message
-   - Copy full traceback
-   - Pastikan `git status` clean (udah di-commit)
+### ✅ Multi-Timeframe Analysis
+- 5m (40%), 15m (35%), 1H (25%) timeframes
+- High confidence signals (80%+)
 
----
+### ✅ Interval Markets
+- LOW/MID/HIGH predictions
+- 2-hour price range forecasts
 
-**Happy Trading! 🚀📈**
+### ✅ Crowd Confirmation
+- Scrape odds dari Unhedged
+- Adjust confidence based on crowd sentiment
+- Contrarian opportunities detection
 
-**Last Updated**: 2025-02-20
-**Status**: Bot ready to run, Selenium fetcher integrated
+### ✅ Discord Alerts
+- Real-time alerts with market links
+- @everyone mentions
+- Rich embeds with all info

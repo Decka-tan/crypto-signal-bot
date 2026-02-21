@@ -149,6 +149,103 @@ class UnhedgedMarket:
         else:
             return 110  # XX:110 for 2-hourly markets
 
+    def is_market_active(self) -> bool:
+        """
+        Check if market is still ACTIVE (not resolved)
+
+        Returns:
+            True if market is active, False if resolved/ended
+        """
+        if not self.resolve_time:
+            return True  # Assume active if no resolve time
+
+        try:
+            # Parse resolve time
+            # Format could be: "2025-02-20T10:00:00Z" or similar
+            resolve_dt = None
+
+            # Try ISO format
+            if 'T' in self.resolve_time:
+                from datetime import datetime
+                resolve_dt = datetime.fromisoformat(self.resolve_time.replace('Z', '+00:00'))
+            else:
+                # Try other formats
+                for fmt in ['%Y-%m-%d %H:%M:%S', '%Y-%m-%dT%H:%M:%S', '%H:%M']:
+                    try:
+                        from datetime import datetime
+                        resolve_dt = datetime.strptime(self.resolve_time, fmt)
+                        break
+                    except:
+                        continue
+
+            if resolve_dt:
+                from datetime import datetime
+                now = datetime.now(resolve_dt.tzinfo)
+                return now < resolve_dt
+
+        except Exception as e:
+            pass
+
+        return True  # Assume active if can't determine
+
+    def get_time_until_resolved(self) -> Optional[int]:
+        """
+        Get minutes until market resolves
+
+        Returns:
+            Minutes until resolve, or None if can't determine
+        """
+        if not self.resolve_time:
+            return None
+
+        try:
+            from datetime import datetime
+
+            # Parse resolve time
+            if 'T' in self.resolve_time:
+                resolve_dt = datetime.fromisoformat(self.resolve_time.replace('Z', '+00:00'))
+            else:
+                for fmt in ['%Y-%m-%d %H:%M:%S', '%Y-%m-%dT%H:%M:%S']:
+                    try:
+                        resolve_dt = datetime.strptime(self.resolve_time, fmt)
+                        break
+                    except:
+                        continue
+                else:
+                    return None
+
+            now = datetime.now(resolve_dt.tzinfo)
+            delta = resolve_dt - now
+
+            minutes_left = int(delta.total_seconds() / 60)
+            return max(0, minutes_left)
+
+        except Exception as e:
+            return None
+
+    def get_status_display(self) -> str:
+        """
+        Get market status display string
+
+        Returns:
+            Status string like "15 min left", "ENDED", "RESOLVED"
+        """
+        if not self.is_market_active():
+            return "ENDED"
+
+        minutes_left = self.get_time_until_resolved()
+        if minutes_left is not None:
+            if minutes_left <= 0:
+                return "ENDED"
+            elif minutes_left <= 60:
+                return f"{minutes_left} min left"
+            else:
+                hours = minutes_left // 60
+                mins = minutes_left % 60
+                return f"{hours}h {mins}m left"
+
+        return "ACTIVE"
+
     def should_alert_now(self, current_minute: int) -> bool:
         """
         Check if we should send alert now
@@ -357,6 +454,62 @@ class UnhedgedScraper:
                 market_map[market.symbol] = market.market_id
 
         return market_map
+
+    def get_active_markets_for_symbols(self, symbols: List[str]) -> Dict[str, UnhedgedMarket]:
+        """
+        Get active markets for specific symbols
+
+        Args:
+            symbols: List of our symbols (e.g., ['BTCUSDT', 'ETHUSDT'])
+
+        Returns:
+            Dict mapping symbol to UnhedgedMarket (only ACTIVE markets)
+        """
+        markets = self.scrape_and_filter(symbols)
+
+        active_markets = {}
+        for market in markets:
+            # Only include active markets
+            if market.symbol != 'UNKNOWN' and market.is_market_active():
+                active_markets[market.symbol] = market
+
+        return active_markets
+
+    def should_alert_symbol(self, symbol: str) -> tuple[bool, UnhedgedMarket, str]:
+        """
+        Check if we should send alert for this symbol
+
+        Args:
+            symbol: Trading pair symbol (e.g., 'BTCUSDT')
+
+        Returns:
+            Tuple of (should_alert: bool, market: UnhedgedMarket, reason: str)
+            - should_alert: True if should send alert
+            - market: The market object (or None)
+            - reason: Status message (e.g., "15 min left", "ENDED", "No market found")
+        """
+        markets = self.scrape_and_filter([symbol])
+
+        if not markets:
+            return False, None, "No market found"
+
+        # Find matching market
+        for market in markets:
+            if market.symbol == symbol:
+                # Check if market is active
+                if not market.is_market_active():
+                    return False, market, "ENDED"
+
+                # Check if within betting window
+                minutes_left = market.get_time_until_resolved()
+                if minutes_left is not None and minutes_left > 0:
+                    # Market is active, OK to alert
+                    status = market.get_status_display()
+                    return True, market, status
+                else:
+                    return False, market, "ENDED"
+
+        return False, None, "No matching market"
 
 
 def main():

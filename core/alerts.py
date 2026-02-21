@@ -33,9 +33,9 @@ class AlertManager:
         Args:
             signal_analysis: Signal analysis dictionary
         """
-        # Console alert (always enabled by default)
-        if self.console_enabled:
-            self._console_alert(signal_analysis)
+        # Console alert - DISABLE for Discord mode to avoid emoji crash
+        # if self.console_enabled:
+        #     self._console_alert(signal_analysis)
 
         # Sound alert
         if self.sound_enabled:
@@ -47,7 +47,11 @@ class AlertManager:
 
         # Discord alert (optional)
         if self.discord_enabled:
-            self._discord_alert(signal_analysis)
+            try:
+                self._discord_alert(signal_analysis)
+                print(f"[OK] {signal_analysis['symbol']}: Discord alert sent")
+            except Exception as e:
+                print(f"[ERROR] {signal_analysis['symbol']}: Discord failed - {str(e)[:50]}")
 
     def _console_alert(self, signal_analysis: Dict):
         """
@@ -66,7 +70,17 @@ class AlertManager:
         signal = signal_analysis['signal']
         confidence = signal_analysis['confidence']
 
-        if 'STRONG YES' in signal or 'YES' in signal:
+        # Check if this is an interval signal (LOW/MID/HIGH)
+        is_interval = signal in ['LOW', 'MID', 'HIGH']
+
+        if is_interval:
+            if signal == 'LOW':
+                color = "red"
+            elif signal == 'MID':
+                color = "yellow"
+            else:  # HIGH
+                color = "green"
+        elif 'STRONG YES' in signal or 'YES' in signal:
             color = "green"
         elif 'STRONG NO' in signal or 'NO' in signal:
             color = "red"
@@ -76,10 +90,20 @@ class AlertManager:
         # Build message
         symbol = signal_analysis['symbol']
         message = Text()
-        message.append(f"\n🚨 SIGNAL ALERT: {symbol}\n", style="bold white")
+
+        # Different title for interval vs binary signals
+        if is_interval:
+            message.append(f"\n[INTERVAL SIGNAL ALERT: {symbol}]\n", style="bold white")
+        else:
+            message.append(f"\n[SIGNAL ALERT: {symbol}]\n", style="bold white")
+
         message.append(f"Signal: ", style="white")
         message.append(f"{signal}", style=f"bold {color}")
         message.append(f" (Confidence: {confidence}%)\n", style="white")
+
+        # Add market status
+        market_status = signal_analysis.get('market_status', 'ACTIVE')
+        message.append(f"Market Status: {market_status}\n", style="cyan")
 
         advice = signal_analysis.get('prediction_advice', {})
         if advice.get('action'):
@@ -94,7 +118,7 @@ class AlertManager:
         for i, reason in enumerate(signal_analysis.get('reasons', []), 1):
             message.append(f"   {i}. {reason}\n", style="white")
 
-        message.append(f"\n⏰ {signal_analysis['timestamp']}\n", style="dim white")
+        message.append(f"\n[{signal_analysis['timestamp']}]\n", style="dim white")
 
         # Create panel
         panel = Panel(
@@ -146,7 +170,7 @@ class AlertManager:
             chat_id = telegram_config.get('chat_id')
 
             if not bot_token or not chat_id:
-                print("⚠️ Telegram not configured: Missing bot_token or chat_id")
+                print("[WARN] Telegram not configured: Missing bot_token or chat_id")
                 return
 
             # Format message
@@ -164,7 +188,7 @@ class AlertManager:
             response.raise_for_status()
 
         except Exception as e:
-            print(f"⚠️ Failed to send Telegram alert: {e}")
+            print(f"[WARN] Failed to send Telegram alert: {e}")
 
     def _format_telegram_message(self, signal_analysis: Dict) -> str:
         """
@@ -241,7 +265,7 @@ class AlertManager:
             everyone_threshold = discord_config.get('everyone_threshold', 90)  # @everyone for 90%+ confidence
 
             if not webhook_url:
-                print("⚠️ Discord not configured: Missing webhook_url")
+                print("[WARN] Discord not configured: Missing webhook_url")
                 return
 
             # Format message with embed
@@ -268,10 +292,10 @@ class AlertManager:
             response = requests.post(webhook_url, json=data, timeout=10)
             response.raise_for_status()
 
-            print(f"✓ Discord alert sent for {signal_analysis['symbol']}")
+            print(f"[OK] Discord alert sent for {signal_analysis['symbol']}")
 
         except Exception as e:
-            print(f"⚠️ Failed to send Discord alert: {e}")
+            print(f"[WARN] Failed to send Discord alert: {e}")
 
     def _format_discord_embed(self, signal_analysis: Dict) -> Dict:
         """
@@ -289,8 +313,33 @@ class AlertManager:
         advice = signal_analysis.get('prediction_advice', {})
         indicators = signal_analysis.get('indicators', {})
 
+        # Check if this is an interval signal (LOW/MID/HIGH)
+        is_interval = signal in ['LOW', 'MID', 'HIGH']
+
+        # Get market status if available
+        market_status = signal_analysis.get('market_status', 'ACTIVE')
+        time_left = signal_analysis.get('time_until_resolved')
+
+        # Get crowd odds if available
+        crowd_odds = signal_analysis.get('crowd_odds', {})
+        sentiment_strength = signal_analysis.get('sentiment_strength', '')
+
+        # Get market link if available
+        market_link = signal_analysis.get('market_link', '')
+        market_id = signal_analysis.get('market_id', '')
+
         # Determine color based on signal
-        if 'STRONG YES' in signal or 'YES' in signal:
+        if is_interval:
+            if signal == 'LOW':
+                color = 15548997  # Red
+                emoji = "🔻"
+            elif signal == 'MID':
+                color = 16776960  # Yellow
+                emoji = "⏸️"
+            else:  # HIGH
+                color = 5763719  # Green
+                emoji = "🔺"
+        elif 'STRONG YES' in signal or 'YES' in signal:
             color = 5763719  # Green
             emoji = "🟢"
         elif 'STRONG NO' in signal or 'NO' in signal:
@@ -301,8 +350,58 @@ class AlertManager:
             emoji = "⚪"
 
         # Build description
-        description = f"**{emoji} Signal:** {signal}\n"
-        description += f"**📈 Confidence:** {confidence}%\n\n"
+        if is_interval:
+            # Interval signal format
+            interval_desc = signal_analysis.get('interval_description', '')
+            predicted_price = signal_analysis.get('predicted_price', 0)
+            current_price = signal_analysis.get('current_price', 0)
+
+            description = f"**{emoji} Interval Signal:** {signal}\n"
+            description += f"**📊 Range:** {interval_desc}\n"
+            description += f"**📈 Confidence:** {confidence}%\n"
+            description += f"**⏰ Status:** {market_status}\n"
+
+            # Add market link
+            if market_link:
+                description += f"**🔗 Market:** [Open Market]({market_link})\n"
+
+            description += "\n"
+
+            # Add crowd odds if available
+            if crowd_odds:
+                description += f"**📊 Crowd:** LOW {crowd_odds.get('low_pct', 0)}% | MID {crowd_odds.get('mid_pct', 0)}% | HIGH {crowd_odds.get('high_pct', 0)}%\n"
+                if sentiment_strength:
+                    description += f"**🎯 Sentiment:** {sentiment_strength}\n"
+                description += "\n"
+
+            description += f"**💰 Current Price:** `${current_price:,.2f}`\n"
+            description += f"**🎯 Predicted Price:** `${predicted_price:,.2f}`\n\n"
+
+            # Add secondary recommendation
+            secondary = signal_analysis.get('secondary', '')
+            if secondary:
+                description += f"**🔄 Backup:** {secondary}\n\n"
+            if secondary:
+                description += f"**🔄 Backup:** {secondary}\n\n"
+        else:
+            # Binary signal format
+            description = f"**{emoji} Signal:** {signal}\n"
+            description += f"**📈 Confidence:** {confidence}%\n"
+            description += f"**⏰ Market Status:** {market_status}\n"
+
+            # Add market link
+            if market_link:
+                description += f"**🔗 Market:** [Open Market]({market_link})\n"
+
+            description += "\n"
+
+            # Add crowd odds if available
+            if crowd_odds:
+                description += f"**📊 Crowd:** YES {crowd_odds.get('yes_pct', 0)}% | NO {crowd_odds.get('no_pct', 0)}%\n"
+                if sentiment_strength:
+                    description += f"**🎯 Sentiment:** {sentiment_strength}\n"
+
+            description += "\n"
 
         if advice.get('action'):
             description += f"**💡 Action:** {advice['action']}\n"
