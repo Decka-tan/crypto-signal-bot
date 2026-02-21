@@ -465,14 +465,21 @@ class AlertManager:
                 'inline': True
             })
 
+        # Get market link (from scraped market ID!)
+        market_link = signal_analysis.get('market_link', '')
+        if not market_link:
+            # Fallback to generic search if no scraped link
+            market_link = f'https://unhedged.gg/markets?search={symbol.lower()}'
+
         # Create embed
         embed = {
-            'title': f"🚨 Signal Alert: {symbol}",
+            'title': f"[Signal Alert: {symbol}]",
             'description': description,
+            'url': market_link,  # This makes the title clickable!
             'color': color,
             'fields': fields,
             'footer': {
-                'text': f"⏰ {signal_analysis['timestamp']} | Crypto Signal Bot v1.0"
+                'text': f"[{signal_analysis['timestamp']}] | Crypto Signal Bot v1.0"
             },
             'thumbnail': {
                 'url': self._get_coin_image(symbol)
