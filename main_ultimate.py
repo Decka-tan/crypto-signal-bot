@@ -45,6 +45,15 @@ from core.result_tracker import ResultTracker, BetResult
 from core.proper_signals import ProperSignalGenerator, MarketOdds
 from core.unhedged_history import UnhedgedHistoryFetcher, calculate_calibration_from_tracker
 
+# Leaderboard Auto-Bet Components
+from core.unhedged_api_client import UnhedgedAPIClient
+from core.unhedged_auto_better import UnhedgedAutoBetter, BetConfig, BetResult
+from core.bankroll_aware_strategy import (
+    BankrollManager, BankrollAwareConfig, SignalQuality,
+    classify_signal, get_bet_amount_cc, prioritize_signals, execute_bets_with_bankroll
+)
+from core.timing_strategy import MarketTimer, TimingConfig
+
 
 def scrape_market_ids_to_config():
     """Standalone function to scrape market IDs and update config.yaml"""
@@ -213,6 +222,55 @@ class CryptoSignalBotUltimate:
                     self.bet_preparer = BetPreparer(self.unhedged_client, self.config)
                 except Exception as e:
                     pass  # Silent fail, will show error in run()
+
+        # ============================================================================
+        # LEADERBOARD AUTO-BET COMPONENTS
+        # ============================================================================
+        # API client for direct market access (replaces scraper)
+        self.unhedged_api_client = None
+        self.auto_better = None
+        self.bankroll_manager = None
+        self.leaderboard_config = BankrollAwareConfig()
+        self.market_timer = MarketTimer(TimingConfig())
+        self.auto_bet_enabled = False
+
+        # Initialize if API key is available
+        if os.getenv('UNHEDGED_API_KEY'):
+            try:
+                self.unhedged_api_client = UnhedgedAPIClient()
+
+                # Auto-better with CC denomination
+                bet_config = BetConfig(
+                    max_bet_per_market=15.0,      # 15 CC max per bet
+                    max_bet_per_hour=100.0,       # 100 CC per hour
+                    max_loss_per_day=50.0,        # 50 CC max daily loss
+                    min_bet_amount=5.0,           # 5 CC minimum
+                    default_bet_amount=5.0,       # 5 CC default
+                    high_confidence_bet=15.0,     # 15 CC for strong signals
+                    min_edge_to_bet=0.01          # 1% min edge
+                )
+
+                # DRY_RUN mode initially - set to False for real bets!
+                dry_run = unhedged_config.get('dry_run', True)
+                self.auto_better = UnhedgedAutoBetter(bet_config, dry_run=dry_run)
+
+                # Get initial balance
+                balance_data = self.unhedged_api_client.get_balance()
+                if balance_data:
+                    initial_balance = float(balance_data.get('balance', {}).get('available', 33))
+                    self.bankroll_manager = BankrollManager(initial_balance_cc=initial_balance)
+                    self.console.print(f"[green]Bankroll initialized: {initial_balance:.1f} CC[/green]")
+
+                self.auto_bet_enabled = unhedged_config.get('auto_bet', False)
+
+                if self.auto_bet_enabled:
+                    mode = "DRY_RUN" if dry_run else "LIVE"
+                    self.console.print(f"[yellow]Auto-Bet ENABLED ({mode} mode)[/yellow]")
+                else:
+                    self.console.print("[dim]Auto-Bet disabled (set auto_bet: true in config to enable)[/dim]")
+
+            except Exception as e:
+                self.console.print(f"[yellow]Failed to initialize auto-bet: {str(e)[:50]}[/yellow]")
 
         self.running = False
         self.last_alerts = {}
@@ -805,6 +863,108 @@ class CryptoSignalBotUltimate:
         except Exception as e:
             console = Console()
             console.print(f"   [yellow][WARN] Failed to send active markets alert: {str(e)[:50]}[/yellow]")
+
+    def _send_45_summary_to_discord(self, bettable: list, unbettable: list, bettable_count: int):
+        """
+        Send Discord summary at XX:45 - ALWAYS runs even if no bettable signals
+
+        This keeps user informed that bot is working and shows all analysis results
+
+        Args:
+            bettable: List of (symbol, signal) tuples for bettable signals
+            unbettable: List of (symbol, signal) tuples for unbettable signals
+            bettable_count: Number of bettable signals
+        """
+        try:
+            import requests
+            discord_config = self.config.get('alerts', {}).get('discord', {})
+            webhook_url = discord_config.get('webhook_url')
+
+            if not webhook_url:
+                return
+
+            username = discord_config.get('username', 'Unhedged Bot')
+            avatar_url = discord_config.get('avatar_url', '')
+
+            # Build embed
+            from datetime import datetime
+            current_time = datetime.now().strftime('%H:%M:%S')
+
+            # Determine color based on whether we have bettable signals
+            color = 5763719 if bettable_count > 0 else 16776960  # Green if signals, yellow if none
+
+            # Build description
+            description = f"**⏰ XX:45 Analysis Complete**\n\n"
+            description += f"**📊 Summary:** {bettable_count} bettable, {len(unbettable)} not bettable\n\n"
+
+            # Add bettable signals
+            if bettable:
+                description += "**✅ BETTABLE SIGNALS:**\n"
+                for symbol, signal in bettable:
+                    sig_type = signal.get('signal', 'N/A')
+                    conf = signal.get('confidence', 0)
+                    edge = signal.get('edge', 0) * 100
+                    description += f"  • {symbol}: {sig_type} ({conf:.0f}%) | Edge: +{edge:.1f}%\n"
+                description += "\n"
+            else:
+                description += "**❌ No bettable signals this hour**\n\n"
+
+            # Add unbettable signals with reasons
+            if unbettable:
+                description += "**⛔ SKIPPED (Reasons):**\n"
+                for symbol, signal in unbettable:
+                    edge = signal.get('edge', 0) * 100
+                    dist = signal.get('distance_to_strike', 0)
+                    vol = signal.get('volatility_5m', 0) * 100
+                    buffer = signal.get('buffer_remaining', 0)
+
+                    # Main reason
+                    if edge <= 0:
+                        reason = f"Edge: {edge:.1f}%"
+                    elif dist is not None and abs(dist) < 0.5:
+                        reason = f"Too close ({dist:.1f}%)"
+                    elif buffer is not None and buffer <= 0:
+                        reason = f"No buffer (${buffer:.2f})"
+                    else:
+                        reason = f"Edge: +{edge:.1f}% | Vol: {vol:.1f}%"
+
+                    description += f"  • {symbol}: {reason}\n"
+
+            # Create embed
+            embed = {
+                'title': f"[XX:45 Analysis Summary]",
+                'description': description,
+                'color': color,
+                'footer': {
+                    'text': f"[{current_time}] | Crypto Signal Bot v1.0"
+                }
+            }
+
+            # Build message data
+            data = {
+                'embeds': [embed],
+                'username': username
+            }
+
+            if avatar_url:
+                data['avatar_url'] = avatar_url
+
+            # Only @everyone if we have bettable signals
+            mention_everyone = discord_config.get('mention_everyone', False)
+            if mention_everyone and bettable_count > 0:
+                data['content'] = '@everyone 🚨 BETTABLE SIGNALS FOUND!'
+            elif mention_everyone:
+                data['content'] = '@everyone 📊 XX:45 Analysis Complete'
+
+            response = requests.post(webhook_url, json=data, timeout=10)
+            response.raise_for_status()
+
+            console = Console()
+            console.print(f"   [green]✓[/green] Sent XX:45 summary to Discord ({bettable_count} bettable)")
+
+        except Exception as e:
+            console = Console()
+            console.print(f"   [yellow][WARN] Failed to send XX:45 summary: {str(e)[:50]}[/yellow]")
 
     def get_market_odds(self, symbol: str, market_type: str) -> Optional[UnhedgedOdds]:
         """
@@ -1636,65 +1796,150 @@ print(json.dumps(symbol_map))
                     time.sleep(min(interval, secs_to_next))
                     continue  # Skip to next iteration
 
-                # KING'S RULE: Alert at XX:45 (5 min before close = SAFE!)
-                # Close XX:50, Resolve XX:00 = 10 min exposure
-                # As long as we check 10-min volatility, XX:45 is SAFE!
-                #
-                # TIMING:
-                # - Binary: 9:00 market → Close 9:50 → Alert at 9:45
-                # - Interval: 9:00 market → Close 10:50 → Alert at 10:45
-                if current_min == 45:
-                    self.console.print("\n[bold yellow]⏰ OPTIMAL TIMING: XX:45 (5 min to close)[/bold yellow]\n")
+                # ============================================================================
+                # LEADERBOARD STRATEGY: Auto-Bet at XX:45-48 (Optimal Window)
+                # Binary: Close at XX:50, bet at XX:45-48 (2-5 min before close)
+                # Interval: Close at XX:110, bet at XX:105-108
+                # ============================================================================
+                if 45 <= current_min <= 48:  # XX:45-48 window (avoids rekt zone!)
+                    time_str = f"{current_min}"
+                    self.console.print(f"\n[bold yellow]OPTIMAL TIMING: XX:{time_str} ({50-current_min} min to binary close)[/bold yellow]\n")
 
-                    # Binary markets (every hour)
+                    # Check if in optimal window using timing strategy
+                    in_window, reason = self.market_timer.is_in_entry_window("binary")
+                    self.console.print(f"[dim]Timing check: {reason}[/dim]")
+
+                    # Get all active crypto markets from API
+                    crypto_markets_by_symbol = {}
+                    if self.unhedged_api_client:
+                        crypto_markets = self.unhedged_api_client.get_markets(status="ACTIVE", limit=100, category="crypto")
+
+                        # Group by symbol
+                        for market in crypto_markets:
+                            if market.symbol not in crypto_markets_by_symbol:
+                                crypto_markets_by_symbol[market.symbol] = []
+                            crypto_markets_by_symbol[market.symbol].append(market)
+
+                        self.console.print(f"[cyan]Found {len(crypto_markets)} active crypto markets[/cyan]")
+
+                    # Analyze all signals
+                    all_bettable = []
+                    all_unbettable = []
+                    bettable_signals = {}  # For auto-betting
+
                     for symbol in self.market_monitor.symbols:
-                        signal = self.analyze_symbol_proper(symbol)  # Use PROPER signal generator
+                        signal = self.analyze_symbol_proper(symbol)
                         all_signals[symbol] = signal
 
-                        # Only alert if bettable (EV > 0, passed buffer checks)
                         if signal.get('is_bettable', False):
-                            self.check_and_alert_proper(signal)
+                            all_bettable.append((symbol, signal))
+                            bettable_signals[symbol] = signal
+                            # Still send alerts for manual monitoring
+                            if current_min == 45:  # Only alert once at XX:45
+                                self.check_and_alert_proper(signal)
                         else:
-                            # Show why skipped
+                            all_unbettable.append((symbol, signal))
                             edge = signal.get('edge', 0) * 100
                             dist = signal.get('distance_to_strike', 0)
-                            dist_dollars = signal.get('distance_dollars', 0)
-                            buffer = signal.get('buffer_remaining', 0)
-                            vol = signal.get('volatility_5m', 0) * 100
-                            self.console.print(f"   [dim][SKIP BINARY] {symbol}: Edge={edge:.1f}%, Dist={dist:.1f}% (${dist_dollars:.2f}), Vol={vol:.1f}%[/dim]")
-                            if buffer is not None:
-                                if buffer <= 0:
-                                    self.console.print(f"   [dim]        [NO-BET ZONE: Buffer ${buffer:.2f} < $100][/dim]")
-                                else:
-                                    self.console.print(f"   [dim]        Buffer: ${buffer:.2f}[/dim]")
+                            self.console.print(f"   [dim][SKIP] {symbol}: Edge={edge:.1f}%, Dist={dist:.1f}%[/dim]")
 
-                    # Interval markets (every 2 hours, at XX:45 of the CLOSING hour)
-                    # Example: 9:00 market closes at 10:50, so alert at 10:45
+                    # Send Discord summary
+                    if current_min == 45:
+                        self._send_45_summary_to_discord(all_bettable, all_unbettable, len(all_bettable))
+
+                    # ============================================================================
+                    # AUTO-BET: Execute bankroll-aware betting
+                    # ============================================================================
+                    if self.auto_bet_enabled and self.auto_better and self.bankroll_manager and current_min == 47:
+                        self.console.print("\n[bold cyan]EXECUTING AUTO-BETS (Bankroll-Aware Strategy)[/bold cyan]\n")
+
+                        # Refresh balance
+                        balance_data = self.unhedged_api_client.get_balance()
+                        if balance_data:
+                            available = float(balance_data.get('balance', {}).get('available', 0))
+                            self.bankroll_manager.current_balance = available
+                            self.console.print(f"[cyan]Current bankroll: {available:.1f} CC[/cyan]")
+
+                        # Prioritize signals by quality
+                        prioritized = prioritize_signals(bettable_signals, self.leaderboard_config)
+
+                        self.console.print(f"\n[cyan]Prioritized Signals ({len(prioritized)}):[/cyan]")
+                        for symbol, signal, quality, bet_amount in prioritized:
+                            conf = signal.get('confidence', 0)
+                            edge = signal.get('edge', 0) * 100
+                            sig = signal.get('signal', 'N/A')
+                            self.console.print(f"  {symbol}: {quality.value:8} ({sig}) - {conf}% conf, {edge:.1f}% edge -> {bet_amount} CC")
+
+                        # Execute bets with bankroll management
+                        actual_bets_placed = 0
+
+                        for symbol, signal, quality, bet_amount in prioritized:
+                            # Check if we have enough balance
+                            if not self.bankroll_manager.can_bet(bet_amount):
+                                self.console.print(f"  [yellow][SKIP] {symbol}: Insufficient balance ({self.bankroll_manager.current_balance:.1f} CC left)[/yellow]")
+                                continue
+
+                            # Find matching market on Unhedged
+                            if symbol in crypto_markets_by_symbol and crypto_markets_by_symbol[symbol]:
+                                market = crypto_markets_by_symbol[symbol][0]  # Take first active market
+
+                                # Determine outcome from signal
+                                outcome = signal.get('signal', 'YES')
+
+                                # PLACE THE BET
+                                result = self.auto_better.place_bet(
+                                    market_id=market.id,
+                                    outcome=outcome,
+                                    amount=bet_amount,
+                                    signal=signal.get('signal', 'N/A'),
+                                    symbol=symbol,
+                                    confidence=signal.get('confidence', 0),
+                                    edge=signal.get('edge', 0)
+                                )
+
+                                if result.success:
+                                    actual_bets_placed += 1
+                                    # Record in bankroll manager
+                                    self.bankroll_manager.place_bet(bet_amount, market.id, symbol)
+
+                                    mode = "DRY_RUN" if self.auto_better.dry_run else "LIVE"
+                                    self.console.print(f"  [green][BET/{mode}] {symbol}: {bet_amount} CC ({outcome}) - {self.bankroll_manager.current_balance:.1f} CC remaining[/green]")
+
+                                    # Still check and alert
+                                    if current_min == 45:
+                                        self.check_and_alert_proper(signal)
+                                else:
+                                    self.console.print(f"  [red]Bet failed for {symbol}: {result.error}[/red]")
+                            else:
+                                self.console.print(f"  [yellow]No market found for {symbol}[/yellow]")
+
+                            # Check if bust
+                            if self.bankroll_manager.is_bust():
+                                self.console.print(f"\n  [red]BANKROLL BUST! Cannot place more bets.[/red]")
+                                break
+
+                        # Summary
+                        self.console.print(f"\n[cyan]XX:{current_min} Betting Summary:[/cyan]")
+                        self.console.print(f"  Bets placed: {actual_bets_placed}")
+                        self.console.print(f"  Total wagered: {self.bankroll_manager.total_bet} CC")
+                        self.console.print(f"  Remaining: {self.bankroll_manager.current_balance:.1f} CC")
+                        self.console.print(f"  Bust: {'YES' if self.bankroll_manager.is_bust() else 'NO'}")
+
+                    # Interval markets (every 2 hours at XX:105-108)
+                    # Note: Need to check current minute in hour for interval markets
                     if interval_enabled and self.interval_generator:
                         current_hour = time.localtime().tm_hour
+                        minutes_from_hour_start = current_min + (current_hour % 2) * 60
 
-                        # Interval markets close at XX:50 of odd+1 hours
-                        # 9:00 market → 10:50 close → Alert at 10:45
-                        # So we alert at even hours: 10, 12, 14, 16, 18, 20, 22, 0
-                        closing_hours = [h for h in range(24) if h % 2 == 0]  # Even hours
-
-                        if current_hour in closing_hours:
-                            self.console.print("[cyan]📊 Checking interval markets...[/cyan]")
+                        # Interval markets: 105-108 minutes from hour start
+                        if 105 <= minutes_from_hour_start <= 108:
+                            self.console.print("[cyan]Checking interval markets (XX:105-108 window)...[/cyan]")
 
                             for symbol in self.market_monitor.symbols:
                                 interval_signal = self.analyze_interval_market(symbol)
                                 if interval_signal and not interval_signal.get('error'):
-                                    # Check time constraints
-                                    active_market = self.find_matching_market(symbol, market_type='interval')
-
-                                    if active_market and active_market.is_still_active():
-                                        minutes_left = active_market.get_time_until_resolved_minutes()
-
-                                        # Only alert if 10-20 min left (optimal window)
-                                        if 10 <= minutes_left <= 20:
-                                            self.check_and_alert_interval(interval_signal)
-                                        else:
-                                            self.console.print(f"   [dim][SKIP INTERVAL] {symbol}: {minutes_left} min left (not optimal)[/dim]")
+                                    # Can add interval betting here
+                                    self.console.print(f"   [dim]Interval {symbol}: {interval_signal.get('signal', 'N/A')}[/dim]")
                                 elif interval_signal.get('error'):
                                     self.console.print(f"   [dim][SKIP INTERVAL] {symbol}: {interval_signal.get('error', 'Unknown error')}[/dim]")
                 else:
