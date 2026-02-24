@@ -1,0 +1,5116 @@
+{
+  "markets": [
+    {
+      "id": "cmm02w2u100920tyybj1w1l6l",
+      "question": "Solana price at 06:00 UTC?",
+      "description": "2-hour price range market.\n\nResolves based on the Chainlink Data Streams SOL/USD benchmark price at 06:00 UTC on February 24, 2026. The winning outcome is the price range that contains the resolution price.\n\nResolution source: Chainlink Data Streams SOL/USD benchmark price (DON consensus median).\nPrice data cryptographically signed by the Chainlink Decentralized Oracle Network.",
+      "category": "crypto",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "< $76.534"
+        },
+        {
+          "index": 1,
+          "label": "$76.534 - $76.791"
+        },
+        {
+          "index": 2,
+          "label": "$76.791 - $77.047"
+        },
+        {
+          "index": 3,
+          "label": "$77.047 - $77.304"
+        },
+        {
+          "index": 4,
+          "label": "> $77.304"
+        }
+      ],
+      "tags": [
+        "sol",
+        "crypto"
+      ],
+      "totalPool": "10",
+      "status": "ACTIVE",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": null,
+      "endTime": "2026-02-24T05:50:00.000Z",
+      "resolutionTime": null,
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": true,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": null,
+      "createdByUserId": "cmlgdjazs000001l0x0or0o8q",
+      "createdAt": "2026-02-24T04:01:17.401Z",
+      "updatedAt": "2026-02-24T04:02:54.529Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": null,
+      "scheduledResolutionTime": "2026-02-24T06:00:00.000Z",
+      "resolution": null,
+      "outcomeStats": [
+        {
+          "id": "cmm02w2u500930tyyom6ujtr9",
+          "marketId": "cmm02w2u100920tyybj1w1l6l",
+          "outcomeIndex": 0,
+          "totalBets": 1,
+          "totalAmount": "5",
+          "uniqueBettors": 1
+        },
+        {
+          "id": "cmm02w2u700940tyyign4ruzt",
+          "marketId": "cmm02w2u100920tyybj1w1l6l",
+          "outcomeIndex": 1,
+          "totalBets": 1,
+          "totalAmount": "5",
+          "uniqueBettors": 1
+        },
+        {
+          "id": "cmm02w2ua00950tyyt7srgrgd",
+          "marketId": "cmm02w2u100920tyybj1w1l6l",
+          "outcomeIndex": 2,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmm02w2uc00960tyyfgftx0qz",
+          "marketId": "cmm02w2u100920tyybj1w1l6l",
+          "outcomeIndex": 3,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmm02w2ue00970tyyznbuol9a",
+          "marketId": "cmm02w2u100920tyybj1w1l6l",
+          "outcomeIndex": 4,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        }
+      ],
+      "betCount": 2,
+      "autoResolution": {
+        "resolverType": "crypto-chainlink",
+        "resolverConfig": {
+          "type": "range",
+          "asset": "SOL",
+          "feedId": "0x0003b778d3f6b2ac4991302b89cb313f99a42467d6c9c5f96f57c29c0d2bc24f",
+          "ranges": [
+            {
+              "max": 76.534,
+              "min": null,
+              "index": 0
+            },
+            {
+              "max": 76.791,
+              "min": 76.534,
+              "index": 1
+            },
+            {
+              "max": 77.047,
+              "min": 76.791,
+              "index": 2
+            },
+            {
+              "max": 77.304,
+              "min": 77.047,
+              "index": 3
+            },
+            {
+              "max": null,
+              "min": 77.304,
+              "index": 4
+            }
+          ],
+          "priceSource": "chainlink"
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": false,
+        "resolutionDelay": 0
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmm02w2nk008v0tyyaok8uggz",
+      "question": "Canton Coin price at 06:00 UTC?",
+      "description": "2-hour price range market.\n\nResolves based on the Chainlink Data Streams CC/USD benchmark price at 06:00 UTC on February 24, 2026. The winning outcome is the price range that contains the resolution price.\n\nResolution source: Chainlink Data Streams CC/USD benchmark price (DON consensus median).\nPrice data cryptographically signed by the Chainlink Decentralized Oracle Network.",
+      "category": "crypto",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "< $0.16103"
+        },
+        {
+          "index": 1,
+          "label": "$0.16103 - $0.16156"
+        },
+        {
+          "index": 2,
+          "label": "$0.16156 - $0.1621"
+        },
+        {
+          "index": 3,
+          "label": "$0.1621 - $0.16264"
+        },
+        {
+          "index": 4,
+          "label": "> $0.16264"
+        }
+      ],
+      "tags": [
+        "cc",
+        "crypto"
+      ],
+      "totalPool": "20",
+      "status": "ACTIVE",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": null,
+      "endTime": "2026-02-24T05:50:00.000Z",
+      "resolutionTime": null,
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": true,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": null,
+      "createdByUserId": "cmlgdjazs000001l0x0or0o8q",
+      "createdAt": "2026-02-24T04:01:17.168Z",
+      "updatedAt": "2026-02-24T04:27:02.505Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": null,
+      "scheduledResolutionTime": "2026-02-24T06:00:00.000Z",
+      "resolution": null,
+      "outcomeStats": [
+        {
+          "id": "cmm02w2nn008w0tyyjzazj7zf",
+          "marketId": "cmm02w2nk008v0tyyaok8uggz",
+          "outcomeIndex": 0,
+          "totalBets": 1,
+          "totalAmount": "5",
+          "uniqueBettors": 1
+        },
+        {
+          "id": "cmm02w2np008x0tyycn9lvuxr",
+          "marketId": "cmm02w2nk008v0tyyaok8uggz",
+          "outcomeIndex": 1,
+          "totalBets": 1,
+          "totalAmount": "5",
+          "uniqueBettors": 1
+        },
+        {
+          "id": "cmm02w2nr008y0tyy7hufocdf",
+          "marketId": "cmm02w2nk008v0tyyaok8uggz",
+          "outcomeIndex": 2,
+          "totalBets": 1,
+          "totalAmount": "5",
+          "uniqueBettors": 1
+        },
+        {
+          "id": "cmm02w2nt008z0tyylh5n2qwg",
+          "marketId": "cmm02w2nk008v0tyyaok8uggz",
+          "outcomeIndex": 3,
+          "totalBets": 1,
+          "totalAmount": "5",
+          "uniqueBettors": 1
+        },
+        {
+          "id": "cmm02w2nv00900tyys11b6iqu",
+          "marketId": "cmm02w2nk008v0tyyaok8uggz",
+          "outcomeIndex": 4,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        }
+      ],
+      "betCount": 4,
+      "autoResolution": {
+        "resolverType": "crypto-chainlink",
+        "resolverConfig": {
+          "type": "range",
+          "asset": "CC",
+          "feedId": "0x0003111e1c2212376d4c196bf7635919e4b28368809dda6f515c396453d53770",
+          "ranges": [
+            {
+              "max": 0.16103,
+              "min": null,
+              "index": 0
+            },
+            {
+              "max": 0.16156,
+              "min": 0.16103,
+              "index": 1
+            },
+            {
+              "max": 0.1621,
+              "min": 0.16156,
+              "index": 2
+            },
+            {
+              "max": 0.16264,
+              "min": 0.1621,
+              "index": 3
+            },
+            {
+              "max": null,
+              "min": 0.16264,
+              "index": 4
+            }
+          ],
+          "priceSource": "chainlink"
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": false,
+        "resolutionDelay": 0
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmm02w2fm008o0tyyfkmzm0sg",
+      "question": "Ethereum price at 06:00 UTC?",
+      "description": "2-hour price range market.\n\nResolves based on the Chainlink Data Streams ETH/USD benchmark price at 06:00 UTC on February 24, 2026. The winning outcome is the price range that contains the resolution price.\n\nResolution source: Chainlink Data Streams ETH/USD benchmark price (DON consensus median).\nPrice data cryptographically signed by the Chainlink Decentralized Oracle Network.",
+      "category": "crypto",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "< $1,823.61"
+        },
+        {
+          "index": 1,
+          "label": "$1,823.61 - $1,829.72"
+        },
+        {
+          "index": 2,
+          "label": "$1,829.72 - $1,835.83"
+        },
+        {
+          "index": 3,
+          "label": "$1,835.83 - $1,841.93"
+        },
+        {
+          "index": 4,
+          "label": "> $1,841.93"
+        }
+      ],
+      "tags": [
+        "eth",
+        "crypto"
+      ],
+      "totalPool": "10",
+      "status": "ACTIVE",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": null,
+      "endTime": "2026-02-24T05:50:00.000Z",
+      "resolutionTime": null,
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": true,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": null,
+      "createdByUserId": "cmlgdjazs000001l0x0or0o8q",
+      "createdAt": "2026-02-24T04:01:16.882Z",
+      "updatedAt": "2026-02-24T04:02:33.656Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": null,
+      "scheduledResolutionTime": "2026-02-24T06:00:00.000Z",
+      "resolution": null,
+      "outcomeStats": [
+        {
+          "id": "cmm02w2fr008p0tyyeq54q9az",
+          "marketId": "cmm02w2fm008o0tyyfkmzm0sg",
+          "outcomeIndex": 0,
+          "totalBets": 1,
+          "totalAmount": "5",
+          "uniqueBettors": 1
+        },
+        {
+          "id": "cmm02w2ft008q0tyy15srnd8a",
+          "marketId": "cmm02w2fm008o0tyyfkmzm0sg",
+          "outcomeIndex": 1,
+          "totalBets": 1,
+          "totalAmount": "5",
+          "uniqueBettors": 1
+        },
+        {
+          "id": "cmm02w2fw008r0tyykrq420xx",
+          "marketId": "cmm02w2fm008o0tyyfkmzm0sg",
+          "outcomeIndex": 2,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmm02w2fz008s0tyyf3fh3jgc",
+          "marketId": "cmm02w2fm008o0tyyfkmzm0sg",
+          "outcomeIndex": 3,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmm02w2g2008t0tyy93e1v93n",
+          "marketId": "cmm02w2fm008o0tyyfkmzm0sg",
+          "outcomeIndex": 4,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        }
+      ],
+      "betCount": 2,
+      "autoResolution": {
+        "resolverType": "crypto-chainlink",
+        "resolverConfig": {
+          "type": "range",
+          "asset": "ETH",
+          "feedId": "0x000362205e10b3a147d02792eccee483dca6c7b44ecce7012cb8c6e0b68b3ae9",
+          "ranges": [
+            {
+              "max": 1823.61,
+              "min": null,
+              "index": 0
+            },
+            {
+              "max": 1829.72,
+              "min": 1823.61,
+              "index": 1
+            },
+            {
+              "max": 1835.83,
+              "min": 1829.72,
+              "index": 2
+            },
+            {
+              "max": 1841.93,
+              "min": 1835.83,
+              "index": 3
+            },
+            {
+              "max": null,
+              "min": 1841.93,
+              "index": 4
+            }
+          ],
+          "priceSource": "chainlink"
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": false,
+        "resolutionDelay": 0
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmm02w29o008h0tyyy435hdg3",
+      "question": "Bitcoin price at 06:00 UTC?",
+      "description": "2-hour price range market.\n\nResolves based on the Chainlink Data Streams BTC/USD benchmark price at 06:00 UTC on February 24, 2026. The winning outcome is the price range that contains the resolution price.\n\nResolution source: Chainlink Data Streams BTC/USD benchmark price (DON consensus median).\nPrice data cryptographically signed by the Chainlink Decentralized Oracle Network.",
+      "category": "crypto",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "< $63,253.42"
+        },
+        {
+          "index": 1,
+          "label": "$63,253.42 - $63,465.32"
+        },
+        {
+          "index": 2,
+          "label": "$63,465.32 - $63,677.23"
+        },
+        {
+          "index": 3,
+          "label": "$63,677.23 - $63,889.13"
+        },
+        {
+          "index": 4,
+          "label": "> $63,889.13"
+        }
+      ],
+      "tags": [
+        "btc",
+        "crypto"
+      ],
+      "totalPool": "10",
+      "status": "ACTIVE",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": null,
+      "endTime": "2026-02-24T05:50:00.000Z",
+      "resolutionTime": null,
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": true,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": null,
+      "createdByUserId": "cmlgdjazs000001l0x0or0o8q",
+      "createdAt": "2026-02-24T04:01:16.668Z",
+      "updatedAt": "2026-02-24T04:02:20.187Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": null,
+      "scheduledResolutionTime": "2026-02-24T06:00:00.000Z",
+      "resolution": null,
+      "outcomeStats": [
+        {
+          "id": "cmm02w29s008i0tyyikiu601l",
+          "marketId": "cmm02w29o008h0tyyy435hdg3",
+          "outcomeIndex": 0,
+          "totalBets": 1,
+          "totalAmount": "5",
+          "uniqueBettors": 1
+        },
+        {
+          "id": "cmm02w29u008j0tyynkuebv3y",
+          "marketId": "cmm02w29o008h0tyyy435hdg3",
+          "outcomeIndex": 1,
+          "totalBets": 1,
+          "totalAmount": "5",
+          "uniqueBettors": 1
+        },
+        {
+          "id": "cmm02w29w008k0tyyyonrlyik",
+          "marketId": "cmm02w29o008h0tyyy435hdg3",
+          "outcomeIndex": 2,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmm02w29y008l0tyy6c4q2kjm",
+          "marketId": "cmm02w29o008h0tyyy435hdg3",
+          "outcomeIndex": 3,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmm02w2a0008m0tyyowxtaipp",
+          "marketId": "cmm02w29o008h0tyyy435hdg3",
+          "outcomeIndex": 4,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        }
+      ],
+      "betCount": 2,
+      "autoResolution": {
+        "resolverType": "crypto-chainlink",
+        "resolverConfig": {
+          "type": "range",
+          "asset": "BTC",
+          "feedId": "0x00039d9e45394f473ab1f050a1b963e6b05351e52d71e507509ada0c95ed75b8",
+          "ranges": [
+            {
+              "max": 63253.42,
+              "min": null,
+              "index": 0
+            },
+            {
+              "max": 63465.32,
+              "min": 63253.42,
+              "index": 1
+            },
+            {
+              "max": 63677.23,
+              "min": 63465.32,
+              "index": 2
+            },
+            {
+              "max": 63889.13,
+              "min": 63677.23,
+              "index": 3
+            },
+            {
+              "max": null,
+              "min": 63889.13,
+              "index": 4
+            }
+          ],
+          "priceSource": "chainlink"
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": false,
+        "resolutionDelay": 0
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmm02w23v008d0tyyayhuc6uo",
+      "question": "Canton Coin above $0.16183 at 05:00 UTC?",
+      "description": "1-hour binary market.\n\nResolves YES if the Canton Coin price is above $0.16183 at 05:00 UTC on February 24, 2026, or NO if at or below $0.16183.\n\n\u2022 YES wins if price > $0.16183\n\u2022 NO wins if price \u2264 $0.16183\n\nResolution source: Chainlink Data Streams CC/USD benchmark price (DON consensus median).\nPrice data cryptographically signed by the Chainlink Decentralized Oracle Network.",
+      "category": "crypto",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "Yes"
+        },
+        {
+          "index": 1,
+          "label": "No"
+        }
+      ],
+      "tags": [
+        "cc",
+        "crypto"
+      ],
+      "totalPool": "85.92",
+      "status": "ACTIVE",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": null,
+      "endTime": "2026-02-24T04:50:00.000Z",
+      "resolutionTime": null,
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": true,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": null,
+      "createdByUserId": "cmlkrdcr901co01k6vk4fvf79",
+      "createdAt": "2026-02-24T04:01:16.459Z",
+      "updatedAt": "2026-02-24T04:26:24.581Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": null,
+      "scheduledResolutionTime": "2026-02-24T05:00:00.000Z",
+      "resolution": null,
+      "outcomeStats": [
+        {
+          "id": "cmm02w23z008e0tyy1491rich",
+          "marketId": "cmm02w23v008d0tyyayhuc6uo",
+          "outcomeIndex": 0,
+          "totalBets": 5,
+          "totalAmount": "45.92",
+          "uniqueBettors": 5
+        },
+        {
+          "id": "cmm02w241008f0tyysdlev3vr",
+          "marketId": "cmm02w23v008d0tyyayhuc6uo",
+          "outcomeIndex": 1,
+          "totalBets": 7,
+          "totalAmount": "40",
+          "uniqueBettors": 7
+        }
+      ],
+      "betCount": 12,
+      "autoResolution": {
+        "resolverType": "crypto-chainlink",
+        "resolverConfig": {
+          "type": "binary",
+          "asset": "CC",
+          "feedId": "0x0003111e1c2212376d4c196bf7635919e4b28368809dda6f515c396453d53770",
+          "threshold": 0.1618344067398298,
+          "priceSource": "chainlink",
+          "aboveOutcome": 0,
+          "belowOutcome": 1
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": false,
+        "resolutionDelay": 0
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmm02w1xp00890tyyxmoec659",
+      "question": "Solana above $76.919 at 05:00 UTC?",
+      "description": "1-hour binary market.\n\nResolves YES if the Solana price is above $76.919 at 05:00 UTC on February 24, 2026, or NO if at or below $76.919.\n\n\u2022 YES wins if price > $76.919\n\u2022 NO wins if price \u2264 $76.919\n\nResolution source: Chainlink Data Streams SOL/USD benchmark price (DON consensus median).\nPrice data cryptographically signed by the Chainlink Decentralized Oracle Network.",
+      "category": "crypto",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "Yes"
+        },
+        {
+          "index": 1,
+          "label": "No"
+        }
+      ],
+      "tags": [
+        "sol",
+        "crypto"
+      ],
+      "totalPool": "82.3",
+      "status": "ACTIVE",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": null,
+      "endTime": "2026-02-24T04:50:00.000Z",
+      "resolutionTime": null,
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": true,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": null,
+      "createdByUserId": "cmlkrdcr901co01k6vk4fvf79",
+      "createdAt": "2026-02-24T04:01:16.237Z",
+      "updatedAt": "2026-02-24T04:35:21.158Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": null,
+      "scheduledResolutionTime": "2026-02-24T05:00:00.000Z",
+      "resolution": null,
+      "outcomeStats": [
+        {
+          "id": "cmm02w1xt008a0tyymfr1fhnu",
+          "marketId": "cmm02w1xp00890tyyxmoec659",
+          "outcomeIndex": 0,
+          "totalBets": 4,
+          "totalAmount": "20",
+          "uniqueBettors": 4
+        },
+        {
+          "id": "cmm02w1xv008b0tyy5mutwull",
+          "marketId": "cmm02w1xp00890tyyxmoec659",
+          "outcomeIndex": 1,
+          "totalBets": 10,
+          "totalAmount": "62.3",
+          "uniqueBettors": 9
+        }
+      ],
+      "betCount": 14,
+      "autoResolution": {
+        "resolverType": "crypto-chainlink",
+        "resolverConfig": {
+          "type": "binary",
+          "asset": "SOL",
+          "feedId": "0x0003b778d3f6b2ac4991302b89cb313f99a42467d6c9c5f96f57c29c0d2bc24f",
+          "threshold": 76.9194560806581,
+          "priceSource": "chainlink",
+          "aboveOutcome": 0,
+          "belowOutcome": 1
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": false,
+        "resolutionDelay": 0
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmm02w1rx00830tyy9q9ktsdj",
+      "question": "Ethereum above $1,832.77 at 05:00 UTC?",
+      "description": "1-hour binary market.\n\nResolves YES if the Ethereum price is above $1,832.77 at 05:00 UTC on February 24, 2026, or NO if at or below $1,832.77.\n\n\u2022 YES wins if price > $1,832.77\n\u2022 NO wins if price \u2264 $1,832.77\n\nResolution source: Chainlink Data Streams ETH/USD benchmark price (DON consensus median).\nPrice data cryptographically signed by the Chainlink Decentralized Oracle Network.",
+      "category": "crypto",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "Yes"
+        },
+        {
+          "index": 1,
+          "label": "No"
+        }
+      ],
+      "tags": [
+        "eth",
+        "crypto"
+      ],
+      "totalPool": "65",
+      "status": "ACTIVE",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": null,
+      "endTime": "2026-02-24T04:50:00.000Z",
+      "resolutionTime": null,
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": true,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": null,
+      "createdByUserId": "cmlkrdcr901co01k6vk4fvf79",
+      "createdAt": "2026-02-24T04:01:16.029Z",
+      "updatedAt": "2026-02-24T04:19:04.371Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": null,
+      "scheduledResolutionTime": "2026-02-24T05:00:00.000Z",
+      "resolution": null,
+      "outcomeStats": [
+        {
+          "id": "cmm02w1s100840tyyz3ob4mqq",
+          "marketId": "cmm02w1rx00830tyy9q9ktsdj",
+          "outcomeIndex": 0,
+          "totalBets": 3,
+          "totalAmount": "15",
+          "uniqueBettors": 3
+        },
+        {
+          "id": "cmm02w1s400850tyycpqbdwrv",
+          "marketId": "cmm02w1rx00830tyy9q9ktsdj",
+          "outcomeIndex": 1,
+          "totalBets": 8,
+          "totalAmount": "50",
+          "uniqueBettors": 7
+        }
+      ],
+      "betCount": 11,
+      "autoResolution": {
+        "resolverType": "crypto-chainlink",
+        "resolverConfig": {
+          "type": "binary",
+          "asset": "ETH",
+          "feedId": "0x000362205e10b3a147d02792eccee483dca6c7b44ecce7012cb8c6e0b68b3ae9",
+          "threshold": 1832.77108773472,
+          "priceSource": "chainlink",
+          "aboveOutcome": 0,
+          "belowOutcome": 1
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": false,
+        "resolutionDelay": 0
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmm02w1lu007z0tyyy7cx6niv",
+      "question": "Bitcoin above $63,574.73 at 05:00 UTC?",
+      "description": "1-hour binary market.\n\nResolves YES if the Bitcoin price is above $63,574.73 at 05:00 UTC on February 24, 2026, or NO if at or below $63,574.73.\n\n\u2022 YES wins if price > $63,574.73\n\u2022 NO wins if price \u2264 $63,574.73\n\nResolution source: Chainlink Data Streams BTC/USD benchmark price (DON consensus median).\nPrice data cryptographically signed by the Chainlink Decentralized Oracle Network.",
+      "category": "crypto",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "Yes"
+        },
+        {
+          "index": 1,
+          "label": "No"
+        }
+      ],
+      "tags": [
+        "btc",
+        "crypto"
+      ],
+      "totalPool": "141.5",
+      "status": "ACTIVE",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": null,
+      "endTime": "2026-02-24T04:50:00.000Z",
+      "resolutionTime": null,
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": true,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": null,
+      "createdByUserId": "cmlkrdcr901co01k6vk4fvf79",
+      "createdAt": "2026-02-24T04:01:15.810Z",
+      "updatedAt": "2026-02-24T04:36:39.528Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": null,
+      "scheduledResolutionTime": "2026-02-24T05:00:00.000Z",
+      "resolution": null,
+      "outcomeStats": [
+        {
+          "id": "cmm02w1lz00800tyyjp6q7kjg",
+          "marketId": "cmm02w1lu007z0tyyy7cx6niv",
+          "outcomeIndex": 0,
+          "totalBets": 4,
+          "totalAmount": "25",
+          "uniqueBettors": 4
+        },
+        {
+          "id": "cmm02w1m100810tyypuitz2hf",
+          "marketId": "cmm02w1lu007z0tyyy7cx6niv",
+          "outcomeIndex": 1,
+          "totalBets": 12,
+          "totalAmount": "116.5",
+          "uniqueBettors": 11
+        }
+      ],
+      "betCount": 16,
+      "autoResolution": {
+        "resolverType": "crypto-chainlink",
+        "resolverConfig": {
+          "type": "binary",
+          "asset": "BTC",
+          "feedId": "0x00039d9e45394f473ab1f050a1b963e6b05351e52d71e507509ada0c95ed75b8",
+          "threshold": 63574.72936344772,
+          "priceSource": "chainlink",
+          "aboveOutcome": 0,
+          "belowOutcome": 1
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": false,
+        "resolutionDelay": 0
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmm00qwdq00mi0svqrny1x2md",
+      "question": "Canton Coin above $0.16235 at 04:00 UTC?",
+      "description": "1-hour binary market.\n\nResolves YES if the Canton Coin price is above $0.16235 at 04:00 UTC on February 24, 2026, or NO if at or below $0.16235.\n\n\u2022 YES wins if price > $0.16235\n\u2022 NO wins if price \u2264 $0.16235\n\nResolution source: Chainlink Data Streams CC/USD benchmark price (DON consensus median).\nPrice data cryptographically signed by the Chainlink Decentralized Oracle Network.",
+      "category": "crypto",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "Yes"
+        },
+        {
+          "index": 1,
+          "label": "No"
+        }
+      ],
+      "tags": [
+        "cc",
+        "crypto"
+      ],
+      "totalPool": "1052.59",
+      "status": "RESOLVED",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": 1,
+      "endTime": "2026-02-24T03:50:00.000Z",
+      "resolutionTime": "2026-02-24T04:00:21.876Z",
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": true,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": null,
+      "createdByUserId": "cmlkrdcr901co01k6vk4fvf79",
+      "createdAt": "2026-02-24T03:01:16.526Z",
+      "updatedAt": "2026-02-24T04:00:21.877Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": null,
+      "scheduledResolutionTime": "2026-02-24T04:00:00.000Z",
+      "resolution": {
+        "id": "cmm02uvzv006r0tyyw4d72kfr",
+        "marketId": "cmm00qwdq00mi0svqrny1x2md",
+        "winningOutcome": 1,
+        "totalPool": "1052.59",
+        "winningPool": "954.59",
+        "losingPool": "98",
+        "platformFee": "1.96",
+        "payoutPool": "1050.63",
+        "resolvedBy": "auto-resolution",
+        "resolvedAt": "2026-02-24T04:00:21.882Z"
+      },
+      "outcomeStats": [
+        {
+          "id": "cmm00qwdu00mj0svqjxlm1u0d",
+          "marketId": "cmm00qwdq00mi0svqrny1x2md",
+          "outcomeIndex": 0,
+          "totalBets": 14,
+          "totalAmount": "98",
+          "uniqueBettors": 13
+        },
+        {
+          "id": "cmm00qwdx00mk0svqkj8d4z5t",
+          "marketId": "cmm00qwdq00mi0svqrny1x2md",
+          "outcomeIndex": 1,
+          "totalBets": 105,
+          "totalAmount": "954.59",
+          "uniqueBettors": 39
+        }
+      ],
+      "betCount": 119,
+      "autoResolution": {
+        "resolverType": "crypto-chainlink",
+        "resolverConfig": {
+          "type": "binary",
+          "asset": "CC",
+          "feedId": "0x0003111e1c2212376d4c196bf7635919e4b28368809dda6f515c396453d53770",
+          "threshold": 0.1623505753928868,
+          "priceSource": "chainlink",
+          "aboveOutcome": 0,
+          "belowOutcome": 1
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": true,
+        "resolutionDelay": 0
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmm00qw7a00me0svqvuxkjhpq",
+      "question": "Solana above $77.46 at 04:00 UTC?",
+      "description": "1-hour binary market.\n\nResolves YES if the Solana price is above $77.46 at 04:00 UTC on February 24, 2026, or NO if at or below $77.46.\n\n\u2022 YES wins if price > $77.46\n\u2022 NO wins if price \u2264 $77.46\n\nResolution source: Chainlink Data Streams SOL/USD benchmark price (DON consensus median).\nPrice data cryptographically signed by the Chainlink Decentralized Oracle Network.",
+      "category": "crypto",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "Yes"
+        },
+        {
+          "index": 1,
+          "label": "No"
+        }
+      ],
+      "tags": [
+        "sol",
+        "crypto"
+      ],
+      "totalPool": "1712",
+      "status": "RESOLVED",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": 1,
+      "endTime": "2026-02-24T03:50:00.000Z",
+      "resolutionTime": "2026-02-24T04:00:20.958Z",
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": true,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": null,
+      "createdByUserId": "cmlkrdcr901co01k6vk4fvf79",
+      "createdAt": "2026-02-24T03:01:16.294Z",
+      "updatedAt": "2026-02-24T04:00:20.959Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": null,
+      "scheduledResolutionTime": "2026-02-24T04:00:00.000Z",
+      "resolution": {
+        "id": "cmm02uvab005e0tyysz4h5wr5",
+        "marketId": "cmm00qw7a00me0svqvuxkjhpq",
+        "winningOutcome": 1,
+        "totalPool": "1712",
+        "winningPool": "1672",
+        "losingPool": "40",
+        "platformFee": "0.8",
+        "payoutPool": "1711.2",
+        "resolvedBy": "auto-resolution",
+        "resolvedAt": "2026-02-24T04:00:20.962Z"
+      },
+      "outcomeStats": [
+        {
+          "id": "cmm00qw7e00mf0svqhjo9bl33",
+          "marketId": "cmm00qw7a00me0svqvuxkjhpq",
+          "outcomeIndex": 0,
+          "totalBets": 8,
+          "totalAmount": "40",
+          "uniqueBettors": 8
+        },
+        {
+          "id": "cmm00qw7h00mg0svq8x2ffjen",
+          "marketId": "cmm00qw7a00me0svqvuxkjhpq",
+          "outcomeIndex": 1,
+          "totalBets": 98,
+          "totalAmount": "1672",
+          "uniqueBettors": 45
+        }
+      ],
+      "betCount": 106,
+      "autoResolution": {
+        "resolverType": "crypto-chainlink",
+        "resolverConfig": {
+          "type": "binary",
+          "asset": "SOL",
+          "feedId": "0x0003b778d3f6b2ac4991302b89cb313f99a42467d6c9c5f96f57c29c0d2bc24f",
+          "threshold": 77.4595935,
+          "priceSource": "chainlink",
+          "aboveOutcome": 0,
+          "belowOutcome": 1
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": true,
+        "resolutionDelay": 0
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmm00qw0500m90svq57hxmur5",
+      "question": "Ethereum above $1,840.04 at 04:00 UTC?",
+      "description": "1-hour binary market.\n\nResolves YES if the Ethereum price is above $1,840.04 at 04:00 UTC on February 24, 2026, or NO if at or below $1,840.04.\n\n\u2022 YES wins if price > $1,840.04\n\u2022 NO wins if price \u2264 $1,840.04\n\nResolution source: Chainlink Data Streams ETH/USD benchmark price (DON consensus median).\nPrice data cryptographically signed by the Chainlink Decentralized Oracle Network.",
+      "category": "crypto",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "Yes"
+        },
+        {
+          "index": 1,
+          "label": "No"
+        }
+      ],
+      "tags": [
+        "eth",
+        "crypto"
+      ],
+      "totalPool": "990",
+      "status": "RESOLVED",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": 1,
+      "endTime": "2026-02-24T03:50:00.000Z",
+      "resolutionTime": "2026-02-24T04:00:20.115Z",
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": true,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": null,
+      "createdByUserId": "cmlkrdcr901co01k6vk4fvf79",
+      "createdAt": "2026-02-24T03:01:16.037Z",
+      "updatedAt": "2026-02-24T04:00:20.116Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": null,
+      "scheduledResolutionTime": "2026-02-24T04:00:00.000Z",
+      "resolution": {
+        "id": "cmm02uumw004b0tyyehqmbjc8",
+        "marketId": "cmm00qw0500m90svq57hxmur5",
+        "winningOutcome": 1,
+        "totalPool": "990",
+        "winningPool": "965",
+        "losingPool": "25",
+        "platformFee": "0.5",
+        "payoutPool": "989.5",
+        "resolvedBy": "auto-resolution",
+        "resolvedAt": "2026-02-24T04:00:20.119Z"
+      },
+      "outcomeStats": [
+        {
+          "id": "cmm00qw0800ma0svqjag982g7",
+          "marketId": "cmm00qw0500m90svq57hxmur5",
+          "outcomeIndex": 0,
+          "totalBets": 5,
+          "totalAmount": "25",
+          "uniqueBettors": 5
+        },
+        {
+          "id": "cmm00qw0b00mb0svqkhj7fbqb",
+          "marketId": "cmm00qw0500m90svq57hxmur5",
+          "outcomeIndex": 1,
+          "totalBets": 47,
+          "totalAmount": "965",
+          "uniqueBettors": 35
+        }
+      ],
+      "betCount": 52,
+      "autoResolution": {
+        "resolverType": "crypto-chainlink",
+        "resolverConfig": {
+          "type": "binary",
+          "asset": "ETH",
+          "feedId": "0x000362205e10b3a147d02792eccee483dca6c7b44ecce7012cb8c6e0b68b3ae9",
+          "threshold": 1840.044407042494,
+          "priceSource": "chainlink",
+          "aboveOutcome": 0,
+          "belowOutcome": 1
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": true,
+        "resolutionDelay": 0
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmm00qvtp00m50svq3xhzx0il",
+      "question": "Bitcoin above $64,008.13 at 04:00 UTC?",
+      "description": "1-hour binary market.\n\nResolves YES if the Bitcoin price is above $64,008.13 at 04:00 UTC on February 24, 2026, or NO if at or below $64,008.13.\n\n\u2022 YES wins if price > $64,008.13\n\u2022 NO wins if price \u2264 $64,008.13\n\nResolution source: Chainlink Data Streams BTC/USD benchmark price (DON consensus median).\nPrice data cryptographically signed by the Chainlink Decentralized Oracle Network.",
+      "category": "crypto",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "Yes"
+        },
+        {
+          "index": 1,
+          "label": "No"
+        }
+      ],
+      "tags": [
+        "btc",
+        "crypto"
+      ],
+      "totalPool": "6236.31",
+      "status": "RESOLVED",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": 1,
+      "endTime": "2026-02-24T03:50:00.000Z",
+      "resolutionTime": "2026-02-24T04:00:18.907Z",
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": true,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": null,
+      "createdByUserId": "cmlkrdcr901co01k6vk4fvf79",
+      "createdAt": "2026-02-24T03:01:15.805Z",
+      "updatedAt": "2026-02-24T04:00:18.908Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": null,
+      "scheduledResolutionTime": "2026-02-24T04:00:00.000Z",
+      "resolution": {
+        "id": "cmm02utpc002v0tyyya7rk1mo",
+        "marketId": "cmm00qvtp00m50svq3xhzx0il",
+        "winningOutcome": 1,
+        "totalPool": "6236.31",
+        "winningPool": "6150.31",
+        "losingPool": "86",
+        "platformFee": "1.72",
+        "payoutPool": "6234.59",
+        "resolvedBy": "auto-resolution",
+        "resolvedAt": "2026-02-24T04:00:18.911Z"
+      },
+      "outcomeStats": [
+        {
+          "id": "cmm00qvtt00m60svq0ikhrkx7",
+          "marketId": "cmm00qvtp00m50svq3xhzx0il",
+          "outcomeIndex": 0,
+          "totalBets": 13,
+          "totalAmount": "86",
+          "uniqueBettors": 10
+        },
+        {
+          "id": "cmm00qvtw00m70svq4n37pp2g",
+          "marketId": "cmm00qvtp00m50svq3xhzx0il",
+          "outcomeIndex": 1,
+          "totalBets": 81,
+          "totalAmount": "6150.31",
+          "uniqueBettors": 48
+        }
+      ],
+      "betCount": 94,
+      "autoResolution": {
+        "resolverType": "crypto-chainlink",
+        "resolverConfig": {
+          "type": "binary",
+          "asset": "BTC",
+          "feedId": "0x00039d9e45394f473ab1f050a1b963e6b05351e52d71e507509ada0c95ed75b8",
+          "threshold": 64008.1314364147,
+          "priceSource": "chainlink",
+          "aboveOutcome": 0,
+          "belowOutcome": 1
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": true,
+        "resolutionDelay": 0
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmlzylr8w007t0svqmfw0f9t1",
+      "question": "Solana price at 04:00 UTC?",
+      "description": "2-hour price range market.\n\nResolves based on the Chainlink Data Streams SOL/USD benchmark price at 04:00 UTC on February 24, 2026. The winning outcome is the price range that contains the resolution price.\n\nResolution source: Chainlink Data Streams SOL/USD benchmark price (DON consensus median).\nPrice data cryptographically signed by the Chainlink Decentralized Oracle Network.",
+      "category": "crypto",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "< $77.29"
+        },
+        {
+          "index": 1,
+          "label": "$77.29 - $77.549"
+        },
+        {
+          "index": 2,
+          "label": "$77.549 - $77.808"
+        },
+        {
+          "index": 3,
+          "label": "$77.808 - $78.067"
+        },
+        {
+          "index": 4,
+          "label": "> $78.067"
+        }
+      ],
+      "tags": [
+        "sol",
+        "crypto"
+      ],
+      "totalPool": "147.95",
+      "status": "RESOLVED",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": 0,
+      "endTime": "2026-02-24T03:50:00.000Z",
+      "resolutionTime": "2026-02-24T04:00:18.349Z",
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": true,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": null,
+      "createdByUserId": "cmlgdjazs000001l0x0or0o8q",
+      "createdAt": "2026-02-24T02:01:17.360Z",
+      "updatedAt": "2026-02-24T04:00:18.350Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": null,
+      "scheduledResolutionTime": "2026-02-24T04:00:00.000Z",
+      "resolution": {
+        "id": "cmm02ut9t002d0tyyjmzz34h0",
+        "marketId": "cmlzylr8w007t0svqmfw0f9t1",
+        "winningOutcome": 0,
+        "totalPool": "147.95",
+        "winningPool": "107.95",
+        "losingPool": "40",
+        "platformFee": "0.8",
+        "payoutPool": "147.15",
+        "resolvedBy": "auto-resolution",
+        "resolvedAt": "2026-02-24T04:00:18.352Z"
+      },
+      "outcomeStats": [
+        {
+          "id": "cmlzylr91007u0svqx5p6mxj5",
+          "marketId": "cmlzylr8w007t0svqmfw0f9t1",
+          "outcomeIndex": 0,
+          "totalBets": 15,
+          "totalAmount": "107.95",
+          "uniqueBettors": 14
+        },
+        {
+          "id": "cmlzylr94007v0svq4lfya7yt",
+          "marketId": "cmlzylr8w007t0svqmfw0f9t1",
+          "outcomeIndex": 1,
+          "totalBets": 3,
+          "totalAmount": "25",
+          "uniqueBettors": 3
+        },
+        {
+          "id": "cmlzylr98007w0svqex093ycs",
+          "marketId": "cmlzylr8w007t0svqmfw0f9t1",
+          "outcomeIndex": 2,
+          "totalBets": 2,
+          "totalAmount": "15",
+          "uniqueBettors": 2
+        },
+        {
+          "id": "cmlzylr9b007x0svqn1rt0o3n",
+          "marketId": "cmlzylr8w007t0svqmfw0f9t1",
+          "outcomeIndex": 3,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzylr9d007y0svq9c901bdu",
+          "marketId": "cmlzylr8w007t0svqmfw0f9t1",
+          "outcomeIndex": 4,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        }
+      ],
+      "betCount": 20,
+      "autoResolution": {
+        "resolverType": "crypto-chainlink",
+        "resolverConfig": {
+          "type": "range",
+          "asset": "SOL",
+          "feedId": "0x0003b778d3f6b2ac4991302b89cb313f99a42467d6c9c5f96f57c29c0d2bc24f",
+          "ranges": [
+            {
+              "max": 77.29,
+              "min": null,
+              "index": 0
+            },
+            {
+              "max": 77.549,
+              "min": 77.29,
+              "index": 1
+            },
+            {
+              "max": 77.808,
+              "min": 77.549,
+              "index": 2
+            },
+            {
+              "max": 78.067,
+              "min": 77.808,
+              "index": 3
+            },
+            {
+              "max": null,
+              "min": 78.067,
+              "index": 4
+            }
+          ],
+          "priceSource": "chainlink"
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": true,
+        "resolutionDelay": 0
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmlzylr2a007m0svq9tnqehcx",
+      "question": "Canton Coin price at 04:00 UTC?",
+      "description": "2-hour price range market.\n\nResolves based on the Chainlink Data Streams CC/USD benchmark price at 04:00 UTC on February 24, 2026. The winning outcome is the price range that contains the resolution price.\n\nResolution source: Chainlink Data Streams CC/USD benchmark price (DON consensus median).\nPrice data cryptographically signed by the Chainlink Decentralized Oracle Network.",
+      "category": "crypto",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "< $0.16121"
+        },
+        {
+          "index": 1,
+          "label": "$0.16121 - $0.16175"
+        },
+        {
+          "index": 2,
+          "label": "$0.16175 - $0.16229"
+        },
+        {
+          "index": 3,
+          "label": "$0.16229 - $0.16283"
+        },
+        {
+          "index": 4,
+          "label": "> $0.16283"
+        }
+      ],
+      "tags": [
+        "cc",
+        "crypto"
+      ],
+      "totalPool": "72.37",
+      "status": "RESOLVED",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": 1,
+      "endTime": "2026-02-24T03:50:00.000Z",
+      "resolutionTime": "2026-02-24T04:00:17.908Z",
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": true,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": null,
+      "createdByUserId": "cmlgdjazs000001l0x0or0o8q",
+      "createdAt": "2026-02-24T02:01:17.122Z",
+      "updatedAt": "2026-02-24T04:00:17.910Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": null,
+      "scheduledResolutionTime": "2026-02-24T04:00:00.000Z",
+      "resolution": {
+        "id": "cmm02usxm00230tyyy9nsdxh0",
+        "marketId": "cmlzylr2a007m0svq9tnqehcx",
+        "winningOutcome": 1,
+        "totalPool": "72.37",
+        "winningPool": "38",
+        "losingPool": "34.37",
+        "platformFee": "0.6874",
+        "payoutPool": "71.6826",
+        "resolvedBy": "auto-resolution",
+        "resolvedAt": "2026-02-24T04:00:17.913Z"
+      },
+      "outcomeStats": [
+        {
+          "id": "cmlzylr2d007n0svqrn1yaro3",
+          "marketId": "cmlzylr2a007m0svq9tnqehcx",
+          "outcomeIndex": 0,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzylr2g007o0svq09fv4ei8",
+          "marketId": "cmlzylr2a007m0svq9tnqehcx",
+          "outcomeIndex": 1,
+          "totalBets": 6,
+          "totalAmount": "38",
+          "uniqueBettors": 6
+        },
+        {
+          "id": "cmlzylr2i007p0svq5tqg16sr",
+          "marketId": "cmlzylr2a007m0svq9tnqehcx",
+          "outcomeIndex": 2,
+          "totalBets": 1,
+          "totalAmount": "9.37",
+          "uniqueBettors": 1
+        },
+        {
+          "id": "cmlzylr2l007q0svqmzwi5p0k",
+          "marketId": "cmlzylr2a007m0svq9tnqehcx",
+          "outcomeIndex": 3,
+          "totalBets": 3,
+          "totalAmount": "15",
+          "uniqueBettors": 2
+        },
+        {
+          "id": "cmlzylr2n007r0svqmfrfju0n",
+          "marketId": "cmlzylr2a007m0svq9tnqehcx",
+          "outcomeIndex": 4,
+          "totalBets": 2,
+          "totalAmount": "10",
+          "uniqueBettors": 1
+        }
+      ],
+      "betCount": 12,
+      "autoResolution": {
+        "resolverType": "crypto-chainlink",
+        "resolverConfig": {
+          "type": "range",
+          "asset": "CC",
+          "feedId": "0x0003111e1c2212376d4c196bf7635919e4b28368809dda6f515c396453d53770",
+          "ranges": [
+            {
+              "max": 0.16121,
+              "min": null,
+              "index": 0
+            },
+            {
+              "max": 0.16175,
+              "min": 0.16121,
+              "index": 1
+            },
+            {
+              "max": 0.16229,
+              "min": 0.16175,
+              "index": 2
+            },
+            {
+              "max": 0.16283,
+              "min": 0.16229,
+              "index": 3
+            },
+            {
+              "max": null,
+              "min": 0.16283,
+              "index": 4
+            }
+          ],
+          "priceSource": "chainlink"
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": true,
+        "resolutionDelay": 0
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmlzylqwi007f0svqn8efiiut",
+      "question": "Ethereum price at 04:00 UTC?",
+      "description": "2-hour price range market.\n\nResolves based on the Chainlink Data Streams ETH/USD benchmark price at 04:00 UTC on February 24, 2026. The winning outcome is the price range that contains the resolution price.\n\nResolution source: Chainlink Data Streams ETH/USD benchmark price (DON consensus median).\nPrice data cryptographically signed by the Chainlink Decentralized Oracle Network.",
+      "category": "crypto",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "< $1,831.41"
+        },
+        {
+          "index": 1,
+          "label": "$1,831.41 - $1,837.54"
+        },
+        {
+          "index": 2,
+          "label": "$1,837.54 - $1,843.68"
+        },
+        {
+          "index": 3,
+          "label": "$1,843.68 - $1,849.81"
+        },
+        {
+          "index": 4,
+          "label": "> $1,849.81"
+        }
+      ],
+      "tags": [
+        "eth",
+        "crypto"
+      ],
+      "totalPool": "167.53",
+      "status": "RESOLVED",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": 0,
+      "endTime": "2026-02-24T03:50:00.000Z",
+      "resolutionTime": "2026-02-24T04:00:17.351Z",
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": true,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": null,
+      "createdByUserId": "cmlgdjazs000001l0x0or0o8q",
+      "createdAt": "2026-02-24T02:01:16.914Z",
+      "updatedAt": "2026-02-24T04:00:17.351Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": null,
+      "scheduledResolutionTime": "2026-02-24T04:00:00.000Z",
+      "resolution": {
+        "id": "cmm02usi3001m0tyyanxrn91f",
+        "marketId": "cmlzylqwi007f0svqn8efiiut",
+        "winningOutcome": 0,
+        "totalPool": "167.53",
+        "winningPool": "102.53",
+        "losingPool": "65",
+        "platformFee": "1.3",
+        "payoutPool": "166.23",
+        "resolvedBy": "auto-resolution",
+        "resolvedAt": "2026-02-24T04:00:17.354Z"
+      },
+      "outcomeStats": [
+        {
+          "id": "cmlzylqwm007g0svqftwkh03b",
+          "marketId": "cmlzylqwi007f0svqn8efiiut",
+          "outcomeIndex": 0,
+          "totalBets": 13,
+          "totalAmount": "102.53",
+          "uniqueBettors": 13
+        },
+        {
+          "id": "cmlzylqwo007h0svq8apjg9cy",
+          "marketId": "cmlzylqwi007f0svqn8efiiut",
+          "outcomeIndex": 1,
+          "totalBets": 9,
+          "totalAmount": "55",
+          "uniqueBettors": 8
+        },
+        {
+          "id": "cmlzylqwr007i0svq0twhndzr",
+          "marketId": "cmlzylqwi007f0svqn8efiiut",
+          "outcomeIndex": 2,
+          "totalBets": 2,
+          "totalAmount": "10",
+          "uniqueBettors": 1
+        },
+        {
+          "id": "cmlzylqwt007j0svqucjvypud",
+          "marketId": "cmlzylqwi007f0svqn8efiiut",
+          "outcomeIndex": 3,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzylqwv007k0svqlce8vuhv",
+          "marketId": "cmlzylqwi007f0svqn8efiiut",
+          "outcomeIndex": 4,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        }
+      ],
+      "betCount": 24,
+      "autoResolution": {
+        "resolverType": "crypto-chainlink",
+        "resolverConfig": {
+          "type": "range",
+          "asset": "ETH",
+          "feedId": "0x000362205e10b3a147d02792eccee483dca6c7b44ecce7012cb8c6e0b68b3ae9",
+          "ranges": [
+            {
+              "max": 1831.41,
+              "min": null,
+              "index": 0
+            },
+            {
+              "max": 1837.54,
+              "min": 1831.41,
+              "index": 1
+            },
+            {
+              "max": 1843.68,
+              "min": 1837.54,
+              "index": 2
+            },
+            {
+              "max": 1849.81,
+              "min": 1843.68,
+              "index": 3
+            },
+            {
+              "max": null,
+              "min": 1849.81,
+              "index": 4
+            }
+          ],
+          "priceSource": "chainlink"
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": true,
+        "resolutionDelay": 0
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmlzylqql00780svqfifvuu44",
+      "question": "Bitcoin price at 04:00 UTC?",
+      "description": "2-hour price range market.\n\nResolves based on the Chainlink Data Streams BTC/USD benchmark price at 04:00 UTC on February 24, 2026. The winning outcome is the price range that contains the resolution price.\n\nResolution source: Chainlink Data Streams BTC/USD benchmark price (DON consensus median).\nPrice data cryptographically signed by the Chainlink Decentralized Oracle Network.",
+      "category": "crypto",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "< $63,795.24"
+        },
+        {
+          "index": 1,
+          "label": "$63,795.24 - $64,008.96"
+        },
+        {
+          "index": 2,
+          "label": "$64,008.96 - $64,222.68"
+        },
+        {
+          "index": 3,
+          "label": "$64,222.68 - $64,436.40"
+        },
+        {
+          "index": 4,
+          "label": "> $64,436.40"
+        }
+      ],
+      "tags": [
+        "btc",
+        "crypto"
+      ],
+      "totalPool": "255",
+      "status": "RESOLVED",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": 0,
+      "endTime": "2026-02-24T03:50:00.000Z",
+      "resolutionTime": "2026-02-24T04:00:16.574Z",
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": true,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": null,
+      "createdByUserId": "cmlgdjazs000001l0x0or0o8q",
+      "createdAt": "2026-02-24T02:01:16.701Z",
+      "updatedAt": "2026-02-24T04:00:16.575Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": null,
+      "scheduledResolutionTime": "2026-02-24T04:00:00.000Z",
+      "resolution": {
+        "id": "cmm02urwj000z0tyydoa2q3nj",
+        "marketId": "cmlzylqql00780svqfifvuu44",
+        "winningOutcome": 0,
+        "totalPool": "255",
+        "winningPool": "215",
+        "losingPool": "40",
+        "platformFee": "0.8",
+        "payoutPool": "254.2",
+        "resolvedBy": "auto-resolution",
+        "resolvedAt": "2026-02-24T04:00:16.578Z"
+      },
+      "outcomeStats": [
+        {
+          "id": "cmlzylqqq00790svqaiqxqyf9",
+          "marketId": "cmlzylqql00780svqfifvuu44",
+          "outcomeIndex": 0,
+          "totalBets": 20,
+          "totalAmount": "215",
+          "uniqueBettors": 19
+        },
+        {
+          "id": "cmlzylqqs007a0svq33jnhxqu",
+          "marketId": "cmlzylqql00780svqfifvuu44",
+          "outcomeIndex": 1,
+          "totalBets": 4,
+          "totalAmount": "30",
+          "uniqueBettors": 4
+        },
+        {
+          "id": "cmlzylqqv007b0svqmk74ou8a",
+          "marketId": "cmlzylqql00780svqfifvuu44",
+          "outcomeIndex": 2,
+          "totalBets": 1,
+          "totalAmount": "10",
+          "uniqueBettors": 1
+        },
+        {
+          "id": "cmlzylqqx007c0svqui1icwmq",
+          "marketId": "cmlzylqql00780svqfifvuu44",
+          "outcomeIndex": 3,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzylqqz007d0svqph8lwkd9",
+          "marketId": "cmlzylqql00780svqfifvuu44",
+          "outcomeIndex": 4,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        }
+      ],
+      "betCount": 25,
+      "autoResolution": {
+        "resolverType": "crypto-chainlink",
+        "resolverConfig": {
+          "type": "range",
+          "asset": "BTC",
+          "feedId": "0x00039d9e45394f473ab1f050a1b963e6b05351e52d71e507509ada0c95ed75b8",
+          "ranges": [
+            {
+              "max": 63795.24,
+              "min": null,
+              "index": 0
+            },
+            {
+              "max": 64008.96,
+              "min": 63795.24,
+              "index": 1
+            },
+            {
+              "max": 64222.68,
+              "min": 64008.96,
+              "index": 2
+            },
+            {
+              "max": 64436.4,
+              "min": 64222.68,
+              "index": 3
+            },
+            {
+              "max": null,
+              "min": 64436.4,
+              "index": 4
+            }
+          ],
+          "priceSource": "chainlink"
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": true,
+        "resolutionDelay": 0
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmlzylqjv00740svqjoft3pvw",
+      "question": "Canton Coin above $0.16202 at 03:00 UTC?",
+      "description": "1-hour binary market.\n\nResolves YES if the Canton Coin price is above $0.16202 at 03:00 UTC on February 24, 2026, or NO if at or below $0.16202.\n\n\u2022 YES wins if price > $0.16202\n\u2022 NO wins if price \u2264 $0.16202\n\nResolution source: Chainlink Data Streams CC/USD benchmark price (DON consensus median).\nPrice data cryptographically signed by the Chainlink Decentralized Oracle Network.",
+      "category": "crypto",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "Yes"
+        },
+        {
+          "index": 1,
+          "label": "No"
+        }
+      ],
+      "tags": [
+        "cc",
+        "crypto"
+      ],
+      "totalPool": "1483.18",
+      "status": "RESOLVED",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": 0,
+      "endTime": "2026-02-24T02:50:00.000Z",
+      "resolutionTime": "2026-02-24T03:00:19.850Z",
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": true,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": null,
+      "createdByUserId": "cmlkrdcr901co01k6vk4fvf79",
+      "createdAt": "2026-02-24T02:01:16.459Z",
+      "updatedAt": "2026-02-24T03:00:19.852Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": null,
+      "scheduledResolutionTime": "2026-02-24T03:00:00.000Z",
+      "resolution": {
+        "id": "cmm00ponl00ks0svq0hjxpln3",
+        "marketId": "cmlzylqjv00740svqjoft3pvw",
+        "winningOutcome": 0,
+        "totalPool": "1483.18",
+        "winningPool": "1182.18",
+        "losingPool": "301",
+        "platformFee": "6.02",
+        "payoutPool": "1477.16",
+        "resolvedBy": "auto-resolution",
+        "resolvedAt": "2026-02-24T03:00:19.856Z"
+      },
+      "outcomeStats": [
+        {
+          "id": "cmlzylqjz00750svqolinoctl",
+          "marketId": "cmlzylqjv00740svqjoft3pvw",
+          "outcomeIndex": 0,
+          "totalBets": 55,
+          "totalAmount": "1182.18",
+          "uniqueBettors": 42
+        },
+        {
+          "id": "cmlzylqk300760svqcf5bkgbr",
+          "marketId": "cmlzylqjv00740svqjoft3pvw",
+          "outcomeIndex": 1,
+          "totalBets": 31,
+          "totalAmount": "301",
+          "uniqueBettors": 10
+        }
+      ],
+      "betCount": 86,
+      "autoResolution": {
+        "resolverType": "crypto-chainlink",
+        "resolverConfig": {
+          "type": "binary",
+          "asset": "CC",
+          "feedId": "0x0003111e1c2212376d4c196bf7635919e4b28368809dda6f515c396453d53770",
+          "threshold": 0.1620239956388794,
+          "priceSource": "chainlink",
+          "aboveOutcome": 0,
+          "belowOutcome": 1
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": true,
+        "resolutionDelay": 0
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmlzylqdw00700svqobruda6w",
+      "question": "Solana above $77.679 at 03:00 UTC?",
+      "description": "1-hour binary market.\n\nResolves YES if the Solana price is above $77.679 at 03:00 UTC on February 24, 2026, or NO if at or below $77.679.\n\n\u2022 YES wins if price > $77.679\n\u2022 NO wins if price \u2264 $77.679\n\nResolution source: Chainlink Data Streams SOL/USD benchmark price (DON consensus median).\nPrice data cryptographically signed by the Chainlink Decentralized Oracle Network.",
+      "category": "crypto",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "Yes"
+        },
+        {
+          "index": 1,
+          "label": "No"
+        }
+      ],
+      "tags": [
+        "sol",
+        "crypto"
+      ],
+      "totalPool": "349.99",
+      "status": "RESOLVED",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": 1,
+      "endTime": "2026-02-24T02:50:00.000Z",
+      "resolutionTime": "2026-02-24T03:00:19.263Z",
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": true,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": null,
+      "createdByUserId": "cmlkrdcr901co01k6vk4fvf79",
+      "createdAt": "2026-02-24T02:01:16.244Z",
+      "updatedAt": "2026-02-24T03:00:19.264Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": null,
+      "scheduledResolutionTime": "2026-02-24T03:00:00.000Z",
+      "resolution": {
+        "id": "cmm00po7700ka0svqzj8wgndf",
+        "marketId": "cmlzylqdw00700svqobruda6w",
+        "winningOutcome": 1,
+        "totalPool": "349.99",
+        "winningPool": "229.99",
+        "losingPool": "120",
+        "platformFee": "2.4",
+        "payoutPool": "347.59",
+        "resolvedBy": "auto-resolution",
+        "resolvedAt": "2026-02-24T03:00:19.266Z"
+      },
+      "outcomeStats": [
+        {
+          "id": "cmlzylqe000710svq1ni90jih",
+          "marketId": "cmlzylqdw00700svqobruda6w",
+          "outcomeIndex": 0,
+          "totalBets": 12,
+          "totalAmount": "120",
+          "uniqueBettors": 11
+        },
+        {
+          "id": "cmlzylqe300720svqnydnw9j0",
+          "marketId": "cmlzylqdw00700svqobruda6w",
+          "outcomeIndex": 1,
+          "totalBets": 17,
+          "totalAmount": "229.99",
+          "uniqueBettors": 14
+        }
+      ],
+      "betCount": 29,
+      "autoResolution": {
+        "resolverType": "crypto-chainlink",
+        "resolverConfig": {
+          "type": "binary",
+          "asset": "SOL",
+          "feedId": "0x0003b778d3f6b2ac4991302b89cb313f99a42467d6c9c5f96f57c29c0d2bc24f",
+          "threshold": 77.67907904190733,
+          "priceSource": "chainlink",
+          "aboveOutcome": 0,
+          "belowOutcome": 1
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": true,
+        "resolutionDelay": 0
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmlzylq87006v0svqjbqb2cx6",
+      "question": "Ethereum above $1,840.63 at 03:00 UTC?",
+      "description": "1-hour binary market.\n\nResolves YES if the Ethereum price is above $1,840.63 at 03:00 UTC on February 24, 2026, or NO if at or below $1,840.63.\n\n\u2022 YES wins if price > $1,840.63\n\u2022 NO wins if price \u2264 $1,840.63\n\nResolution source: Chainlink Data Streams ETH/USD benchmark price (DON consensus median).\nPrice data cryptographically signed by the Chainlink Decentralized Oracle Network.",
+      "category": "crypto",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "Yes"
+        },
+        {
+          "index": 1,
+          "label": "No"
+        }
+      ],
+      "tags": [
+        "eth",
+        "crypto"
+      ],
+      "totalPool": "471",
+      "status": "RESOLVED",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": 0,
+      "endTime": "2026-02-24T02:50:00.000Z",
+      "resolutionTime": "2026-02-24T03:00:18.166Z",
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": true,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": null,
+      "createdByUserId": "cmlkrdcr901co01k6vk4fvf79",
+      "createdAt": "2026-02-24T02:01:16.039Z",
+      "updatedAt": "2026-02-24T03:00:18.166Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": null,
+      "scheduledResolutionTime": "2026-02-24T03:00:00.000Z",
+      "resolution": {
+        "id": "cmm00pncq00j20svq58k6zt6d",
+        "marketId": "cmlzylq87006v0svqjbqb2cx6",
+        "winningOutcome": 0,
+        "totalPool": "471",
+        "winningPool": "396",
+        "losingPool": "75",
+        "platformFee": "1.5",
+        "payoutPool": "469.5",
+        "resolvedBy": "auto-resolution",
+        "resolvedAt": "2026-02-24T03:00:18.170Z"
+      },
+      "outcomeStats": [
+        {
+          "id": "cmlzylq89006w0svqo64iert8",
+          "marketId": "cmlzylq87006v0svqjbqb2cx6",
+          "outcomeIndex": 0,
+          "totalBets": 59,
+          "totalAmount": "396",
+          "uniqueBettors": 40
+        },
+        {
+          "id": "cmlzylq8b006x0svq5m95ts51",
+          "marketId": "cmlzylq87006v0svqjbqb2cx6",
+          "outcomeIndex": 1,
+          "totalBets": 9,
+          "totalAmount": "75",
+          "uniqueBettors": 8
+        }
+      ],
+      "betCount": 68,
+      "autoResolution": {
+        "resolverType": "crypto-chainlink",
+        "resolverConfig": {
+          "type": "binary",
+          "asset": "ETH",
+          "feedId": "0x000362205e10b3a147d02792eccee483dca6c7b44ecce7012cb8c6e0b68b3ae9",
+          "threshold": 1840.628742667544,
+          "priceSource": "chainlink",
+          "aboveOutcome": 0,
+          "belowOutcome": 1
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": true,
+        "resolutionDelay": 0
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmlzylq1g006r0svqn93wnu7y",
+      "question": "Bitcoin above $64,116.70 at 03:00 UTC?",
+      "description": "1-hour binary market.\n\nResolves YES if the Bitcoin price is above $64,116.70 at 03:00 UTC on February 24, 2026, or NO if at or below $64,116.70.\n\n\u2022 YES wins if price > $64,116.70\n\u2022 NO wins if price \u2264 $64,116.70\n\nResolution source: Chainlink Data Streams BTC/USD benchmark price (DON consensus median).\nPrice data cryptographically signed by the Chainlink Decentralized Oracle Network.",
+      "category": "crypto",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "Yes"
+        },
+        {
+          "index": 1,
+          "label": "No"
+        }
+      ],
+      "tags": [
+        "btc",
+        "crypto"
+      ],
+      "totalPool": "495.92",
+      "status": "RESOLVED",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": 1,
+      "endTime": "2026-02-24T02:50:00.000Z",
+      "resolutionTime": "2026-02-24T03:00:17.628Z",
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": true,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": null,
+      "createdByUserId": "cmlkrdcr901co01k6vk4fvf79",
+      "createdAt": "2026-02-24T02:01:15.796Z",
+      "updatedAt": "2026-02-24T03:00:17.629Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": null,
+      "scheduledResolutionTime": "2026-02-24T03:00:00.000Z",
+      "resolution": {
+        "id": "cmm00pmxt00im0svq5kwo9s7p",
+        "marketId": "cmlzylq1g006r0svqn93wnu7y",
+        "winningOutcome": 1,
+        "totalPool": "495.92",
+        "winningPool": "175",
+        "losingPool": "320.92",
+        "platformFee": "6.4184",
+        "payoutPool": "489.5016",
+        "resolvedBy": "auto-resolution",
+        "resolvedAt": "2026-02-24T03:00:17.632Z"
+      },
+      "outcomeStats": [
+        {
+          "id": "cmlzylq1j006s0svqd2wfza6t",
+          "marketId": "cmlzylq1g006r0svqn93wnu7y",
+          "outcomeIndex": 0,
+          "totalBets": 29,
+          "totalAmount": "320.92",
+          "uniqueBettors": 25
+        },
+        {
+          "id": "cmlzylq1l006t0svq1oi43cld",
+          "marketId": "cmlzylq1g006r0svqn93wnu7y",
+          "outcomeIndex": 1,
+          "totalBets": 14,
+          "totalAmount": "175",
+          "uniqueBettors": 12
+        }
+      ],
+      "betCount": 43,
+      "autoResolution": {
+        "resolverType": "crypto-chainlink",
+        "resolverConfig": {
+          "type": "binary",
+          "asset": "BTC",
+          "feedId": "0x00039d9e45394f473ab1f050a1b963e6b05351e52d71e507509ada0c95ed75b8",
+          "threshold": 64116.70497255598,
+          "priceSource": "chainlink",
+          "aboveOutcome": 0,
+          "belowOutcome": 1
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": true,
+        "resolutionDelay": 0
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmlzwgkqc005u0twor4b4yc0a",
+      "question": "Canton Coin above $0.16244 at 02:00 UTC?",
+      "description": "1-hour binary market.\n\nResolves YES if the Canton Coin price is above $0.16244 at 02:00 UTC on February 24, 2026, or NO if at or below $0.16244.\n\n\u2022 YES wins if price > $0.16244\n\u2022 NO wins if price \u2264 $0.16244\n\nResolution source: Chainlink Data Streams CC/USD benchmark price (DON consensus median).\nPrice data cryptographically signed by the Chainlink Decentralized Oracle Network.",
+      "category": "crypto",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "Yes"
+        },
+        {
+          "index": 1,
+          "label": "No"
+        }
+      ],
+      "tags": [
+        "cc",
+        "crypto"
+      ],
+      "totalPool": "611",
+      "status": "RESOLVED",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": 1,
+      "endTime": "2026-02-24T01:50:00.000Z",
+      "resolutionTime": "2026-02-24T02:00:21.921Z",
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": true,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": null,
+      "createdByUserId": "cmlkrdcr901co01k6vk4fvf79",
+      "createdAt": "2026-02-24T01:01:16.404Z",
+      "updatedAt": "2026-02-24T02:00:21.922Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": null,
+      "scheduledResolutionTime": "2026-02-24T02:00:00.000Z",
+      "resolution": {
+        "id": "cmlzykkh2005o0svqq9nj4qac",
+        "marketId": "cmlzwgkqc005u0twor4b4yc0a",
+        "winningOutcome": 1,
+        "totalPool": "611",
+        "winningPool": "541",
+        "losingPool": "70",
+        "platformFee": "1.4",
+        "payoutPool": "609.6",
+        "resolvedBy": "auto-resolution",
+        "resolvedAt": "2026-02-24T02:00:21.926Z"
+      },
+      "outcomeStats": [
+        {
+          "id": "cmlzwgkqf005v0twodu6i3sq4",
+          "marketId": "cmlzwgkqc005u0twor4b4yc0a",
+          "outcomeIndex": 0,
+          "totalBets": 12,
+          "totalAmount": "70",
+          "uniqueBettors": 11
+        },
+        {
+          "id": "cmlzwgkqi005w0two5xtxcath",
+          "marketId": "cmlzwgkqc005u0twor4b4yc0a",
+          "outcomeIndex": 1,
+          "totalBets": 44,
+          "totalAmount": "541",
+          "uniqueBettors": 30
+        }
+      ],
+      "betCount": 56,
+      "autoResolution": {
+        "resolverType": "crypto-chainlink",
+        "resolverConfig": {
+          "type": "binary",
+          "asset": "CC",
+          "feedId": "0x0003111e1c2212376d4c196bf7635919e4b28368809dda6f515c396453d53770",
+          "threshold": 0.1624405,
+          "priceSource": "chainlink",
+          "aboveOutcome": 0,
+          "belowOutcome": 1
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": true,
+        "resolutionDelay": 0
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmlzwgkk9005p0twoj4b9qent",
+      "question": "Solana above $78.358 at 02:00 UTC?",
+      "description": "1-hour binary market.\n\nResolves YES if the Solana price is above $78.358 at 02:00 UTC on February 24, 2026, or NO if at or below $78.358.\n\n\u2022 YES wins if price > $78.358\n\u2022 NO wins if price \u2264 $78.358\n\nResolution source: Chainlink Data Streams SOL/USD benchmark price (DON consensus median).\nPrice data cryptographically signed by the Chainlink Decentralized Oracle Network.",
+      "category": "crypto",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "Yes"
+        },
+        {
+          "index": 1,
+          "label": "No"
+        }
+      ],
+      "tags": [
+        "sol",
+        "crypto"
+      ],
+      "totalPool": "6211.65",
+      "status": "RESOLVED",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": 1,
+      "endTime": "2026-02-24T01:50:00.000Z",
+      "resolutionTime": "2026-02-24T02:00:21.128Z",
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": true,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": null,
+      "createdByUserId": "cmlkrdcr901co01k6vk4fvf79",
+      "createdAt": "2026-02-24T01:01:16.185Z",
+      "updatedAt": "2026-02-24T02:00:21.128Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": null,
+      "scheduledResolutionTime": "2026-02-24T02:00:00.000Z",
+      "resolution": {
+        "id": "cmlzykjv0004o0svqy945btre",
+        "marketId": "cmlzwgkk9005p0twoj4b9qent",
+        "winningOutcome": 1,
+        "totalPool": "6211.65",
+        "winningPool": "6115",
+        "losingPool": "96.65",
+        "platformFee": "1.933",
+        "payoutPool": "6209.717",
+        "resolvedBy": "auto-resolution",
+        "resolvedAt": "2026-02-24T02:00:21.131Z"
+      },
+      "outcomeStats": [
+        {
+          "id": "cmlzwgkkd005q0twotiwxehap",
+          "marketId": "cmlzwgkk9005p0twoj4b9qent",
+          "outcomeIndex": 0,
+          "totalBets": 17,
+          "totalAmount": "96.65",
+          "uniqueBettors": 15
+        },
+        {
+          "id": "cmlzwgkkg005r0twor0bcfe9v",
+          "marketId": "cmlzwgkk9005p0twoj4b9qent",
+          "outcomeIndex": 1,
+          "totalBets": 176,
+          "totalAmount": "6115",
+          "uniqueBettors": 32
+        }
+      ],
+      "betCount": 193,
+      "autoResolution": {
+        "resolverType": "crypto-chainlink",
+        "resolverConfig": {
+          "type": "binary",
+          "asset": "SOL",
+          "feedId": "0x0003b778d3f6b2ac4991302b89cb313f99a42467d6c9c5f96f57c29c0d2bc24f",
+          "threshold": 78.3583785,
+          "priceSource": "chainlink",
+          "aboveOutcome": 0,
+          "belowOutcome": 1
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": true,
+        "resolutionDelay": 0
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmlzwgkdg005l0twoomnjaqru",
+      "question": "Ethereum above $1,866.53 at 02:00 UTC?",
+      "description": "1-hour binary market.\n\nResolves YES if the Ethereum price is above $1,866.53 at 02:00 UTC on February 24, 2026, or NO if at or below $1,866.53.\n\n\u2022 YES wins if price > $1,866.53\n\u2022 NO wins if price \u2264 $1,866.53\n\nResolution source: Chainlink Data Streams ETH/USD benchmark price (DON consensus median).\nPrice data cryptographically signed by the Chainlink Decentralized Oracle Network.",
+      "category": "crypto",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "Yes"
+        },
+        {
+          "index": 1,
+          "label": "No"
+        }
+      ],
+      "tags": [
+        "eth",
+        "crypto"
+      ],
+      "totalPool": "960",
+      "status": "RESOLVED",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": 1,
+      "endTime": "2026-02-24T01:50:00.000Z",
+      "resolutionTime": "2026-02-24T02:00:20.260Z",
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": true,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": null,
+      "createdByUserId": "cmlkrdcr901co01k6vk4fvf79",
+      "createdAt": "2026-02-24T01:01:15.940Z",
+      "updatedAt": "2026-02-24T02:00:20.261Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": null,
+      "scheduledResolutionTime": "2026-02-24T02:00:00.000Z",
+      "resolution": {
+        "id": "cmlzykj6x003j0svq4nvii4lu",
+        "marketId": "cmlzwgkdg005l0twoomnjaqru",
+        "winningOutcome": 1,
+        "totalPool": "960",
+        "winningPool": "910",
+        "losingPool": "50",
+        "platformFee": "1",
+        "payoutPool": "959",
+        "resolvedBy": "auto-resolution",
+        "resolvedAt": "2026-02-24T02:00:20.264Z"
+      },
+      "outcomeStats": [
+        {
+          "id": "cmlzwgkdk005m0two1dus39wk",
+          "marketId": "cmlzwgkdg005l0twoomnjaqru",
+          "outcomeIndex": 0,
+          "totalBets": 10,
+          "totalAmount": "50",
+          "uniqueBettors": 10
+        },
+        {
+          "id": "cmlzwgkdt005n0twoiqwjxzm7",
+          "marketId": "cmlzwgkdg005l0twoomnjaqru",
+          "outcomeIndex": 1,
+          "totalBets": 84,
+          "totalAmount": "910",
+          "uniqueBettors": 37
+        }
+      ],
+      "betCount": 94,
+      "autoResolution": {
+        "resolverType": "crypto-chainlink",
+        "resolverConfig": {
+          "type": "binary",
+          "asset": "ETH",
+          "feedId": "0x000362205e10b3a147d02792eccee483dca6c7b44ecce7012cb8c6e0b68b3ae9",
+          "threshold": 1866.52599,
+          "priceSource": "chainlink",
+          "aboveOutcome": 0,
+          "belowOutcome": 1
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": true,
+        "resolutionDelay": 0
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmlzwgk7p005h0two5zjrz2sw",
+      "question": "Bitcoin above $64,874.79 at 02:00 UTC?",
+      "description": "1-hour binary market.\n\nResolves YES if the Bitcoin price is above $64,874.79 at 02:00 UTC on February 24, 2026, or NO if at or below $64,874.79.\n\n\u2022 YES wins if price > $64,874.79\n\u2022 NO wins if price \u2264 $64,874.79\n\nResolution source: Chainlink Data Streams BTC/USD benchmark price (DON consensus median).\nPrice data cryptographically signed by the Chainlink Decentralized Oracle Network.",
+      "category": "crypto",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "Yes"
+        },
+        {
+          "index": 1,
+          "label": "No"
+        }
+      ],
+      "tags": [
+        "btc",
+        "crypto"
+      ],
+      "totalPool": "11939.29",
+      "status": "RESOLVED",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": 1,
+      "endTime": "2026-02-24T01:50:00.000Z",
+      "resolutionTime": "2026-02-24T02:00:18.817Z",
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": true,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": null,
+      "createdByUserId": "cmlkrdcr901co01k6vk4fvf79",
+      "createdAt": "2026-02-24T01:01:15.733Z",
+      "updatedAt": "2026-02-24T02:00:18.818Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": null,
+      "scheduledResolutionTime": "2026-02-24T02:00:00.000Z",
+      "resolution": {
+        "id": "cmlzyki3n001x0svqerobqwvr",
+        "marketId": "cmlzwgk7p005h0two5zjrz2sw",
+        "winningOutcome": 1,
+        "totalPool": "11939.29",
+        "winningPool": "11798.99",
+        "losingPool": "140.3",
+        "platformFee": "2.806",
+        "payoutPool": "11936.484",
+        "resolvedBy": "auto-resolution",
+        "resolvedAt": "2026-02-24T02:00:18.850Z"
+      },
+      "outcomeStats": [
+        {
+          "id": "cmlzwgk7s005i0two1f9dn19m",
+          "marketId": "cmlzwgk7p005h0two5zjrz2sw",
+          "outcomeIndex": 0,
+          "totalBets": 20,
+          "totalAmount": "140.3",
+          "uniqueBettors": 17
+        },
+        {
+          "id": "cmlzwgk7u005j0twoq0meehmi",
+          "marketId": "cmlzwgk7p005h0two5zjrz2sw",
+          "outcomeIndex": 1,
+          "totalBets": 292,
+          "totalAmount": "11798.99",
+          "uniqueBettors": 50
+        }
+      ],
+      "betCount": 312,
+      "autoResolution": {
+        "resolverType": "crypto-chainlink",
+        "resolverConfig": {
+          "type": "binary",
+          "asset": "BTC",
+          "feedId": "0x00039d9e45394f473ab1f050a1b963e6b05351e52d71e507509ada0c95ed75b8",
+          "threshold": 64874.794955,
+          "priceSource": "chainlink",
+          "aboveOutcome": 0,
+          "belowOutcome": 1
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": true,
+        "resolutionDelay": 0
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmlzubguz00700trrqbwpb550",
+      "question": "Solana price at 02:00 UTC?",
+      "description": "2-hour price range market.\n\nResolves based on the Chainlink Data Streams SOL/USD benchmark price at 02:00 UTC on February 24, 2026. The winning outcome is the price range that contains the resolution price.\n\nResolution source: Chainlink Data Streams SOL/USD benchmark price (DON consensus median).\nPrice data cryptographically signed by the Chainlink Decentralized Oracle Network.",
+      "category": "crypto",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "< $77.707"
+        },
+        {
+          "index": 1,
+          "label": "$77.707 - $77.968"
+        },
+        {
+          "index": 2,
+          "label": "$77.968 - $78.228"
+        },
+        {
+          "index": 3,
+          "label": "$78.228 - $78.488"
+        },
+        {
+          "index": 4,
+          "label": "> $78.488"
+        }
+      ],
+      "tags": [
+        "sol",
+        "crypto"
+      ],
+      "totalPool": "75",
+      "status": "RESOLVED",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": 0,
+      "endTime": "2026-02-24T01:50:00.000Z",
+      "resolutionTime": "2026-02-24T02:00:18.292Z",
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": true,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": null,
+      "createdByUserId": "cmlgdjazs000001l0x0or0o8q",
+      "createdAt": "2026-02-24T00:01:18.875Z",
+      "updatedAt": "2026-02-24T02:00:18.293Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": null,
+      "scheduledResolutionTime": "2026-02-24T02:00:00.000Z",
+      "resolution": {
+        "id": "cmlzykho9001l0svqnnf4eer9",
+        "marketId": "cmlzubguz00700trrqbwpb550",
+        "winningOutcome": 0,
+        "totalPool": "75",
+        "winningPool": "60",
+        "losingPool": "15",
+        "platformFee": "0.3",
+        "payoutPool": "74.7",
+        "resolvedBy": "auto-resolution",
+        "resolvedAt": "2026-02-24T02:00:18.297Z"
+      },
+      "outcomeStats": [
+        {
+          "id": "cmlzubgvh00710trrj3d55ztx",
+          "marketId": "cmlzubguz00700trrqbwpb550",
+          "outcomeIndex": 0,
+          "totalBets": 8,
+          "totalAmount": "60",
+          "uniqueBettors": 8
+        },
+        {
+          "id": "cmlzubgvm00720trr4y6wzb8w",
+          "marketId": "cmlzubguz00700trrqbwpb550",
+          "outcomeIndex": 1,
+          "totalBets": 3,
+          "totalAmount": "15",
+          "uniqueBettors": 3
+        },
+        {
+          "id": "cmlzubgvx00730trrp8y02ulu",
+          "marketId": "cmlzubguz00700trrqbwpb550",
+          "outcomeIndex": 2,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzubgw700740trrz7xn70mj",
+          "marketId": "cmlzubguz00700trrqbwpb550",
+          "outcomeIndex": 3,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzubgwh00750trr2tk83aub",
+          "marketId": "cmlzubguz00700trrqbwpb550",
+          "outcomeIndex": 4,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        }
+      ],
+      "betCount": 11,
+      "autoResolution": {
+        "resolverType": "crypto-chainlink",
+        "resolverConfig": {
+          "type": "range",
+          "asset": "SOL",
+          "feedId": "0x0003b778d3f6b2ac4991302b89cb313f99a42467d6c9c5f96f57c29c0d2bc24f",
+          "ranges": [
+            {
+              "max": 77.707,
+              "min": null,
+              "index": 0
+            },
+            {
+              "max": 77.968,
+              "min": 77.707,
+              "index": 1
+            },
+            {
+              "max": 78.228,
+              "min": 77.968,
+              "index": 2
+            },
+            {
+              "max": 78.488,
+              "min": 78.228,
+              "index": 3
+            },
+            {
+              "max": null,
+              "min": 78.488,
+              "index": 4
+            }
+          ],
+          "priceSource": "chainlink"
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": true,
+        "resolutionDelay": 0
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmlzubgiu006s0trrsgt1am2t",
+      "question": "Canton Coin price at 02:00 UTC?",
+      "description": "2-hour price range market.\n\nResolves based on the Chainlink Data Streams CC/USD benchmark price at 02:00 UTC on February 24, 2026. The winning outcome is the price range that contains the resolution price.\n\nResolution source: Chainlink Data Streams CC/USD benchmark price (DON consensus median).\nPrice data cryptographically signed by the Chainlink Decentralized Oracle Network.",
+      "category": "crypto",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "< $0.16151"
+        },
+        {
+          "index": 1,
+          "label": "$0.16151 - $0.16205"
+        },
+        {
+          "index": 2,
+          "label": "$0.16205 - $0.16259"
+        },
+        {
+          "index": 3,
+          "label": "$0.16259 - $0.16313"
+        },
+        {
+          "index": 4,
+          "label": "> $0.16313"
+        }
+      ],
+      "tags": [
+        "cc",
+        "crypto"
+      ],
+      "totalPool": "50",
+      "status": "RESOLVED",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": 2,
+      "endTime": "2026-02-24T01:50:00.000Z",
+      "resolutionTime": "2026-02-24T02:00:17.841Z",
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": true,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": null,
+      "createdByUserId": "cmlgdjazs000001l0x0or0o8q",
+      "createdAt": "2026-02-24T00:01:18.438Z",
+      "updatedAt": "2026-02-24T02:00:17.841Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": null,
+      "scheduledResolutionTime": "2026-02-24T02:00:00.000Z",
+      "resolution": {
+        "id": "cmlzykhbq001f0svqpdl22yrm",
+        "marketId": "cmlzubgiu006s0trrsgt1am2t",
+        "winningOutcome": 2,
+        "totalPool": "50",
+        "winningPool": "10",
+        "losingPool": "40",
+        "platformFee": "0.8",
+        "payoutPool": "49.2",
+        "resolvedBy": "auto-resolution",
+        "resolvedAt": "2026-02-24T02:00:17.845Z"
+      },
+      "outcomeStats": [
+        {
+          "id": "cmlzubgj9006t0trr6fgqbmfz",
+          "marketId": "cmlzubgiu006s0trrsgt1am2t",
+          "outcomeIndex": 0,
+          "totalBets": 4,
+          "totalAmount": "20",
+          "uniqueBettors": 4
+        },
+        {
+          "id": "cmlzubgjz006u0trrst0rzgvy",
+          "marketId": "cmlzubgiu006s0trrsgt1am2t",
+          "outcomeIndex": 1,
+          "totalBets": 4,
+          "totalAmount": "20",
+          "uniqueBettors": 4
+        },
+        {
+          "id": "cmlzubgkg006v0trrnrhplm8b",
+          "marketId": "cmlzubgiu006s0trrsgt1am2t",
+          "outcomeIndex": 2,
+          "totalBets": 2,
+          "totalAmount": "10",
+          "uniqueBettors": 2
+        },
+        {
+          "id": "cmlzubgkv006w0trrs4yqhjnf",
+          "marketId": "cmlzubgiu006s0trrsgt1am2t",
+          "outcomeIndex": 3,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzubgl9006x0trrcpwtlm5d",
+          "marketId": "cmlzubgiu006s0trrsgt1am2t",
+          "outcomeIndex": 4,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        }
+      ],
+      "betCount": 10,
+      "autoResolution": {
+        "resolverType": "crypto-chainlink",
+        "resolverConfig": {
+          "type": "range",
+          "asset": "CC",
+          "feedId": "0x0003111e1c2212376d4c196bf7635919e4b28368809dda6f515c396453d53770",
+          "ranges": [
+            {
+              "max": 0.16151,
+              "min": null,
+              "index": 0
+            },
+            {
+              "max": 0.16205,
+              "min": 0.16151,
+              "index": 1
+            },
+            {
+              "max": 0.16259,
+              "min": 0.16205,
+              "index": 2
+            },
+            {
+              "max": 0.16313,
+              "min": 0.16259,
+              "index": 3
+            },
+            {
+              "max": null,
+              "min": 0.16313,
+              "index": 4
+            }
+          ],
+          "priceSource": "chainlink"
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": true,
+        "resolutionDelay": 0
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmlzubg6y006l0trreci8lstv",
+      "question": "Bitcoin price at 02:00 UTC?",
+      "description": "2-hour price range market.\n\nResolves based on the Chainlink Data Streams BTC/USD benchmark price at 02:00 UTC on February 24, 2026. The winning outcome is the price range that contains the resolution price.\n\nResolution source: Chainlink Data Streams BTC/USD benchmark price (DON consensus median).\nPrice data cryptographically signed by the Chainlink Decentralized Oracle Network.",
+      "category": "crypto",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "< $64,414.91"
+        },
+        {
+          "index": 1,
+          "label": "$64,414.91 - $64,630.70"
+        },
+        {
+          "index": 2,
+          "label": "$64,630.70 - $64,846.50"
+        },
+        {
+          "index": 3,
+          "label": "$64,846.50 - $65,062.29"
+        },
+        {
+          "index": 4,
+          "label": "> $65,062.29"
+        }
+      ],
+      "tags": [
+        "btc",
+        "crypto"
+      ],
+      "totalPool": "170.34",
+      "status": "RESOLVED",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": 0,
+      "endTime": "2026-02-24T01:50:00.000Z",
+      "resolutionTime": "2026-02-24T02:00:17.241Z",
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": true,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": null,
+      "createdByUserId": "cmlgdjazs000001l0x0or0o8q",
+      "createdAt": "2026-02-24T00:01:18.010Z",
+      "updatedAt": "2026-02-24T02:00:17.242Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": null,
+      "scheduledResolutionTime": "2026-02-24T02:00:00.000Z",
+      "resolution": {
+        "id": "cmlzykgv1000v0svq0reu3mdg",
+        "marketId": "cmlzubg6y006l0trreci8lstv",
+        "winningOutcome": 0,
+        "totalPool": "170.34",
+        "winningPool": "150.34",
+        "losingPool": "20",
+        "platformFee": "0.4",
+        "payoutPool": "169.94",
+        "resolvedBy": "auto-resolution",
+        "resolvedAt": "2026-02-24T02:00:17.245Z"
+      },
+      "outcomeStats": [
+        {
+          "id": "cmlzubg7k006m0trrq8gw2cim",
+          "marketId": "cmlzubg6y006l0trreci8lstv",
+          "outcomeIndex": 0,
+          "totalBets": 18,
+          "totalAmount": "150.34",
+          "uniqueBettors": 16
+        },
+        {
+          "id": "cmlzubg7w006n0trrfs0gybbk",
+          "marketId": "cmlzubg6y006l0trreci8lstv",
+          "outcomeIndex": 1,
+          "totalBets": 2,
+          "totalAmount": "10",
+          "uniqueBettors": 2
+        },
+        {
+          "id": "cmlzubg83006o0trri90ksoxq",
+          "marketId": "cmlzubg6y006l0trreci8lstv",
+          "outcomeIndex": 2,
+          "totalBets": 1,
+          "totalAmount": "5",
+          "uniqueBettors": 1
+        },
+        {
+          "id": "cmlzubg8o006p0trrfdmkw9p0",
+          "marketId": "cmlzubg6y006l0trreci8lstv",
+          "outcomeIndex": 3,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzubg9d006q0trrh157d2gq",
+          "marketId": "cmlzubg6y006l0trreci8lstv",
+          "outcomeIndex": 4,
+          "totalBets": 1,
+          "totalAmount": "5",
+          "uniqueBettors": 1
+        }
+      ],
+      "betCount": 22,
+      "autoResolution": {
+        "resolverType": "crypto-chainlink",
+        "resolverConfig": {
+          "type": "range",
+          "asset": "BTC",
+          "feedId": "0x00039d9e45394f473ab1f050a1b963e6b05351e52d71e507509ada0c95ed75b8",
+          "ranges": [
+            {
+              "max": 64414.91,
+              "min": null,
+              "index": 0
+            },
+            {
+              "max": 64630.7,
+              "min": 64414.91,
+              "index": 1
+            },
+            {
+              "max": 64846.5,
+              "min": 64630.7,
+              "index": 2
+            },
+            {
+              "max": 65062.29,
+              "min": 64846.5,
+              "index": 3
+            },
+            {
+              "max": null,
+              "min": 65062.29,
+              "index": 4
+            }
+          ],
+          "priceSource": "chainlink"
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": true,
+        "resolutionDelay": 0
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmlzubfvn006e0trrvnw8o7dh",
+      "question": "Ethereum price at 02:00 UTC?",
+      "description": "2-hour price range market.\n\nResolves based on the Chainlink Data Streams ETH/USD benchmark price at 02:00 UTC on February 24, 2026. The winning outcome is the price range that contains the resolution price.\n\nResolution source: Chainlink Data Streams ETH/USD benchmark price (DON consensus median).\nPrice data cryptographically signed by the Chainlink Decentralized Oracle Network.",
+      "category": "crypto",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "< $1,849.38"
+        },
+        {
+          "index": 1,
+          "label": "$1,849.38 - $1,855.58"
+        },
+        {
+          "index": 2,
+          "label": "$1,855.58 - $1,861.77"
+        },
+        {
+          "index": 3,
+          "label": "$1,861.77 - $1,867.97"
+        },
+        {
+          "index": 4,
+          "label": "> $1,867.97"
+        }
+      ],
+      "tags": [
+        "eth",
+        "crypto"
+      ],
+      "totalPool": "80",
+      "status": "RESOLVED",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": 0,
+      "endTime": "2026-02-24T01:50:00.000Z",
+      "resolutionTime": "2026-02-24T02:00:16.588Z",
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": true,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": null,
+      "createdByUserId": "cmlgdjazs000001l0x0or0o8q",
+      "createdAt": "2026-02-24T00:01:17.603Z",
+      "updatedAt": "2026-02-24T02:00:16.590Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": null,
+      "scheduledResolutionTime": "2026-02-24T02:00:00.000Z",
+      "resolution": {
+        "id": "cmlzykgcy000k0svq4uzptqmu",
+        "marketId": "cmlzubfvn006e0trrvnw8o7dh",
+        "winningOutcome": 0,
+        "totalPool": "80",
+        "winningPool": "60",
+        "losingPool": "20",
+        "platformFee": "0.4",
+        "payoutPool": "79.6",
+        "resolvedBy": "auto-resolution",
+        "resolvedAt": "2026-02-24T02:00:16.593Z"
+      },
+      "outcomeStats": [
+        {
+          "id": "cmlzubfvy006f0trru7hkbu06",
+          "marketId": "cmlzubfvn006e0trrvnw8o7dh",
+          "outcomeIndex": 0,
+          "totalBets": 7,
+          "totalAmount": "60",
+          "uniqueBettors": 7
+        },
+        {
+          "id": "cmlzubfw8006g0trryx2ls9fn",
+          "marketId": "cmlzubfvn006e0trrvnw8o7dh",
+          "outcomeIndex": 1,
+          "totalBets": 2,
+          "totalAmount": "10",
+          "uniqueBettors": 2
+        },
+        {
+          "id": "cmlzubfwl006h0trr7yrrc6jt",
+          "marketId": "cmlzubfvn006e0trrvnw8o7dh",
+          "outcomeIndex": 2,
+          "totalBets": 1,
+          "totalAmount": "5",
+          "uniqueBettors": 1
+        },
+        {
+          "id": "cmlzubfwt006i0trrgk1ttuwo",
+          "marketId": "cmlzubfvn006e0trrvnw8o7dh",
+          "outcomeIndex": 3,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzubfx5006j0trryyn3f6p8",
+          "marketId": "cmlzubfvn006e0trrvnw8o7dh",
+          "outcomeIndex": 4,
+          "totalBets": 1,
+          "totalAmount": "5",
+          "uniqueBettors": 1
+        }
+      ],
+      "betCount": 11,
+      "autoResolution": {
+        "resolverType": "crypto-chainlink",
+        "resolverConfig": {
+          "type": "range",
+          "asset": "ETH",
+          "feedId": "0x000362205e10b3a147d02792eccee483dca6c7b44ecce7012cb8c6e0b68b3ae9",
+          "ranges": [
+            {
+              "max": 1849.38,
+              "min": null,
+              "index": 0
+            },
+            {
+              "max": 1855.58,
+              "min": 1849.38,
+              "index": 1
+            },
+            {
+              "max": 1861.77,
+              "min": 1855.58,
+              "index": 2
+            },
+            {
+              "max": 1867.97,
+              "min": 1861.77,
+              "index": 3
+            },
+            {
+              "max": null,
+              "min": 1867.97,
+              "index": 4
+            }
+          ],
+          "priceSource": "chainlink"
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": true,
+        "resolutionDelay": 0
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmlzubfld006a0trrju0w7h7v",
+      "question": "Canton Coin above $0.16232 at 01:00 UTC?",
+      "description": "1-hour binary market.\n\nResolves YES if the Canton Coin price is above $0.16232 at 01:00 UTC on February 24, 2026, or NO if at or below $0.16232.\n\n\u2022 YES wins if price > $0.16232\n\u2022 NO wins if price \u2264 $0.16232\n\nResolution source: Chainlink Data Streams CC/USD benchmark price (DON consensus median).\nPrice data cryptographically signed by the Chainlink Decentralized Oracle Network.",
+      "category": "crypto",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "Yes"
+        },
+        {
+          "index": 1,
+          "label": "No"
+        }
+      ],
+      "tags": [
+        "cc",
+        "crypto"
+      ],
+      "totalPool": "395.58",
+      "status": "RESOLVED",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": 0,
+      "endTime": "2026-02-24T00:50:00.000Z",
+      "resolutionTime": "2026-02-24T01:00:19.496Z",
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": true,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": null,
+      "createdByUserId": "cmlkrdcr901co01k6vk4fvf79",
+      "createdAt": "2026-02-24T00:01:17.233Z",
+      "updatedAt": "2026-02-24T01:00:19.496Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": null,
+      "scheduledResolutionTime": "2026-02-24T01:00:00.000Z",
+      "resolution": {
+        "id": "cmlzwfctp004q0two89ymr8zh",
+        "marketId": "cmlzubfld006a0trrju0w7h7v",
+        "winningOutcome": 0,
+        "totalPool": "395.58",
+        "winningPool": "219.58",
+        "losingPool": "176",
+        "platformFee": "3.52",
+        "payoutPool": "392.06",
+        "resolvedBy": "auto-resolution",
+        "resolvedAt": "2026-02-24T01:00:19.501Z"
+      },
+      "outcomeStats": [
+        {
+          "id": "cmlzubfll006b0trrdje8p3de",
+          "marketId": "cmlzubfld006a0trrju0w7h7v",
+          "outcomeIndex": 0,
+          "totalBets": 26,
+          "totalAmount": "219.58",
+          "uniqueBettors": 17
+        },
+        {
+          "id": "cmlzubfm1006c0trr5vtgzo97",
+          "marketId": "cmlzubfld006a0trrju0w7h7v",
+          "outcomeIndex": 1,
+          "totalBets": 13,
+          "totalAmount": "176",
+          "uniqueBettors": 13
+        }
+      ],
+      "betCount": 39,
+      "autoResolution": {
+        "resolverType": "crypto-chainlink",
+        "resolverConfig": {
+          "type": "binary",
+          "asset": "CC",
+          "feedId": "0x0003111e1c2212376d4c196bf7635919e4b28368809dda6f515c396453d53770",
+          "threshold": 0.1623234984458059,
+          "priceSource": "chainlink",
+          "aboveOutcome": 0,
+          "belowOutcome": 1
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": true,
+        "resolutionDelay": 0
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmlzubf9v00660trrrazzcl0v",
+      "question": "Solana above $78.109 at 01:00 UTC?",
+      "description": "1-hour binary market.\n\nResolves YES if the Solana price is above $78.109 at 01:00 UTC on February 24, 2026, or NO if at or below $78.109.\n\n\u2022 YES wins if price > $78.109\n\u2022 NO wins if price \u2264 $78.109\n\nResolution source: Chainlink Data Streams SOL/USD benchmark price (DON consensus median).\nPrice data cryptographically signed by the Chainlink Decentralized Oracle Network.",
+      "category": "crypto",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "Yes"
+        },
+        {
+          "index": 1,
+          "label": "No"
+        }
+      ],
+      "tags": [
+        "sol",
+        "crypto"
+      ],
+      "totalPool": "643.18",
+      "status": "RESOLVED",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": 0,
+      "endTime": "2026-02-24T00:50:00.000Z",
+      "resolutionTime": "2026-02-24T01:00:18.600Z",
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": true,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": null,
+      "createdByUserId": "cmlkrdcr901co01k6vk4fvf79",
+      "createdAt": "2026-02-24T00:01:16.819Z",
+      "updatedAt": "2026-02-24T01:00:18.601Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": null,
+      "scheduledResolutionTime": "2026-02-24T01:00:00.000Z",
+      "resolution": {
+        "id": "cmlzwfc4t003n0twoqg72je8f",
+        "marketId": "cmlzubf9v00660trrrazzcl0v",
+        "winningOutcome": 0,
+        "totalPool": "643.18",
+        "winningPool": "587.18",
+        "losingPool": "56",
+        "platformFee": "1.12",
+        "payoutPool": "642.06",
+        "resolvedBy": "auto-resolution",
+        "resolvedAt": "2026-02-24T01:00:18.604Z"
+      },
+      "outcomeStats": [
+        {
+          "id": "cmlzubfav00670trrju1fls14",
+          "marketId": "cmlzubf9v00660trrrazzcl0v",
+          "outcomeIndex": 0,
+          "totalBets": 72,
+          "totalAmount": "587.18",
+          "uniqueBettors": 35
+        },
+        {
+          "id": "cmlzubfbr00680trrsnwu3jco",
+          "marketId": "cmlzubf9v00660trrrazzcl0v",
+          "outcomeIndex": 1,
+          "totalBets": 10,
+          "totalAmount": "56",
+          "uniqueBettors": 9
+        }
+      ],
+      "betCount": 82,
+      "autoResolution": {
+        "resolverType": "crypto-chainlink",
+        "resolverConfig": {
+          "type": "binary",
+          "asset": "SOL",
+          "feedId": "0x0003b778d3f6b2ac4991302b89cb313f99a42467d6c9c5f96f57c29c0d2bc24f",
+          "threshold": 78.10913642478067,
+          "priceSource": "chainlink",
+          "aboveOutcome": 0,
+          "belowOutcome": 1
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": true,
+        "resolutionDelay": 0
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmlzubexg00620trr327sjy45",
+      "question": "Ethereum above $1,858.69 at 01:00 UTC?",
+      "description": "1-hour binary market.\n\nResolves YES if the Ethereum price is above $1,858.69 at 01:00 UTC on February 24, 2026, or NO if at or below $1,858.69.\n\n\u2022 YES wins if price > $1,858.69\n\u2022 NO wins if price \u2264 $1,858.69\n\nResolution source: Chainlink Data Streams ETH/USD benchmark price (DON consensus median).\nPrice data cryptographically signed by the Chainlink Decentralized Oracle Network.",
+      "category": "crypto",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "Yes"
+        },
+        {
+          "index": 1,
+          "label": "No"
+        }
+      ],
+      "tags": [
+        "eth",
+        "crypto"
+      ],
+      "totalPool": "3695",
+      "status": "RESOLVED",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": 0,
+      "endTime": "2026-02-24T00:50:00.000Z",
+      "resolutionTime": "2026-02-24T01:00:17.637Z",
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": true,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": null,
+      "createdByUserId": "cmlkrdcr901co01k6vk4fvf79",
+      "createdAt": "2026-02-24T00:01:16.372Z",
+      "updatedAt": "2026-02-24T01:00:17.638Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": null,
+      "scheduledResolutionTime": "2026-02-24T01:00:00.000Z",
+      "resolution": {
+        "id": "cmlzwfbe2002k0twow8z6vh33",
+        "marketId": "cmlzubexg00620trr327sjy45",
+        "winningOutcome": 0,
+        "totalPool": "3695",
+        "winningPool": "3635",
+        "losingPool": "60",
+        "platformFee": "1.2",
+        "payoutPool": "3693.8",
+        "resolvedBy": "auto-resolution",
+        "resolvedAt": "2026-02-24T01:00:17.641Z"
+      },
+      "outcomeStats": [
+        {
+          "id": "cmlzubey800630trro0wth5ri",
+          "marketId": "cmlzubexg00620trr327sjy45",
+          "outcomeIndex": 0,
+          "totalBets": 69,
+          "totalAmount": "3635",
+          "uniqueBettors": 35
+        },
+        {
+          "id": "cmlzubeyo00640trrowr8umjl",
+          "marketId": "cmlzubexg00620trr327sjy45",
+          "outcomeIndex": 1,
+          "totalBets": 10,
+          "totalAmount": "60",
+          "uniqueBettors": 9
+        }
+      ],
+      "betCount": 79,
+      "autoResolution": {
+        "resolverType": "crypto-chainlink",
+        "resolverConfig": {
+          "type": "binary",
+          "asset": "ETH",
+          "feedId": "0x000362205e10b3a147d02792eccee483dca6c7b44ecce7012cb8c6e0b68b3ae9",
+          "threshold": 1858.6868455,
+          "priceSource": "chainlink",
+          "aboveOutcome": 0,
+          "belowOutcome": 1
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": true,
+        "resolutionDelay": 0
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmlzubenf005y0trrvn9s81t0",
+      "question": "Bitcoin above $64,738.66 at 01:00 UTC?",
+      "description": "1-hour binary market.\n\nResolves YES if the Bitcoin price is above $64,738.66 at 01:00 UTC on February 24, 2026, or NO if at or below $64,738.66.\n\n\u2022 YES wins if price > $64,738.66\n\u2022 NO wins if price \u2264 $64,738.66\n\nResolution source: Chainlink Data Streams BTC/USD benchmark price (DON consensus median).\nPrice data cryptographically signed by the Chainlink Decentralized Oracle Network.",
+      "category": "crypto",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "Yes"
+        },
+        {
+          "index": 1,
+          "label": "No"
+        }
+      ],
+      "tags": [
+        "btc",
+        "crypto"
+      ],
+      "totalPool": "5278.13",
+      "status": "RESOLVED",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": 0,
+      "endTime": "2026-02-24T00:50:00.000Z",
+      "resolutionTime": "2026-02-24T01:00:16.601Z",
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": true,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": null,
+      "createdByUserId": "cmlkrdcr901co01k6vk4fvf79",
+      "createdAt": "2026-02-24T00:01:16.011Z",
+      "updatedAt": "2026-02-24T01:00:16.602Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": null,
+      "scheduledResolutionTime": "2026-02-24T01:00:00.000Z",
+      "resolution": {
+        "id": "cmlzwfal9001b0twohmdw8lzc",
+        "marketId": "cmlzubenf005y0trrvn9s81t0",
+        "winningOutcome": 0,
+        "totalPool": "5278.13",
+        "winningPool": "5173.13",
+        "losingPool": "105",
+        "platformFee": "2.1",
+        "payoutPool": "5276.03",
+        "resolvedBy": "auto-resolution",
+        "resolvedAt": "2026-02-24T01:00:16.605Z"
+      },
+      "outcomeStats": [
+        {
+          "id": "cmlzubeo8005z0trr3mtyler6",
+          "marketId": "cmlzubenf005y0trrvn9s81t0",
+          "outcomeIndex": 0,
+          "totalBets": 149,
+          "totalAmount": "5173.13",
+          "uniqueBettors": 41
+        },
+        {
+          "id": "cmlzubeok00600trr1ba3tks6",
+          "marketId": "cmlzubenf005y0trrvn9s81t0",
+          "outcomeIndex": 1,
+          "totalBets": 11,
+          "totalAmount": "105",
+          "uniqueBettors": 10
+        }
+      ],
+      "betCount": 160,
+      "autoResolution": {
+        "resolverType": "crypto-chainlink",
+        "resolverConfig": {
+          "type": "binary",
+          "asset": "BTC",
+          "feedId": "0x00039d9e45394f473ab1f050a1b963e6b05351e52d71e507509ada0c95ed75b8",
+          "threshold": 64738.65845068966,
+          "priceSource": "chainlink",
+          "aboveOutcome": 0,
+          "belowOutcome": 1
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": true,
+        "resolutionDelay": 0
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmlzu7lcu003b01lsjpy3aiio",
+      "question": "Tacoma Defiance vs Los Angeles FC II",
+      "description": "MLS Next Pro match between Tacoma Defiance (home) and Los Angeles FC II (away) on Monday, March 2, 2026, kick-off at 03:00 AM UTC.\n\nPredict the full-time result: Tacoma Defiance win, Draw, or Los Angeles FC II win.\n\nResolution Rules:\n\u2022 Resolves based on the final score at full time (90 minutes + stoppage time).\n\u2022 Extra time and penalty shootouts DO NOT count \u2014 only the 90-minute result matters.\n\u2022 If the match is postponed or abandoned before completion, the market will be voided and all bets refunded.\n\u2022 Data source: API-Sports (official match result).",
+      "category": "sports",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "Tacoma Defiance"
+        },
+        {
+          "index": 1,
+          "label": "Draw"
+        },
+        {
+          "index": 2,
+          "label": "Los Angeles FC II"
+        }
+      ],
+      "tags": [
+        "Football (Soccer)",
+        "MLS Next Pro"
+      ],
+      "totalPool": "0",
+      "status": "ACTIVE",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": null,
+      "endTime": "2026-03-02T02:00:00.000Z",
+      "resolutionTime": null,
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": false,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": "10000",
+      "createdByUserId": "cmlkrdcr901co01k6vk4fvf79",
+      "createdAt": "2026-02-23T23:58:18.078Z",
+      "updatedAt": "2026-02-23T23:58:18.339Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": "apisports-football-909-1512971",
+      "scheduledResolutionTime": "2026-03-02T05:00:00.000Z",
+      "resolution": null,
+      "outcomeStats": [
+        {
+          "id": "cmlzu7ld5003c01lsp6d91431",
+          "marketId": "cmlzu7lcu003b01lsjpy3aiio",
+          "outcomeIndex": 0,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzu7ldj003d01lszg9zix1r",
+          "marketId": "cmlzu7lcu003b01lsjpy3aiio",
+          "outcomeIndex": 1,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzu7leh003e01ls5skwn2m8",
+          "marketId": "cmlzu7lcu003b01lsjpy3aiio",
+          "outcomeIndex": 2,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        }
+      ],
+      "betCount": 0,
+      "autoResolution": {
+        "resolverType": "sports",
+        "resolverConfig": {
+          "gameId": "1512971",
+          "awayTeam": "Los Angeles FC II",
+          "homeTeam": "Tacoma Defiance",
+          "leagueId": 909,
+          "sportKey": "football",
+          "leagueLogo": "https://media.api-sports.io/football/leagues/909.png",
+          "awayTeamLogo": "https://media.api-sports.io/football/teams/21141.png",
+          "homeTeamLogo": "https://media.api-sports.io/football/teams/4020.png",
+          "outcomeMapping": {
+            "away": 2,
+            "draw": 1,
+            "home": 0
+          }
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": false,
+        "resolutionDelay": 7200
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmlzu7ky2003601lsc3e21o3q",
+      "question": "Austin II vs Minnesota United II",
+      "description": "MLS Next Pro match between Austin II (home) and Minnesota United II (away) on Monday, March 2, 2026, kick-off at 01:30 AM UTC.\n\nPredict the full-time result: Austin II win, Draw, or Minnesota United II win.\n\nResolution Rules:\n\u2022 Resolves based on the final score at full time (90 minutes + stoppage time).\n\u2022 Extra time and penalty shootouts DO NOT count \u2014 only the 90-minute result matters.\n\u2022 If the match is postponed or abandoned before completion, the market will be voided and all bets refunded.\n\u2022 Data source: API-Sports (official match result).",
+      "category": "sports",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "Austin II"
+        },
+        {
+          "index": 1,
+          "label": "Draw"
+        },
+        {
+          "index": 2,
+          "label": "Minnesota United II"
+        }
+      ],
+      "tags": [
+        "Football (Soccer)",
+        "MLS Next Pro"
+      ],
+      "totalPool": "0",
+      "status": "ACTIVE",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": null,
+      "endTime": "2026-03-02T00:30:00.000Z",
+      "resolutionTime": null,
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": false,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": "10000",
+      "createdByUserId": "cmlkrdcr901co01k6vk4fvf79",
+      "createdAt": "2026-02-23T23:58:17.546Z",
+      "updatedAt": "2026-02-23T23:58:17.756Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": "apisports-football-909-1512970",
+      "scheduledResolutionTime": "2026-03-02T03:30:00.000Z",
+      "resolution": null,
+      "outcomeStats": [
+        {
+          "id": "cmlzu7l03003701lsgj6wmbp9",
+          "marketId": "cmlzu7ky2003601lsc3e21o3q",
+          "outcomeIndex": 0,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzu7l17003801lskn4u3ajg",
+          "marketId": "cmlzu7ky2003601lsc3e21o3q",
+          "outcomeIndex": 1,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzu7l26003901lsmwdnsitg",
+          "marketId": "cmlzu7ky2003601lsc3e21o3q",
+          "outcomeIndex": 2,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        }
+      ],
+      "betCount": 0,
+      "autoResolution": {
+        "resolverType": "sports",
+        "resolverConfig": {
+          "gameId": "1512970",
+          "awayTeam": "Minnesota United II",
+          "homeTeam": "Austin II",
+          "leagueId": 909,
+          "sportKey": "football",
+          "leagueLogo": "https://media.api-sports.io/football/leagues/909.png",
+          "awayTeamLogo": "https://media.api-sports.io/football/teams/18814.png",
+          "homeTeamLogo": "https://media.api-sports.io/football/teams/21138.png",
+          "outcomeMapping": {
+            "away": 2,
+            "draw": 1,
+            "home": 0
+          }
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": false,
+        "resolutionDelay": 7200
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmlzu7kj9003101lsp5weqo8a",
+      "question": "New England II vs Atlanta United II",
+      "description": "MLS Next Pro match between New England II (home) and Atlanta United II (away) on Monday, March 2, 2026, kick-off at 01:00 AM UTC.\n\nPredict the full-time result: New England II win, Draw, or Atlanta United II win.\n\nResolution Rules:\n\u2022 Resolves based on the final score at full time (90 minutes + stoppage time).\n\u2022 Extra time and penalty shootouts DO NOT count \u2014 only the 90-minute result matters.\n\u2022 If the match is postponed or abandoned before completion, the market will be voided and all bets refunded.\n\u2022 Data source: API-Sports (official match result).",
+      "category": "sports",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "New England II"
+        },
+        {
+          "index": 1,
+          "label": "Draw"
+        },
+        {
+          "index": 2,
+          "label": "Atlanta United II"
+        }
+      ],
+      "tags": [
+        "Football (Soccer)",
+        "MLS Next Pro"
+      ],
+      "totalPool": "0",
+      "status": "ACTIVE",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": null,
+      "endTime": "2026-03-02T00:00:00.000Z",
+      "resolutionTime": null,
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": false,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": "10000",
+      "createdByUserId": "cmlkrdcr901co01k6vk4fvf79",
+      "createdAt": "2026-02-23T23:58:17.013Z",
+      "updatedAt": "2026-02-23T23:58:17.214Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": "apisports-football-909-1512969",
+      "scheduledResolutionTime": "2026-03-02T03:00:00.000Z",
+      "resolution": null,
+      "outcomeStats": [
+        {
+          "id": "cmlzu7kjn003201ls18e9cw8f",
+          "marketId": "cmlzu7kj9003101lsp5weqo8a",
+          "outcomeIndex": 0,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzu7klx003301lsa3ijyjpd",
+          "marketId": "cmlzu7kj9003101lsp5weqo8a",
+          "outcomeIndex": 1,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzu7kmk003401lsp2e91qa9",
+          "marketId": "cmlzu7kj9003101lsp5weqo8a",
+          "outcomeIndex": 2,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        }
+      ],
+      "betCount": 0,
+      "autoResolution": {
+        "resolverType": "sports",
+        "resolverConfig": {
+          "gameId": "1512969",
+          "awayTeam": "Atlanta United II",
+          "homeTeam": "New England II",
+          "leagueId": 909,
+          "sportKey": "football",
+          "leagueLogo": "https://media.api-sports.io/football/leagues/909.png",
+          "awayTeamLogo": "https://media.api-sports.io/football/teams/3986.png",
+          "homeTeamLogo": "https://media.api-sports.io/football/teams/10281.png",
+          "outcomeMapping": {
+            "away": 2,
+            "draw": 1,
+            "home": 0
+          }
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": false,
+        "resolutionDelay": 7200
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmlzu7kcm002w01ls1mc88id1",
+      "question": "Houston Dynamo FC II vs Colorado Rapids II",
+      "description": "MLS Next Pro match between Houston Dynamo FC II (home) and Colorado Rapids II (away) on Monday, March 2, 2026, kick-off at 12:00 AM UTC.\n\nPredict the full-time result: Houston Dynamo FC II win, Draw, or Colorado Rapids II win.\n\nResolution Rules:\n\u2022 Resolves based on the final score at full time (90 minutes + stoppage time).\n\u2022 Extra time and penalty shootouts DO NOT count \u2014 only the 90-minute result matters.\n\u2022 If the match is postponed or abandoned before completion, the market will be voided and all bets refunded.\n\u2022 Data source: API-Sports (official match result).",
+      "category": "sports",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "Houston Dynamo FC II"
+        },
+        {
+          "index": 1,
+          "label": "Draw"
+        },
+        {
+          "index": 2,
+          "label": "Colorado Rapids II"
+        }
+      ],
+      "tags": [
+        "Football (Soccer)",
+        "MLS Next Pro"
+      ],
+      "totalPool": "0",
+      "status": "ACTIVE",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": null,
+      "endTime": "2026-03-01T23:00:00.000Z",
+      "resolutionTime": null,
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": false,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": "10000",
+      "createdByUserId": "cmlkrdcr901co01k6vk4fvf79",
+      "createdAt": "2026-02-23T23:58:16.774Z",
+      "updatedAt": "2026-02-23T23:58:16.838Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": "apisports-football-909-1512968",
+      "scheduledResolutionTime": "2026-03-02T02:00:00.000Z",
+      "resolution": null,
+      "outcomeStats": [
+        {
+          "id": "cmlzu7kct002x01lsswwn7q13",
+          "marketId": "cmlzu7kcm002w01ls1mc88id1",
+          "outcomeIndex": 0,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzu7kde002y01lseod2be3b",
+          "marketId": "cmlzu7kcm002w01ls1mc88id1",
+          "outcomeIndex": 1,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzu7kdm002z01lswg5orlw8",
+          "marketId": "cmlzu7kcm002w01ls1mc88id1",
+          "outcomeIndex": 2,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        }
+      ],
+      "betCount": 0,
+      "autoResolution": {
+        "resolverType": "sports",
+        "resolverConfig": {
+          "gameId": "1512968",
+          "awayTeam": "Colorado Rapids II",
+          "homeTeam": "Houston Dynamo FC II",
+          "leagueId": 909,
+          "sportKey": "football",
+          "leagueLogo": "https://media.api-sports.io/football/leagues/909.png",
+          "awayTeamLogo": "https://media.api-sports.io/football/teams/4102.png",
+          "homeTeamLogo": "https://media.api-sports.io/football/teams/18813.png",
+          "outcomeMapping": {
+            "away": 2,
+            "draw": 1,
+            "home": 0
+          }
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": false,
+        "resolutionDelay": 7200
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmlzu7k78002r01lsy2bc3u9f",
+      "question": "FC Cincinnati II vs Connecticut FC",
+      "description": "MLS Next Pro match between FC Cincinnati II (home) and Connecticut FC (away) on Sunday, March 1, 2026, kick-off at 11:00 PM UTC.\n\nPredict the full-time result: FC Cincinnati II win, Draw, or Connecticut FC win.\n\nResolution Rules:\n\u2022 Resolves based on the final score at full time (90 minutes + stoppage time).\n\u2022 Extra time and penalty shootouts DO NOT count \u2014 only the 90-minute result matters.\n\u2022 If the match is postponed or abandoned before completion, the market will be voided and all bets refunded.\n\u2022 Data source: API-Sports (official match result).",
+      "category": "sports",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "FC Cincinnati II"
+        },
+        {
+          "index": 1,
+          "label": "Draw"
+        },
+        {
+          "index": 2,
+          "label": "Connecticut FC"
+        }
+      ],
+      "tags": [
+        "Football (Soccer)",
+        "MLS Next Pro"
+      ],
+      "totalPool": "0",
+      "status": "ACTIVE",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": null,
+      "endTime": "2026-03-01T22:00:00.000Z",
+      "resolutionTime": null,
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": false,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": "10000",
+      "createdByUserId": "cmlkrdcr901co01k6vk4fvf79",
+      "createdAt": "2026-02-23T23:58:16.580Z",
+      "updatedAt": "2026-02-23T23:58:16.656Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": "apisports-football-909-1512967",
+      "scheduledResolutionTime": "2026-03-02T01:00:00.000Z",
+      "resolution": null,
+      "outcomeStats": [
+        {
+          "id": "cmlzu7k7f002s01ls81w6ypj0",
+          "marketId": "cmlzu7k78002r01lsy2bc3u9f",
+          "outcomeIndex": 0,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzu7k7u002t01lspwi4cla7",
+          "marketId": "cmlzu7k78002r01lsy2bc3u9f",
+          "outcomeIndex": 1,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzu7k8t002u01lsve4edh8m",
+          "marketId": "cmlzu7k78002r01lsy2bc3u9f",
+          "outcomeIndex": 2,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        }
+      ],
+      "betCount": 0,
+      "autoResolution": {
+        "resolverType": "sports",
+        "resolverConfig": {
+          "gameId": "1512967",
+          "awayTeam": "Connecticut FC",
+          "homeTeam": "FC Cincinnati II",
+          "leagueId": 909,
+          "sportKey": "football",
+          "leagueLogo": "https://media.api-sports.io/football/leagues/909.png",
+          "awayTeamLogo": "https://media.api-sports.io/football/teams/27420.png",
+          "homeTeamLogo": "https://media.api-sports.io/football/teams/18812.png",
+          "outcomeMapping": {
+            "away": 2,
+            "draw": 1,
+            "home": 0
+          }
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": false,
+        "resolutionDelay": 7200
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmlzu7jlz002m01lsger6btvg",
+      "question": "Real Monarchs vs North Texas",
+      "description": "MLS Next Pro match between Real Monarchs (home) and North Texas (away) on Sunday, March 1, 2026, kick-off at 10:30 PM UTC.\n\nPredict the full-time result: Real Monarchs win, Draw, or North Texas win.\n\nResolution Rules:\n\u2022 Resolves based on the final score at full time (90 minutes + stoppage time).\n\u2022 Extra time and penalty shootouts DO NOT count \u2014 only the 90-minute result matters.\n\u2022 If the match is postponed or abandoned before completion, the market will be voided and all bets refunded.\n\u2022 Data source: API-Sports (official match result).",
+      "category": "sports",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "Real Monarchs"
+        },
+        {
+          "index": 1,
+          "label": "Draw"
+        },
+        {
+          "index": 2,
+          "label": "North Texas"
+        }
+      ],
+      "tags": [
+        "Football (Soccer)",
+        "MLS Next Pro"
+      ],
+      "totalPool": "0",
+      "status": "ACTIVE",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": null,
+      "endTime": "2026-03-01T21:30:00.000Z",
+      "resolutionTime": null,
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": false,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": "10000",
+      "createdByUserId": "cmlkrdcr901co01k6vk4fvf79",
+      "createdAt": "2026-02-23T23:58:15.815Z",
+      "updatedAt": "2026-02-23T23:58:16.284Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": "apisports-football-909-1512966",
+      "scheduledResolutionTime": "2026-03-02T00:30:00.000Z",
+      "resolution": null,
+      "outcomeStats": [
+        {
+          "id": "cmlzu7jmr002n01lssksbtgub",
+          "marketId": "cmlzu7jlz002m01lsger6btvg",
+          "outcomeIndex": 0,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzu7jqg002o01lsh4gl5cwb",
+          "marketId": "cmlzu7jlz002m01lsger6btvg",
+          "outcomeIndex": 1,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzu7jtx002p01lsozx31lzu",
+          "marketId": "cmlzu7jlz002m01lsger6btvg",
+          "outcomeIndex": 2,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        }
+      ],
+      "betCount": 0,
+      "autoResolution": {
+        "resolverType": "sports",
+        "resolverConfig": {
+          "gameId": "1512966",
+          "awayTeam": "North Texas",
+          "homeTeam": "Real Monarchs",
+          "leagueId": 909,
+          "sportKey": "football",
+          "leagueLogo": "https://media.api-sports.io/football/leagues/909.png",
+          "awayTeamLogo": "https://media.api-sports.io/football/teams/10282.png",
+          "homeTeamLogo": "https://media.api-sports.io/football/teams/4012.png",
+          "outcomeMapping": {
+            "away": 2,
+            "draw": 1,
+            "home": 0
+          }
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": false,
+        "resolutionDelay": 7200
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmlzu7je9002h01lsvvadgfow",
+      "question": "Ventura County vs Vancouver Whitecaps II",
+      "description": "MLS Next Pro match between Ventura County (home) and Vancouver Whitecaps II (away) on Monday, March 2, 2026, kick-off at 01:00 AM UTC.\n\nPredict the full-time result: Ventura County win, Draw, or Vancouver Whitecaps II win.\n\nResolution Rules:\n\u2022 Resolves based on the final score at full time (90 minutes + stoppage time).\n\u2022 Extra time and penalty shootouts DO NOT count \u2014 only the 90-minute result matters.\n\u2022 If the match is postponed or abandoned before completion, the market will be voided and all bets refunded.\n\u2022 Data source: API-Sports (official match result).",
+      "category": "sports",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "Ventura County"
+        },
+        {
+          "index": 1,
+          "label": "Draw"
+        },
+        {
+          "index": 2,
+          "label": "Vancouver Whitecaps II"
+        }
+      ],
+      "tags": [
+        "Football (Soccer)",
+        "MLS Next Pro"
+      ],
+      "totalPool": "0",
+      "status": "ACTIVE",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": null,
+      "endTime": "2026-03-02T00:00:00.000Z",
+      "resolutionTime": null,
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": false,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": "10000",
+      "createdByUserId": "cmlkrdcr901co01k6vk4fvf79",
+      "createdAt": "2026-02-23T23:58:15.537Z",
+      "updatedAt": "2026-02-23T23:58:15.605Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": "apisports-football-909-1512965",
+      "scheduledResolutionTime": "2026-03-02T03:00:00.000Z",
+      "resolution": null,
+      "outcomeStats": [
+        {
+          "id": "cmlzu7jey002i01lsex3dr26b",
+          "marketId": "cmlzu7je9002h01lsvvadgfow",
+          "outcomeIndex": 0,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzu7jfe002j01lsnezg8kh6",
+          "marketId": "cmlzu7je9002h01lsvvadgfow",
+          "outcomeIndex": 1,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzu7jfl002k01lsrvbf4sdg",
+          "marketId": "cmlzu7je9002h01lsvvadgfow",
+          "outcomeIndex": 2,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        }
+      ],
+      "betCount": 0,
+      "autoResolution": {
+        "resolverType": "sports",
+        "resolverConfig": {
+          "gameId": "1512965",
+          "awayTeam": "Vancouver Whitecaps II",
+          "homeTeam": "Ventura County",
+          "leagueId": 909,
+          "sportKey": "football",
+          "leagueLogo": "https://media.api-sports.io/football/leagues/909.png",
+          "awayTeamLogo": "https://media.api-sports.io/football/teams/4028.png",
+          "homeTeamLogo": "https://media.api-sports.io/football/teams/3997.png",
+          "outcomeMapping": {
+            "away": 2,
+            "draw": 1,
+            "home": 0
+          }
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": false,
+        "resolutionDelay": 7200
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmlzu7j7l002c01ls011zq6wr",
+      "question": "New York RB II vs Columbus Crew II",
+      "description": "MLS Next Pro match between New York RB II (home) and Columbus Crew II (away) on Sunday, March 1, 2026, kick-off at 10:00 PM UTC.\n\nPredict the full-time result: New York RB II win, Draw, or Columbus Crew II win.\n\nResolution Rules:\n\u2022 Resolves based on the final score at full time (90 minutes + stoppage time).\n\u2022 Extra time and penalty shootouts DO NOT count \u2014 only the 90-minute result matters.\n\u2022 If the match is postponed or abandoned before completion, the market will be voided and all bets refunded.\n\u2022 Data source: API-Sports (official match result).",
+      "category": "sports",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "New York RB II"
+        },
+        {
+          "index": 1,
+          "label": "Draw"
+        },
+        {
+          "index": 2,
+          "label": "Columbus Crew II"
+        }
+      ],
+      "tags": [
+        "Football (Soccer)",
+        "MLS Next Pro"
+      ],
+      "totalPool": "0",
+      "status": "ACTIVE",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": null,
+      "endTime": "2026-03-01T21:00:00.000Z",
+      "resolutionTime": null,
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": false,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": "10000",
+      "createdByUserId": "cmlkrdcr901co01k6vk4fvf79",
+      "createdAt": "2026-02-23T23:58:15.297Z",
+      "updatedAt": "2026-02-23T23:58:15.393Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": "apisports-football-909-1512964",
+      "scheduledResolutionTime": "2026-03-02T00:00:00.000Z",
+      "resolution": null,
+      "outcomeStats": [
+        {
+          "id": "cmlzu7j7u002d01lsfy14jbyb",
+          "marketId": "cmlzu7j7l002c01ls011zq6wr",
+          "outcomeIndex": 0,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzu7j89002e01ls9vcj8b9h",
+          "marketId": "cmlzu7j7l002c01ls011zq6wr",
+          "outcomeIndex": 1,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzu7j93002f01lsxyfnhwrm",
+          "marketId": "cmlzu7j7l002c01ls011zq6wr",
+          "outcomeIndex": 2,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        }
+      ],
+      "betCount": 0,
+      "autoResolution": {
+        "resolverType": "sports",
+        "resolverConfig": {
+          "gameId": "1512964",
+          "awayTeam": "Columbus Crew II",
+          "homeTeam": "New York RB II",
+          "leagueId": 909,
+          "sportKey": "football",
+          "leagueLogo": "https://media.api-sports.io/football/leagues/909.png",
+          "awayTeamLogo": "https://media.api-sports.io/football/teams/18811.png",
+          "homeTeamLogo": "https://media.api-sports.io/football/teams/4004.png",
+          "outcomeMapping": {
+            "away": 2,
+            "draw": 1,
+            "home": 0
+          }
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": false,
+        "resolutionDelay": 7200
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmlzu7iys002701lsh6evu6jf",
+      "question": "Portland Timbers II vs The Town",
+      "description": "MLS Next Pro match between Portland Timbers II (home) and The Town (away) on Sunday, March 1, 2026, kick-off at 09:00 PM UTC.\n\nPredict the full-time result: Portland Timbers II win, Draw, or The Town win.\n\nResolution Rules:\n\u2022 Resolves based on the final score at full time (90 minutes + stoppage time).\n\u2022 Extra time and penalty shootouts DO NOT count \u2014 only the 90-minute result matters.\n\u2022 If the match is postponed or abandoned before completion, the market will be voided and all bets refunded.\n\u2022 Data source: API-Sports (official match result).",
+      "category": "sports",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "Portland Timbers II"
+        },
+        {
+          "index": 1,
+          "label": "Draw"
+        },
+        {
+          "index": 2,
+          "label": "The Town"
+        }
+      ],
+      "tags": [
+        "Football (Soccer)",
+        "MLS Next Pro"
+      ],
+      "totalPool": "0",
+      "status": "ACTIVE",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": null,
+      "endTime": "2026-03-01T20:00:00.000Z",
+      "resolutionTime": null,
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": false,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": "10000",
+      "createdByUserId": "cmlkrdcr901co01k6vk4fvf79",
+      "createdAt": "2026-02-23T23:58:14.980Z",
+      "updatedAt": "2026-02-23T23:58:15.106Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": "apisports-football-909-1512963",
+      "scheduledResolutionTime": "2026-03-01T23:00:00.000Z",
+      "resolution": null,
+      "outcomeStats": [
+        {
+          "id": "cmlzu7izc002801lsckgd96pl",
+          "marketId": "cmlzu7iys002701lsh6evu6jf",
+          "outcomeIndex": 0,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzu7izz002901lsvfb76dk5",
+          "marketId": "cmlzu7iys002701lsh6evu6jf",
+          "outcomeIndex": 1,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzu7j0i002a01ls5nfto4n7",
+          "marketId": "cmlzu7iys002701lsh6evu6jf",
+          "outcomeIndex": 2,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        }
+      ],
+      "betCount": 0,
+      "autoResolution": {
+        "resolverType": "sports",
+        "resolverConfig": {
+          "gameId": "1512963",
+          "awayTeam": "The Town",
+          "homeTeam": "Portland Timbers II",
+          "leagueId": 909,
+          "sportKey": "football",
+          "leagueLogo": "https://media.api-sports.io/football/leagues/909.png",
+          "awayTeamLogo": "https://media.api-sports.io/football/teams/18816.png",
+          "homeTeamLogo": "https://media.api-sports.io/football/teams/4011.png",
+          "outcomeMapping": {
+            "away": 2,
+            "draw": 1,
+            "home": 0
+          }
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": false,
+        "resolutionDelay": 7200
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmlzu7iq8002201lsw2mwfp6r",
+      "question": "Chattanooga vs Crown Legacy",
+      "description": "MLS Next Pro match between Chattanooga (home) and Crown Legacy (away) on Sunday, March 1, 2026, kick-off at 08:00 PM UTC.\n\nPredict the full-time result: Chattanooga win, Draw, or Crown Legacy win.\n\nResolution Rules:\n\u2022 Resolves based on the final score at full time (90 minutes + stoppage time).\n\u2022 Extra time and penalty shootouts DO NOT count \u2014 only the 90-minute result matters.\n\u2022 If the match is postponed or abandoned before completion, the market will be voided and all bets refunded.\n\u2022 Data source: API-Sports (official match result).",
+      "category": "sports",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "Chattanooga"
+        },
+        {
+          "index": 1,
+          "label": "Draw"
+        },
+        {
+          "index": 2,
+          "label": "Crown Legacy"
+        }
+      ],
+      "tags": [
+        "Football (Soccer)",
+        "MLS Next Pro"
+      ],
+      "totalPool": "0",
+      "status": "ACTIVE",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": null,
+      "endTime": "2026-03-01T19:00:00.000Z",
+      "resolutionTime": null,
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": false,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": "10000",
+      "createdByUserId": "cmlkrdcr901co01k6vk4fvf79",
+      "createdAt": "2026-02-23T23:58:14.672Z",
+      "updatedAt": "2026-02-23T23:58:14.768Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": "apisports-football-909-1512962",
+      "scheduledResolutionTime": "2026-03-01T22:00:00.000Z",
+      "resolution": null,
+      "outcomeStats": [
+        {
+          "id": "cmlzu7iqt002301lsfnd7w0vh",
+          "marketId": "cmlzu7iq8002201lsw2mwfp6r",
+          "outcomeIndex": 0,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzu7ir0002401lsbcru5159",
+          "marketId": "cmlzu7iq8002201lsw2mwfp6r",
+          "outcomeIndex": 1,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzu7irm002501lsungzml77",
+          "marketId": "cmlzu7iq8002201lsw2mwfp6r",
+          "outcomeIndex": 2,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        }
+      ],
+      "betCount": 0,
+      "autoResolution": {
+        "resolverType": "sports",
+        "resolverConfig": {
+          "gameId": "1512962",
+          "awayTeam": "Crown Legacy",
+          "homeTeam": "Chattanooga",
+          "leagueId": 909,
+          "sportKey": "football",
+          "leagueLogo": "https://media.api-sports.io/football/leagues/909.png",
+          "awayTeamLogo": "https://media.api-sports.io/football/teams/21139.png",
+          "homeTeamLogo": "https://media.api-sports.io/football/teams/9073.png",
+          "outcomeMapping": {
+            "away": 2,
+            "draw": 1,
+            "home": 0
+          }
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": false,
+        "resolutionDelay": 7200
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmlzu7i8w001x01ls0r4gxfrs",
+      "question": "New York City II vs Carolina Core",
+      "description": "MLS Next Pro match between New York City II (home) and Carolina Core (away) on Sunday, March 1, 2026, kick-off at 12:00 AM UTC.\n\nPredict the full-time result: New York City II win, Draw, or Carolina Core win.\n\nResolution Rules:\n\u2022 Resolves based on the final score at full time (90 minutes + stoppage time).\n\u2022 Extra time and penalty shootouts DO NOT count \u2014 only the 90-minute result matters.\n\u2022 If the match is postponed or abandoned before completion, the market will be voided and all bets refunded.\n\u2022 Data source: API-Sports (official match result).",
+      "category": "sports",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "New York City II"
+        },
+        {
+          "index": 1,
+          "label": "Draw"
+        },
+        {
+          "index": 2,
+          "label": "Carolina Core"
+        }
+      ],
+      "tags": [
+        "Football (Soccer)",
+        "MLS Next Pro"
+      ],
+      "totalPool": "0",
+      "status": "ACTIVE",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": null,
+      "endTime": "2026-02-28T23:00:00.000Z",
+      "resolutionTime": null,
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": false,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": "10000",
+      "createdByUserId": "cmlkrdcr901co01k6vk4fvf79",
+      "createdAt": "2026-02-23T23:58:14.048Z",
+      "updatedAt": "2026-02-23T23:58:14.294Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": "apisports-football-909-1512961",
+      "scheduledResolutionTime": "2026-03-01T02:00:00.000Z",
+      "resolution": null,
+      "outcomeStats": [
+        {
+          "id": "cmlzu7i9e001y01ls8q3numq3",
+          "marketId": "cmlzu7i8w001x01ls0r4gxfrs",
+          "outcomeIndex": 0,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzu7iaa001z01lsaskyy4kh",
+          "marketId": "cmlzu7i8w001x01ls0r4gxfrs",
+          "outcomeIndex": 1,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzu7ibh002001lsswzocc42",
+          "marketId": "cmlzu7i8w001x01ls0r4gxfrs",
+          "outcomeIndex": 2,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        }
+      ],
+      "betCount": 0,
+      "autoResolution": {
+        "resolverType": "sports",
+        "resolverConfig": {
+          "gameId": "1512961",
+          "awayTeam": "Carolina Core",
+          "homeTeam": "New York City II",
+          "leagueId": 909,
+          "sportKey": "football",
+          "leagueLogo": "https://media.api-sports.io/football/leagues/909.png",
+          "awayTeamLogo": "https://media.api-sports.io/football/teams/23063.png",
+          "homeTeamLogo": "https://media.api-sports.io/football/teams/18815.png",
+          "outcomeMapping": {
+            "away": 2,
+            "draw": 1,
+            "home": 0
+          }
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": false,
+        "resolutionDelay": 7200
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmlzu7huw001s01lsuol3azo4",
+      "question": "St. Louis City II vs Sporting KC II",
+      "description": "MLS Next Pro match between St. Louis City II (home) and Sporting KC II (away) on Saturday, February 28, 2026, kick-off at 10:00 PM UTC.\n\nPredict the full-time result: St. Louis City II win, Draw, or Sporting KC II win.\n\nResolution Rules:\n\u2022 Resolves based on the final score at full time (90 minutes + stoppage time).\n\u2022 Extra time and penalty shootouts DO NOT count \u2014 only the 90-minute result matters.\n\u2022 If the match is postponed or abandoned before completion, the market will be voided and all bets refunded.\n\u2022 Data source: API-Sports (official match result).",
+      "category": "sports",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "St. Louis City II"
+        },
+        {
+          "index": 1,
+          "label": "Draw"
+        },
+        {
+          "index": 2,
+          "label": "Sporting KC II"
+        }
+      ],
+      "tags": [
+        "Football (Soccer)",
+        "MLS Next Pro"
+      ],
+      "totalPool": "0",
+      "status": "ACTIVE",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": null,
+      "endTime": "2026-02-28T21:00:00.000Z",
+      "resolutionTime": null,
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": false,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": "10000",
+      "createdByUserId": "cmlkrdcr901co01k6vk4fvf79",
+      "createdAt": "2026-02-23T23:58:13.543Z",
+      "updatedAt": "2026-02-23T23:58:13.696Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": "apisports-football-909-1512960",
+      "scheduledResolutionTime": "2026-03-01T00:00:00.000Z",
+      "resolution": null,
+      "outcomeStats": [
+        {
+          "id": "cmlzu7hvt001t01lst62nwbci",
+          "marketId": "cmlzu7huw001s01lsuol3azo4",
+          "outcomeIndex": 0,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzu7hws001u01ls9zn21xyi",
+          "marketId": "cmlzu7huw001s01lsuol3azo4",
+          "outcomeIndex": 1,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzu7hy9001v01lsb1358nyq",
+          "marketId": "cmlzu7huw001s01lsuol3azo4",
+          "outcomeIndex": 2,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        }
+      ],
+      "betCount": 0,
+      "autoResolution": {
+        "resolverType": "sports",
+        "resolverConfig": {
+          "gameId": "1512960",
+          "awayTeam": "Sporting KC II",
+          "homeTeam": "St. Louis City II",
+          "leagueId": 909,
+          "sportKey": "football",
+          "leagueLogo": "https://media.api-sports.io/football/leagues/909.png",
+          "awayTeamLogo": "https://media.api-sports.io/football/teams/4019.png",
+          "homeTeamLogo": "https://media.api-sports.io/football/teams/18740.png",
+          "outcomeMapping": {
+            "away": 2,
+            "draw": 1,
+            "home": 0
+          }
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": false,
+        "resolutionDelay": 7200
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmlzu7hn1001n01lsqifavh7r",
+      "question": "Philadelphia Union II vs Toronto II",
+      "description": "MLS Next Pro match between Philadelphia Union II (home) and Toronto II (away) on Saturday, February 28, 2026, kick-off at 08:00 PM UTC.\n\nPredict the full-time result: Philadelphia Union II win, Draw, or Toronto II win.\n\nResolution Rules:\n\u2022 Resolves based on the final score at full time (90 minutes + stoppage time).\n\u2022 Extra time and penalty shootouts DO NOT count \u2014 only the 90-minute result matters.\n\u2022 If the match is postponed or abandoned before completion, the market will be voided and all bets refunded.\n\u2022 Data source: API-Sports (official match result).",
+      "category": "sports",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "Philadelphia Union II"
+        },
+        {
+          "index": 1,
+          "label": "Draw"
+        },
+        {
+          "index": 2,
+          "label": "Toronto II"
+        }
+      ],
+      "tags": [
+        "Football (Soccer)",
+        "MLS Next Pro"
+      ],
+      "totalPool": "0",
+      "status": "ACTIVE",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": null,
+      "endTime": "2026-02-28T19:00:00.000Z",
+      "resolutionTime": null,
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": false,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": "10000",
+      "createdByUserId": "cmlkrdcr901co01k6vk4fvf79",
+      "createdAt": "2026-02-23T23:58:13.261Z",
+      "updatedAt": "2026-02-23T23:58:13.365Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": "apisports-football-909-1512959",
+      "scheduledResolutionTime": "2026-02-28T22:00:00.000Z",
+      "resolution": null,
+      "outcomeStats": [
+        {
+          "id": "cmlzu7hnl001o01ls84szuopj",
+          "marketId": "cmlzu7hn1001n01lsqifavh7r",
+          "outcomeIndex": 0,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzu7hnx001p01lsnyys5tqx",
+          "marketId": "cmlzu7hn1001n01lsqifavh7r",
+          "outcomeIndex": 1,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzu7ho7001q01lsbftuev5r",
+          "marketId": "cmlzu7hn1001n01lsqifavh7r",
+          "outcomeIndex": 2,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        }
+      ],
+      "betCount": 0,
+      "autoResolution": {
+        "resolverType": "sports",
+        "resolverConfig": {
+          "gameId": "1512959",
+          "awayTeam": "Toronto II",
+          "homeTeam": "Philadelphia Union II",
+          "leagueId": 909,
+          "sportKey": "football",
+          "leagueLogo": "https://media.api-sports.io/football/leagues/909.png",
+          "awayTeamLogo": "https://media.api-sports.io/football/teams/4025.png",
+          "homeTeamLogo": "https://media.api-sports.io/football/teams/3988.png",
+          "outcomeMapping": {
+            "away": 2,
+            "draw": 1,
+            "home": 0
+          }
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": false,
+        "resolutionDelay": 7200
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmlzu7hhe001i01ls0she8fhi",
+      "question": "Inter Miami II vs Chicago Fire",
+      "description": "MLS Next Pro match between Inter Miami II (home) and Chicago Fire (away) on Saturday, February 28, 2026, kick-off at 12:00 AM UTC.\n\nPredict the full-time result: Inter Miami II win, Draw, or Chicago Fire win.\n\nResolution Rules:\n\u2022 Resolves based on the final score at full time (90 minutes + stoppage time).\n\u2022 Extra time and penalty shootouts DO NOT count \u2014 only the 90-minute result matters.\n\u2022 If the match is postponed or abandoned before completion, the market will be voided and all bets refunded.\n\u2022 Data source: API-Sports (official match result).",
+      "category": "sports",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "Inter Miami II"
+        },
+        {
+          "index": 1,
+          "label": "Draw"
+        },
+        {
+          "index": 2,
+          "label": "Chicago Fire"
+        }
+      ],
+      "tags": [
+        "Football (Soccer)",
+        "MLS Next Pro"
+      ],
+      "totalPool": "30",
+      "status": "ACTIVE",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": null,
+      "endTime": "2026-02-27T23:00:00.000Z",
+      "resolutionTime": null,
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": false,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": "10000",
+      "createdByUserId": "cmlkrdcr901co01k6vk4fvf79",
+      "createdAt": "2026-02-23T23:58:13.057Z",
+      "updatedAt": "2026-02-24T04:15:05.850Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": "apisports-football-909-1512958",
+      "scheduledResolutionTime": "2026-02-28T02:00:00.000Z",
+      "resolution": null,
+      "outcomeStats": [
+        {
+          "id": "cmlzu7hhy001j01lsc970msyb",
+          "marketId": "cmlzu7hhe001i01ls0she8fhi",
+          "outcomeIndex": 0,
+          "totalBets": 1,
+          "totalAmount": "25",
+          "uniqueBettors": 1
+        },
+        {
+          "id": "cmlzu7hi7001k01lsru2hcid9",
+          "marketId": "cmlzu7hhe001i01ls0she8fhi",
+          "outcomeIndex": 1,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzu7hiq001l01lsof4ecscn",
+          "marketId": "cmlzu7hhe001i01ls0she8fhi",
+          "outcomeIndex": 2,
+          "totalBets": 1,
+          "totalAmount": "5",
+          "uniqueBettors": 1
+        }
+      ],
+      "betCount": 2,
+      "autoResolution": {
+        "resolverType": "sports",
+        "resolverConfig": {
+          "gameId": "1512958",
+          "awayTeam": "Chicago Fire",
+          "homeTeam": "Inter Miami II",
+          "leagueId": 909,
+          "sportKey": "football",
+          "leagueLogo": "https://media.api-sports.io/football/leagues/909.png",
+          "awayTeamLogo": "https://media.api-sports.io/football/teams/1607.png",
+          "homeTeamLogo": "https://media.api-sports.io/football/teams/10280.png",
+          "outcomeMapping": {
+            "away": 2,
+            "draw": 1,
+            "home": 0
+          }
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": false,
+        "resolutionDelay": 7200
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmlzu5bfy001d01lsp1pjo922",
+      "question": "Viettel vs Ha Noi",
+      "description": "V.League 1 match between Viettel (home) and Ha Noi (away) on Sunday, March 1, 2026, kick-off at 12:15 PM UTC.\n\nPredict the full-time result: Viettel win, Draw, or Ha Noi win.\n\nResolution Rules:\n\u2022 Resolves based on the final score at full time (90 minutes + stoppage time).\n\u2022 Extra time and penalty shootouts DO NOT count \u2014 only the 90-minute result matters.\n\u2022 If the match is postponed or abandoned before completion, the market will be voided and all bets refunded.\n\u2022 Data source: API-Sports (official match result).",
+      "category": "sports",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "Viettel"
+        },
+        {
+          "index": 1,
+          "label": "Draw"
+        },
+        {
+          "index": 2,
+          "label": "Ha Noi"
+        }
+      ],
+      "tags": [
+        "Football (Soccer)",
+        "V.League 1"
+      ],
+      "totalPool": "0",
+      "status": "ACTIVE",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": null,
+      "endTime": "2026-03-01T11:15:00.000Z",
+      "resolutionTime": null,
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": false,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": "10000",
+      "createdByUserId": "cmlkrdcr901co01k6vk4fvf79",
+      "createdAt": "2026-02-23T23:56:31.918Z",
+      "updatedAt": "2026-02-23T23:56:31.979Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": "apisports-football-340-1518025",
+      "scheduledResolutionTime": "2026-03-01T14:15:00.000Z",
+      "resolution": null,
+      "outcomeStats": [
+        {
+          "id": "cmlzu5bgj001e01lsior6ar5d",
+          "marketId": "cmlzu5bfy001d01lsp1pjo922",
+          "outcomeIndex": 0,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzu5bgs001f01lsim2uq2k5",
+          "marketId": "cmlzu5bfy001d01lsp1pjo922",
+          "outcomeIndex": 1,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzu5bh1001g01ls1egwr5vy",
+          "marketId": "cmlzu5bfy001d01lsp1pjo922",
+          "outcomeIndex": 2,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        }
+      ],
+      "betCount": 0,
+      "autoResolution": {
+        "resolverType": "sports",
+        "resolverConfig": {
+          "gameId": "1518025",
+          "awayTeam": "Ha Noi",
+          "homeTeam": "Viettel",
+          "leagueId": 340,
+          "sportKey": "football",
+          "leagueLogo": "https://media.api-sports.io/football/leagues/340.png",
+          "awayTeamLogo": "https://media.api-sports.io/football/teams/3670.png",
+          "homeTeamLogo": "https://media.api-sports.io/football/teams/3681.png",
+          "outcomeMapping": {
+            "away": 2,
+            "draw": 1,
+            "home": 0
+          }
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": false,
+        "resolutionDelay": 7200
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmlzu5b9a001801lsgsbglfjh",
+      "question": "Ho Chi Minh vs Binh Duong",
+      "description": "V.League 1 match between Ho Chi Minh (home) and Binh Duong (away) on Sunday, March 1, 2026, kick-off at 12:15 PM UTC.\n\nPredict the full-time result: Ho Chi Minh win, Draw, or Binh Duong win.\n\nResolution Rules:\n\u2022 Resolves based on the final score at full time (90 minutes + stoppage time).\n\u2022 Extra time and penalty shootouts DO NOT count \u2014 only the 90-minute result matters.\n\u2022 If the match is postponed or abandoned before completion, the market will be voided and all bets refunded.\n\u2022 Data source: API-Sports (official match result).",
+      "category": "sports",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "Ho Chi Minh"
+        },
+        {
+          "index": 1,
+          "label": "Draw"
+        },
+        {
+          "index": 2,
+          "label": "Binh Duong"
+        }
+      ],
+      "tags": [
+        "Football (Soccer)",
+        "V.League 1"
+      ],
+      "totalPool": "0",
+      "status": "ACTIVE",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": null,
+      "endTime": "2026-03-01T11:15:00.000Z",
+      "resolutionTime": null,
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": false,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": "10000",
+      "createdByUserId": "cmlkrdcr901co01k6vk4fvf79",
+      "createdAt": "2026-02-23T23:56:31.678Z",
+      "updatedAt": "2026-02-23T23:56:31.734Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": "apisports-football-340-1518024",
+      "scheduledResolutionTime": "2026-03-01T14:15:00.000Z",
+      "resolution": null,
+      "outcomeStats": [
+        {
+          "id": "cmlzu5b9g001901ls87vpwd4g",
+          "marketId": "cmlzu5b9a001801lsgsbglfjh",
+          "outcomeIndex": 0,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzu5b9o001a01lsrkikhnx1",
+          "marketId": "cmlzu5b9a001801lsgsbglfjh",
+          "outcomeIndex": 1,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzu5ba2001b01lsz8oahwqv",
+          "marketId": "cmlzu5b9a001801lsgsbglfjh",
+          "outcomeIndex": 2,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        }
+      ],
+      "betCount": 0,
+      "autoResolution": {
+        "resolverType": "sports",
+        "resolverConfig": {
+          "gameId": "1518024",
+          "awayTeam": "Binh Duong",
+          "homeTeam": "Ho Chi Minh",
+          "leagueId": 340,
+          "sportKey": "football",
+          "leagueLogo": "https://media.api-sports.io/football/leagues/340.png",
+          "awayTeamLogo": "https://media.api-sports.io/football/teams/3668.png",
+          "homeTeamLogo": "https://media.api-sports.io/football/teams/3672.png",
+          "outcomeMapping": {
+            "away": 2,
+            "draw": 1,
+            "home": 0
+          }
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": false,
+        "resolutionDelay": 7200
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmlzu5b3d001301lsykhp8k0o",
+      "question": "Nam Dinh vs Phu Dong",
+      "description": "V.League 1 match between Nam Dinh (home) and Phu Dong (away) on Sunday, March 1, 2026, kick-off at 11:00 AM UTC.\n\nPredict the full-time result: Nam Dinh win, Draw, or Phu Dong win.\n\nResolution Rules:\n\u2022 Resolves based on the final score at full time (90 minutes + stoppage time).\n\u2022 Extra time and penalty shootouts DO NOT count \u2014 only the 90-minute result matters.\n\u2022 If the match is postponed or abandoned before completion, the market will be voided and all bets refunded.\n\u2022 Data source: API-Sports (official match result).",
+      "category": "sports",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "Nam Dinh"
+        },
+        {
+          "index": 1,
+          "label": "Draw"
+        },
+        {
+          "index": 2,
+          "label": "Phu Dong"
+        }
+      ],
+      "tags": [
+        "Football (Soccer)",
+        "V.League 1"
+      ],
+      "totalPool": "0",
+      "status": "ACTIVE",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": null,
+      "endTime": "2026-03-01T10:00:00.000Z",
+      "resolutionTime": null,
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": false,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": "10000",
+      "createdByUserId": "cmlkrdcr901co01k6vk4fvf79",
+      "createdAt": "2026-02-23T23:56:31.465Z",
+      "updatedAt": "2026-02-23T23:56:31.552Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": "apisports-football-340-1518023",
+      "scheduledResolutionTime": "2026-03-01T13:00:00.000Z",
+      "resolution": null,
+      "outcomeStats": [
+        {
+          "id": "cmlzu5b3t001401lsn0oh6gqw",
+          "marketId": "cmlzu5b3d001301lsykhp8k0o",
+          "outcomeIndex": 0,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzu5b4f001501lsybner56z",
+          "marketId": "cmlzu5b3d001301lsykhp8k0o",
+          "outcomeIndex": 1,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzu5b4w001601lsh5ng4o7v",
+          "marketId": "cmlzu5b3d001301lsykhp8k0o",
+          "outcomeIndex": 2,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        }
+      ],
+      "betCount": 0,
+      "autoResolution": {
+        "resolverType": "sports",
+        "resolverConfig": {
+          "gameId": "1518023",
+          "awayTeam": "Phu Dong",
+          "homeTeam": "Nam Dinh",
+          "leagueId": 340,
+          "sportKey": "football",
+          "leagueLogo": "https://media.api-sports.io/football/leagues/340.png",
+          "awayTeamLogo": "https://media.api-sports.io/football/teams/9167.png",
+          "homeTeamLogo": "https://media.api-sports.io/football/teams/3674.png",
+          "outcomeMapping": {
+            "away": 2,
+            "draw": 1,
+            "home": 0
+          }
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": false,
+        "resolutionDelay": 7200
+      },
+      "liveEventData": null
+    },
+    {
+      "id": "cmlzu5awp000y01ls01xch2n6",
+      "question": "Hai Phong vs Thanh H\u00f3a",
+      "description": "V.League 1 match between Hai Phong (home) and Thanh H\u00f3a (away) on Sunday, March 1, 2026, kick-off at 11:00 AM UTC.\n\nPredict the full-time result: Hai Phong win, Draw, or Thanh H\u00f3a win.\n\nResolution Rules:\n\u2022 Resolves based on the final score at full time (90 minutes + stoppage time).\n\u2022 Extra time and penalty shootouts DO NOT count \u2014 only the 90-minute result matters.\n\u2022 If the match is postponed or abandoned before completion, the market will be voided and all bets refunded.\n\u2022 Data source: API-Sports (official match result).",
+      "category": "sports",
+      "outcomes": [
+        {
+          "index": 0,
+          "label": "Hai Phong"
+        },
+        {
+          "index": 1,
+          "label": "Draw"
+        },
+        {
+          "index": 2,
+          "label": "Thanh H\u00f3a"
+        }
+      ],
+      "tags": [
+        "Football (Soccer)",
+        "V.League 1"
+      ],
+      "totalPool": "0",
+      "status": "ACTIVE",
+      "visibility": "PUBLIC",
+      "featured": false,
+      "featuredAt": null,
+      "winningOutcome": null,
+      "endTime": "2026-03-01T10:00:00.000Z",
+      "resolutionTime": null,
+      "platformFeeRate": "0.02",
+      "timeWeightingEnabled": false,
+      "timeWeightingAlpha": "1",
+      "minimumBet": "5",
+      "maximumBet": "10000",
+      "createdByUserId": "cmlkrdcr901co01k6vk4fvf79",
+      "createdAt": "2026-02-23T23:56:31.225Z",
+      "updatedAt": "2026-02-23T23:56:31.324Z",
+      "deletedAt": null,
+      "deletedBy": null,
+      "externalEventId": "apisports-football-340-1518022",
+      "scheduledResolutionTime": "2026-03-01T13:00:00.000Z",
+      "resolution": null,
+      "outcomeStats": [
+        {
+          "id": "cmlzu5axw000z01lsllnrd839",
+          "marketId": "cmlzu5awp000y01ls01xch2n6",
+          "outcomeIndex": 0,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzu5ay5001001lszpgln0qd",
+          "marketId": "cmlzu5awp000y01ls01xch2n6",
+          "outcomeIndex": 1,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        },
+        {
+          "id": "cmlzu5ayu001101lsdavaknns",
+          "marketId": "cmlzu5awp000y01ls01xch2n6",
+          "outcomeIndex": 2,
+          "totalBets": 0,
+          "totalAmount": "0",
+          "uniqueBettors": 0
+        }
+      ],
+      "betCount": 0,
+      "autoResolution": {
+        "resolverType": "sports",
+        "resolverConfig": {
+          "gameId": "1518022",
+          "awayTeam": "Thanh H\u00f3a",
+          "homeTeam": "Hai Phong",
+          "leagueId": 340,
+          "sportKey": "football",
+          "leagueLogo": "https://media.api-sports.io/football/leagues/340.png",
+          "awayTeamLogo": "https://media.api-sports.io/football/teams/3680.png",
+          "homeTeamLogo": "https://media.api-sports.io/football/teams/3671.png",
+          "outcomeMapping": {
+            "away": 2,
+            "draw": 1,
+            "home": 0
+          }
+        },
+        "autoResolveEnabled": true,
+        "resolvedAutomatically": false,
+        "resolutionDelay": 7200
+      },
+      "liveEventData": null
+    }
+  ],
+  "total": 2548,
+  "activeCount": 176,
+  "endedCount": 3,
+  "resolvedCount": 2361
+}

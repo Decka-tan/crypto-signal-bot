@@ -1,7 +1,7 @@
 """
 Multi-Exchange Market Monitor Module
 Supports: Binance, Bybit, OKX, KuCoin
-Uses Selenium/Chrome for data fetching (bypasses Python blocking)
+Uses CCXT library (industry standard) + Selenium fallback
 """
 
 import requests
@@ -9,6 +9,14 @@ import pandas as pd
 from typing import List, Dict, Optional
 import numpy as np
 from datetime import datetime, timedelta
+import time
+
+# Import CCXT for reliable exchange data
+try:
+    import ccxt
+    CCXT_AVAILABLE = True
+except ImportError:
+    CCXT_AVAILABLE = False
 
 # Import Selenium fetcher
 from core.selenium_market_fetcher import SeleniumMarketFetcher
@@ -39,7 +47,9 @@ class MarketMonitor:
 
     def get_klines(self, symbol: str, limit: int = 100, timeframe: str = None) -> Optional[pd.DataFrame]:
         """
-        Fetch candlestick data - uses Selenium by default (bypasses Python blocking)
+        Fetch candlestick data - uses CCXT first (most reliable)
+
+        Priority: CCXT → Selenium → Direct API → Demo
 
         Args:
             symbol: Trading pair symbol
@@ -49,22 +59,19 @@ class MarketMonitor:
         # Use provided timeframe or fall back to default
         tf = timeframe if timeframe else self.timeframe
 
-        # CCUSDT (Canton) - try OKX first, then demo mode
-        if symbol == 'CCUSDT' and not self.demo_mode:
-            try:
-                # Try OKX for CCUSDT (might be listed there)
-                df = self._get_okx_klines(symbol, limit, tf)
-                if df is not None and len(df) > 0:
-                    return df
-            except:
-                pass  # Fall through to demo mode
-            # If OKX fails, use demo mode
-            return self._generate_demo_data(symbol, limit)
-
         if self.demo_mode:
             return self._generate_demo_data(symbol, limit)
 
-        # Use Selenium fetcher (Chrome browser)
+        # PRIORITY 1: CCXT (industry standard, 100+ exchanges, auto retry)
+        if CCXT_AVAILABLE:
+            try:
+                df = self._get_ccxt_klines(symbol, limit, tf)
+                if df is not None and len(df) > 0:
+                    return df
+            except Exception as e:
+                print(f"   [WARN] CCXT failed: {str(e)[:40]}")
+
+        # PRIORITY 2: Selenium fetcher (Chrome browser - bypasses rate limits)
         if self.use_selenium:
             try:
                 if self.selenium_fetcher is None:
@@ -115,6 +122,79 @@ class MarketMonitor:
             print(f"   [WARN] [{symbol}] All methods failed, using demo data")
 
         return self._generate_demo_data(symbol, limit)
+
+    def _get_ccxt_klines(self, symbol: str, limit: int, timeframe: str = None, max_retries: int = 3) -> Optional[pd.DataFrame]:
+        """
+        Fetch using CCXT library (industry standard, supports 100+ exchanges)
+
+        Auto-retry + fallback chain: Binance → Bybit → OKX
+        """
+        if not CCXT_AVAILABLE:
+            return None
+
+        tf = timeframe if timeframe else self.timeframe
+
+        # CCXT timeframe mapping
+        ccxt_timeframes = {
+            '1m': '1m', '3m': '3m', '5m': '5m', '15m': '15m', '30m': '30m',
+            '1h': '1h', '2h': '2h', '4h': '4h', '6h': '6h', '12h': '12h',
+            '1d': '1d', '1w': '1w'
+        }
+        ccxt_tf = ccxt_timeframes.get(tf, '5m')
+
+        # Exchange priority for CCXT (best data first)
+        exchanges_config = [
+            ('binance', 'binance', {'enableRateLimit': True, 'timeout': 10000}),
+            ('bybit', 'bybit', {'enableRateLimit': True, 'timeout': 10000}),
+            ('okx', 'okx', {'enableRateLimit': True, 'timeout': 10000}),
+        ]
+
+        for exchange_name, ccxt_id, config in exchanges_config:
+            for attempt in range(max_retries):
+                try:
+                    # Initialize exchange
+                    exchange_class = getattr(ccxt, ccxt_id)
+                    exchange = exchange_class(config)
+
+                    # Check if symbol exists
+                    markets = exchange.load_markets()
+                    ccxt_symbol = symbol
+
+                    # Convert symbol format if needed
+                    if symbol not in markets:
+                        # Try common conversions
+                        if ccxt_id == 'okx':
+                            ccxt_symbol = symbol.replace('USDT', '-USDT')
+                        elif ccxt_id in ['kucoin', 'bitget']:
+                            ccxt_symbol = symbol.replace('USDT', '-USDT')
+
+                    if ccxt_symbol not in markets:
+                        continue
+
+                    # Fetch OHLCV
+                    ohlcv = exchange.fetch_ohlcv(ccxt_symbol, ccxt_tf, limit=limit)
+
+                    if not ohlcv:
+                        continue
+
+                    # Convert to DataFrame
+                    df = pd.DataFrame(ohlcv, columns=['timestamp', 'open', 'high', 'low', 'close', 'volume'])
+                    df['timestamp'] = pd.to_datetime(df['timestamp'], unit='ms')
+                    df.set_index('timestamp', inplace=True)
+
+                    print(f"   [OK] {symbol} via CCXT/{exchange_name.upper()}: ${df['close'].iloc[-1]:.4f}")
+                    return df
+
+                except ccxt.NetworkError as e:
+                    if attempt < max_retries - 1:
+                        time.sleep(1)  # Wait before retry
+                        continue
+                except ccxt.ExchangeError:
+                    break  # Exchange doesn't have this symbol, try next exchange
+                except Exception as e:
+                    break  # Other error, try next exchange
+
+        return None
 
     def _get_binance_klines(self, symbol: str, limit: int, timeframe: str = None) -> Optional[pd.DataFrame]:
         """Fetch from Binance"""

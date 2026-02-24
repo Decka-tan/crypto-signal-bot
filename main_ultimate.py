@@ -1784,8 +1784,29 @@ print(json.dumps(symbol_map))
 
                 all_signals = {}
 
-                # SKIP ANALYSIS during market resolved window (XX:50-XX:00)
-                # Data is not accurate during this time
+                # ============================================================================
+                # OPTIMIZED: Only scan during optimal window (XX:42-48)
+                # Skip scanning when outside window to save CPU
+                # ============================================================================
+                OPTIMAL_WINDOW_START = 42  # XX:42
+                OPTIMAL_WINDOW_END = 48    # XX:48
+
+                # If outside optimal window, sleep until XX:42
+                if current_min < OPTIMAL_WINDOW_START:
+                    # Calculate seconds until XX:42
+                    secs_until_42 = (OPTIMAL_WINDOW_START - current_min) * 60 - time.localtime().tm_sec
+                    self.console.print(f"[dim]💤 Outside optimal window - Sleeping until XX:42 ({secs_until_42}s)[/dim]\n")
+                    time.sleep(secs_until_42)
+                    continue  # Skip to next iteration (will be in window)
+
+                elif current_min > OPTIMAL_WINDOW_END:
+                    # Calculate seconds until XX:42 of next hour
+                    secs_until_next_42 = ((60 - current_min) + OPTIMAL_WINDOW_START) * 60 - time.localtime().tm_sec
+                    self.console.print(f"[dim]💤 Outside optimal window - Sleeping until XX:42 next hour ({secs_until_next_42}s)[/dim]\n")
+                    time.sleep(min(secs_until_next_42, 300))  # Max 5 min sleep
+                    continue  # Skip to next iteration
+
+                # SKIP during market resolved window (XX:50-XX:05)
                 if in_resolved_window:
                     self.console.print("[dim]⏸️  Market resolved window - Analysis paused[/dim]\n")
 
@@ -1971,13 +1992,25 @@ print(json.dumps(symbol_map))
                 #         self.console.print("\n[bold bright_yellow]🎯 Prepared Bets Available[/bold bright_yellow]")
                 #         self.send_prepared_bets_to_discord(prepared_bets)
 
-                # Show next check time (Option A: continuous monitoring)
+                # Show next check time (optimized for XX:42-48 window)
                 current_min = time.localtime().tm_min
                 current_sec = time.localtime().tm_sec
-                secs_to_next = 60 - current_sec
-                self.console.print(f"\n[dim]⏰ Next check: {secs_to_next}s (continuous monitoring)[/dim]")
 
-                time.sleep(interval)
+                if current_min < OPTIMAL_WINDOW_END:
+                    # Still in window, check every 10 seconds
+                    secs_to_next = 10 - current_sec % 10
+                    self.console.print(f"\n[dim]⏰ Next check: {secs_to_next}s (optimal window)[/dim]")
+                    time.sleep(secs_to_next)
+                elif current_min < 50:
+                    # After window, sleep until XX:42 next hour
+                    secs_until_next_42 = ((60 - current_min) + OPTIMAL_WINDOW_START) * 60 - current_sec
+                    self.console.print(f"\n[dim]💤 Sleeping until XX:42 next hour ({secs_until_next_42}s)[/dim]")
+                    time.sleep(min(secs_until_next_42, 300))
+                else:
+                    # After XX:50, sleep until XX:42 next hour
+                    secs_until_next_42 = ((60 - current_min) + OPTIMAL_WINDOW_START) * 60 - current_sec
+                    self.console.print(f"\n[dim]💤 Sleeping until XX:42 next hour ({secs_until_next_42}s)[/dim]")
+                    time.sleep(min(secs_until_next_42, 300))
 
         except KeyboardInterrupt:
             self.console.print("\n\n[yellow]⏸️  Bot stopped[/yellow]")

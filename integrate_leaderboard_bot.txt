@@ -1,0 +1,136 @@
+"""
+INTEGRATION GUIDE - Leaderboard Auto-Bot
+
+Add this to main_ultimate.py in the XX:45 section
+"""
+
+# At top of file, add:
+from core.unhedged_api_client import UnhedgedAPIClient
+from core.unhedged_auto_better import UnhedgedAutoBetter, BetConfig
+from leaderboard_strategy import LeaderboardConfig, LeaderboardTracker, should_bet_leaderboard, calculate_bet_amount
+
+# In __init__ of CryptoSignalBot, add:
+self.leaderboard_config = LeaderboardConfig()
+self.leaderboard_tracker = LeaderboardTracker()
+
+# Auto-better setup (DRY_RUN initially!)
+self.auto_better = UnhedgedAutoBetter(
+    config=BetConfig(
+        max_bet_per_market=2.0,  # Max $2 per bet
+        max_bet_per_hour=20.0,
+        max_loss_per_day=5.0,
+        min_bet_amount=0.50,
+        min_edge_to_bet=0.01  # 1% min edge
+    ),
+    dry_run=True  # SET TO FALSE WHEN READY FOR REAL BETS!
+)
+
+self.unhedged_api = UnhedgedAPIClient()
+
+# IN THE XX:45 SECTION, replace current logic with:
+
+if current_min == 45:
+    self.console.print("\n[bold yellow]⏰ OPTIMAL TIMING: XX:45 (5 min to close)[/bold yellow]\n")
+
+    # Get current bankroll
+    balance = self.unhedged_api.get_balance()
+    bankroll = float(balance['balance']['available']) if balance else 33.0
+
+    # Get active crypto markets from API
+    all_markets = self.unhedged_api.get_markets(status="ACTIVE", limit=100)
+    crypto_markets = [m for m in all_markets if m.category == 'crypto']
+
+    # Group by symbol
+    by_symbol = {}
+    for m in crypto_markets:
+        if m.symbol not in by_symbol:
+            by_symbol[m.symbol] = []
+        by_symbol[m.symbol].append(m)
+
+    bettable_count = 0
+    all_bettable = []
+    all_unbettable = []
+    actual_bets_placed = 0
+
+    # For each symbol in our watchlist
+    for symbol in self.market_monitor.symbols:
+        # Get signal analysis
+        signal = self.analyze_symbol_proper(symbol)
+        all_signals[symbol] = signal
+
+        # Check if we should bet (leaderboard strategy)
+        should_bet, reason = should_bet_leaderboard(
+            signal,
+            bankroll,
+            self.leaderboard_tracker,
+            self.leaderboard_config
+        )
+
+        if should_bet and signal.get('is_bettable', False):
+            bettable_count += 1
+            all_bettable.append((symbol, signal))
+
+            # Find matching market on Unhedged
+            if symbol in by_symbol and by_symbol[symbol]:
+                market = by_symbol[symbol][0]  # Take first active market
+
+                # Determine outcome from signal
+                outcome = signal.get('signal', 'YES')  # 'YES' or 'NO'
+
+                # Calculate bet amount (leaderboard-optimized)
+                bet_amount = calculate_bet_amount(
+                    bankroll,
+                    signal.get('confidence', 60),
+                    signal.get('edge', 0.01),
+                    self.leaderboard_config
+                )
+
+                # PLACE THE BET
+                result = self.auto_better.place_bet(
+                    market_id=market.id,
+                    outcome=outcome,
+                    amount=bet_amount,
+                    signal=signal.get('signal', 'N/A'),
+                    symbol=symbol,
+                    confidence=signal.get('confidence', 0),
+                    edge=signal.get('edge', 0)
+                )
+
+                if result.success:
+                    actual_bets_placed += 1
+                    # Record in tracker
+                    self.leaderboard_tracker.record_bet(
+                        market_id=market.id,
+                        symbol=symbol,
+                        signal=outcome,
+                        amount=bet_amount,
+                        confidence=signal.get('confidence', 0),
+                        edge=signal.get('edge', 0)
+                    )
+
+                    # Check and alert
+                    self.check_and_alert_proper(signal)
+                else:
+                    self.console.print(f"   [red]Bet failed: {result.error}[/red]")
+            else:
+                self.console.print(f"   [yellow]No market found for {symbol}[/yellow]")
+        else:
+            all_unbettable.append((symbol, signal))
+            self.console.print(f"   [dim][SKIP] {symbol}: {reason}[/dim]")
+
+    # Show summary
+    self.console.print(f"\n[cyan]XX:45 Summary:[/cyan]")
+    self.console.print(f"  Bettable signals: {bettable_count}")
+    self.console.print(f"  Bets placed: {actual_bets_placed}")
+    self.console.print(f"  Bankroll: ${bankroll:.2f}")
+
+    # ALWAYS send Discord summary
+    self._send_45_summary_to_discord(all_bettable, all_unbettable, bettable_count)
+
+    # Show leaderboard stats
+    prediction = self.leaderboard_tracker.get_leaderboard_prediction()
+    self.console.print(f"\n[yellow]Leaderboard Prediction:[/yellow]")
+    self.console.print(f"  Consistency: {prediction['consistency']:.0f}")
+    self.console.print(f"  Active: {prediction['active']:.0f}")
+    self.console.print(f"  Profit: {prediction['profit']:.0f}")
+    self.console.print(f"  TOTAL: {prediction['total']:.0f}")
