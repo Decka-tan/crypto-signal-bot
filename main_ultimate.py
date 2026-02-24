@@ -44,6 +44,7 @@ from core.unhedged_active_markets import UnhedgedActiveMarketsScraper, UnhedgedA
 from core.result_tracker import ResultTracker, BetResult
 from core.proper_signals import ProperSignalGenerator, MarketOdds
 from core.unhedged_history import UnhedgedHistoryFetcher, calculate_calibration_from_tracker
+from core.prediction_market_signals import PredictionMarketGenerator, PredictionSignal
 
 # Leaderboard Auto-Bet Components
 from core.unhedged_api_client import UnhedgedAPIClient
@@ -205,6 +206,9 @@ class CryptoSignalBotUltimate:
         # PROPER signal generator (with EV, edge, real probability)
         self.proper_signal_generator = ProperSignalGenerator(self.config)
 
+        # PREDICTION MARKET signal generator (for binary markets)
+        self.prediction_market_generator = PredictionMarketGenerator(self.config)
+
         # Unhedged scraper for real-time market status (may not work due to JS rendering)
         self.unhedged_scraper = UnhedgedScraper(use_selenium=True)
 
@@ -318,9 +322,9 @@ class CryptoSignalBotUltimate:
 
     def analyze_symbol_proper(self, symbol: str) -> Dict:
         """
-        PROPER signal analysis with EV, Edge, and Real Probability
+        PREDICTION MARKET signal analysis
 
-        Replaces UltimateSignalGenerator with ProperSignalGenerator
+        Binary market logic: Will price be ABOVE/BELOW strike at time X?
         """
         # Get price data
         df = self.market_monitor.get_klines(symbol, limit=100)
@@ -353,6 +357,7 @@ class CryptoSignalBotUltimate:
         market_question = ""
         market_id = None
         market_link = None
+        time_until_close = 5  # Default
 
         if active_market:
             market_question = active_market.question
@@ -369,65 +374,85 @@ class CryptoSignalBotUltimate:
             elif below_match:
                 strike_price = float(below_match.group(1).replace(',', ''))
 
-        # Generate PROPER signal
-        signal_analysis = self.proper_signal_generator.generate_signal(
-            symbol=symbol,
-            df=df,
-            current_price=current_price,
-            market_odds=market_odds,
-            strike_price=strike_price
-        )
+            # Get time until close
+            time_until_close = active_market.get_time_until_resolved_minutes()
+            if time_until_close is None:
+                time_until_close = 5  # Default
 
-        # Convert to dict format (compatible with existing code)
-        result = {
-            'symbol': symbol,
-            'signal': signal_analysis.signal,
-            'signal_type': signal_analysis.signal,
-            'confidence': signal_analysis.confidence,
-            'p_yes': signal_analysis.p_yes,
-            'ev': signal_analysis.ev,
-            'edge': signal_analysis.edge,
-            'is_bettable': signal_analysis.is_bettable,
-            'current_price': signal_analysis.current_price,
-            'predicted_price': signal_analysis.predicted_price,
-            'distance_to_strike': signal_analysis.distance_to_strike,
-            'distance_dollars': signal_analysis.distance_dollars,
-            'buffer_remaining': signal_analysis.buffer_remaining,
-            'volatility_5m': signal_analysis.volatility_5m,
-            'reasons': signal_analysis.reasons,
-            'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-            'market_id': market_id,
-            'market_link': market_link,
-            'market_question': market_question
-        }
+        # Generate PREDICTION MARKET signal
+        if strike_price:
+            signal_analysis = self.prediction_market_generator.generate_signal(
+                symbol=symbol,
+                df=df,
+                current_price=current_price,
+                strike_price=strike_price,
+                time_until_close=time_until_close,
+                market_odds=market_odds
+            )
 
-        # Add market odds info
-        if market_odds:
-            result['market_odds'] = {
-                'yes_pct': market_odds.yes_price * 100,
-                'no_pct': market_odds.no_price * 100,
-                'yes_volume': market_odds.yes_volume,
-                'no_volume': market_odds.no_volume
+            # Convert PredictionSignal to dict format (compatible with existing code)
+            result = {
+                'symbol': symbol,
+                'signal': signal_analysis.signal,
+                'signal_type': signal_analysis.signal,
+                'confidence': signal_analysis.confidence,
+                'edge': signal_analysis.edge,
+                'is_bettable': signal_analysis.is_bettable,
+                'current_price': signal_analysis.current_price,
+                'distance_to_strike': signal_analysis.distance_pct,
+                'distance_dollars': signal_analysis.distance_dollars,
+                'volatility_5m': signal_analysis.volatility_5m,
+                'reasons': signal_analysis.reasons,
+                'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                'market_id': market_id,
+                'market_link': market_link,
+                'market_question': market_question,
+                'strike_price': strike_price,
+                'time_until_close': time_until_close
             }
-            result['implied_prob'] = market_odds.implied_prob_yes * 100
-            result['crowd_sentiment'] = 'STRONG_BULLISH' if market_odds.yes_price > 0.7 else \
-                                           'BULLISH' if market_odds.yes_price > 0.6 else \
-                                           'NEUTRAL' if market_odds.yes_price > 0.4 else \
-                                           'BEARISH' if market_odds.yes_price > 0.3 else 'STRONG_BEARISH'
 
-        # Add edge status to reasons
-        if signal_analysis.edge > 0:
-            result['reasons'].insert(0, f"Edge: +{signal_analysis.edge*100:.1f}%")
+            # Add market odds info
+            if market_odds:
+                result['market_odds'] = {
+                    'yes_pct': market_odds.yes_price * 100,
+                    'no_pct': market_odds.no_price * 100,
+                    'yes_volume': market_odds.yes_volume,
+                    'no_volume': market_odds.no_volume
+                }
+                result['implied_prob'] = market_odds.implied_prob_yes * 100
+                result['crowd_sentiment'] = 'STRONG_BULLISH' if market_odds.yes_price > 0.7 else \
+                                               'BULLISH' if market_odds.yes_price > 0.6 else \
+                                               'NEUTRAL' if market_odds.yes_price > 0.4 else \
+                                               'BEARISH' if market_odds.yes_price > 0.3 else 'STRONG_BEARISH'
+
+            # Add edge status to reasons
+            if signal_analysis.edge > 0:
+                result['reasons'].insert(0, f"Edge: +{signal_analysis.edge*100:.1f}%")
+            else:
+                result['reasons'].insert(0, f"Edge: {signal_analysis.edge*100:.1f}%")
+
+            # Add distance to strike status
+            dist = signal_analysis.distance_pct
+            if abs(dist) < 0.5:
+                result['reasons'].append(f"Very close to strike: {dist:+.2f}% - RISKY")
+            elif abs(dist) > 3:
+                result['reasons'].append(f"Good distance: {dist:+.2f}% - Safe")
+
+            # EV calculation (simplified)
+            result['ev'] = signal_analysis.edge  # Use edge as proxy for EV
+            result['p_yes'] = signal_analysis.confidence / 100  # Confidence as probability
+
+            return result
         else:
-            result['reasons'].insert(0, f"Edge: {signal_analysis.edge*100:.1f}%")
-
-        # Add distance to strike status
-        if signal_analysis.distance_to_strike is not None:
-            dist = signal_analysis.distance_to_strike
-            if abs(dist) < 1:
-                result['reasons'].append(f"Too close to strike: {dist:.2f}%")
-            elif abs(dist) > 5:
-                result['reasons'].append(f"Good distance: {dist:.2f}%")
+            # No strike price found - can't analyze
+            return {
+                'error': 'No strike price',
+                'symbol': symbol,
+                'reason': 'Could not extract strike price from market question',
+                'is_bettable': False,
+                'confidence': 0,
+                'edge': -999
+            }
 
         # Add volatility status
         if signal_analysis.volatility_5m is not None:
@@ -755,10 +780,21 @@ class CryptoSignalBotUltimate:
         Returns:
             Best matching UnhedgedActiveMarket or None
         """
+        # Normalize symbol: CCUSDT → CC, BTCUSDT → BTC, etc.
+        # Unhedged uses short symbols (CC, BTC, ETH, SOL)
+        normalized_search = symbol.replace('USDT', '').replace('-', '')
+
+        # Also search with full symbol for backward compatibility
+        search_variants = [normalized_search, symbol]
+
         # Find all markets for this symbol
         matching_markets = []
         for key, market in self.active_markets_cache.items():
-            if key.startswith(f"{symbol}_"):
+            # Extract symbol from cache key (format: symbol_marketid)
+            cache_symbol = key.rsplit('_', 1)[0] if '_' in key else key
+
+            # Check if cache symbol matches any of our search variants
+            if cache_symbol in search_variants or any(cache_symbol == s for s in search_variants):
                 # Filter by market type if specified
                 if market_type != 'any' and market.market_type != market_type:
                     continue
