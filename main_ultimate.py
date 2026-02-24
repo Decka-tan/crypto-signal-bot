@@ -274,6 +274,8 @@ class CryptoSignalBotUltimate:
 
         self.running = False
         self.last_alerts = {}
+        self.bets_placed_this_hour = False  # Track if bets already placed this hour
+        self.last_bet_hour = None  # Track which hour we last bet
 
     def _load_config(self, config_path: str):
         """Load configuration from YAML and environment variables"""
@@ -1772,6 +1774,14 @@ print(json.dumps(symbol_map))
                 # Current time and window status
                 current_time = time.strftime('%H:%M:%S')
                 current_min = time.localtime().tm_min
+                current_hour = time.localtime().tm_hour
+
+                # Reset bet flag when hour changes
+                if self.last_bet_hour != current_hour and current_min < 45:
+                    self.bets_placed_this_hour = False
+                    if self.last_bet_hour is not None:
+                        self.console.print(f"[dim]🔄 New hour detected, reset bet flag (last bet: hour {self.last_bet_hour})[/dim]")
+
                 in_resolved_window = current_min >= resolved_window['start'] or current_min < resolved_window['end']
                 window_status = "[red]MARKET RESOLVED ❌[/red]" if in_resolved_window else "[green]BETTING OPEN ✅[/green]"
 
@@ -1870,9 +1880,20 @@ print(json.dumps(symbol_map))
 
                     # ============================================================================
                     # AUTO-BET: Execute bankroll-aware betting
+                    # Safety: Execute at XX:47 or XX:48, but only ONCE per hour
                     # ============================================================================
-                    if self.auto_bet_enabled and self.auto_better and self.bankroll_manager and current_min == 47:
-                        self.console.print("\n[bold cyan]EXECUTING AUTO-BETS (Bankroll-Aware Strategy)[/bold cyan]\n")
+                    current_hour = time.localtime().tm_hour
+                    should_bet = (
+                        self.auto_bet_enabled and
+                        self.auto_better and
+                        self.bankroll_manager and
+                        (current_min == 47 or current_min == 48) and
+                        self.last_bet_hour != current_hour  # Only bet once per hour
+                    )
+
+                    if should_bet:
+                        self.console.print(f"\n[bold cyan]EXECUTING AUTO-BETS at XX:{current_min} (Bankroll-Aware Strategy)[/bold cyan]\n")
+                        self.console.print(f"[dim]Last bet hour: {self.last_bet_hour}, Current hour: {current_hour}[/dim]\n")
 
                         # Refresh balance
                         balance_data = self.unhedged_api_client.get_balance()
@@ -1945,6 +1966,14 @@ print(json.dumps(symbol_map))
                         self.console.print(f"  Total wagered: {self.bankroll_manager.total_bet} CC")
                         self.console.print(f"  Remaining: {self.bankroll_manager.current_balance:.1f} CC")
                         self.console.print(f"  Bust: {'YES' if self.bankroll_manager.is_bust() else 'NO'}")
+
+                        # Mark that bets were placed this hour
+                        if actual_bets_placed > 0:
+                            self.last_bet_hour = current_hour
+                            self.bets_placed_this_hour = True
+                            self.console.print(f"\n[green]✓ Bets recorded for hour {current_hour}:00[/green]")
+                        else:
+                            self.console.print(f"\n[yellow]⚠ No bets placed this hour[/yellow]")
 
                     # Interval markets (every 2 hours at XX:105-108)
                     # Note: Need to check current minute in hour for interval markets
